@@ -168,10 +168,15 @@ The user clicks each flashcard to edit it (UC#9)
 Related User Story #11: As a user, I want to be able to change my password.
 
 Main Flow: 
-The user enters their username and password. 
-The user clicks on the login button. 
-The user inputted a wrong password, so a "wrong password" error shows up. 
-The system prompts the user to try again or change passwords. 
+The user is on the logged in view.
+The user clicks on the change password button on the navigation bar.
+The system prompts the user to fill in their new password and confirm password.
+The user fills in their new password and confirm password. 
+The user clicks the confirm button. 
+
+Alternate Flow: 
+The user decides they don't want to change passwords anymore. 
+The user clicks the cancel button and keeps their old password. 
 
 ### Use Case #13 Title: Log Out
 
