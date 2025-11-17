@@ -25,6 +25,7 @@ Our project’s domain is Education, with the main purpose being a language lear
 - User Story #10: As a user, I want to see all my decks listed on the deck menu, and there’s a Don’t Know Deck on the top
 - User Story #11: As a user, I want to open each deck on the deck menu, and on each deck’s panel, I can see all the flashcards of the deck and can do further execution of adding flashcards (UC#1), studying the flashcards (UC#2), and editing flashcards (UC#9)
 - User Story #12: As a user, I want to be able to change my password.
+- User Story #13: As a user, I want to be able to log out of my account.
 
 ## **Use Cases**
 
@@ -172,6 +173,17 @@ The user clicks on the login button.
 The user inputted a wrong password, so a "wrong password" error shows up. 
 The system prompts the user to try again or change passwords. 
 
+### Use Case #13 Title: Log Out
+
+Related User Story #11: As a user, I want to be able to log out of my account.
+
+Main Flow:
+The user is on the logged in view.
+The user clicks on the log-out button on the navigation bar.
+The system asks the user if they are sure they want to log out. 
+The user clicks yes. 
+The system switches the logged in view to the login view. 
+
 ## Leads for Use Cases
 
 ### Jane
@@ -180,6 +192,7 @@ Use Case #6: Sign Up,
 Use Case #7: Log In,
 Use Case #11: Open Decks
 User Story #12: Change Password
+User Story #13: Log Out
 
 ### Jennifer
 
