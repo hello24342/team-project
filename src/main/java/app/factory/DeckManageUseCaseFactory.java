@@ -35,11 +35,11 @@ public class DeckManageUseCaseFactory {
         ListDecksInteractor listInteractor =
                 new ListDecksInteractor(deckDAO, listPresenter);
 
-        // Controllers
+        /// Controllers
         CreateDeckController createCtl =
                 new CreateDeckController(createInteractor, userId);
         ListDecksController listCtl =
-                new ListDecksController(listInteractor);
+                new ListDecksController(listInteractor, userId);
 
         return new DeckMenuBundle(vm, createCtl, listCtl);
 
