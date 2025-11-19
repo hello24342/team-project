@@ -18,7 +18,6 @@ public class DeckMenuView extends JPanel {
     private final DeckMenuViewModel vm;
     private final CreateDeckController createCtl;
     private final ListDecksController listCtl;
-    private final int userId;
 
     //Todo: add opendeckcontroller
     private final ViewManager viewManager;
@@ -32,12 +31,10 @@ public class DeckMenuView extends JPanel {
                         CreateDeckController createCtl,
                         ListDecksController listCtl,
                         OpenDeckController openCtl,
-                        ViewManager viewManager,
-                        int userId) {
+                        ViewManager viewManager) {
         this.vm = vm;
         this.createCtl = createCtl;
         this.listCtl = listCtl;
-        this.userId = userId;
         this.openCtl = openCtl;
         this.viewManager = viewManager;
 
@@ -76,7 +73,7 @@ public class DeckMenuView extends JPanel {
         });
 
         // automatic load decks when entering the view
-        listCtl.onEnterDeckMenu(userId);
+        listCtl.onEnterDeckMenu();
     }
     // Handle the "New Deck" button click
     private void onClickNewDeck() {
