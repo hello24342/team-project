@@ -1,4 +1,5 @@
 package usecase.study_deck.mark_unknown;
 
-public class MarkUnknownInputBoundary {
+public interface MarkUnknownInputBoundary {
+    void execute(MarkUnknownInputData inputData);
 }

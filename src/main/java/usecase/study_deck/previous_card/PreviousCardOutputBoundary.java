@@ -1,4 +1,6 @@
 package usecase.study_deck.previous_card;
 
-public class PreviousCardOutputBoundary {
+public interface PreviousCardOutputBoundary {
+    void presentSuccessView(PreviousCardOutputData outputData);
+    void presentFailureView(String errorMessage);
 }

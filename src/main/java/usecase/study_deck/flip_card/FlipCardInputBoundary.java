@@ -1,4 +1,5 @@
 package usecase.study_deck.flip_card;
 
-public class FlipCardInputBoundary {
+public interface FlipCardInputBoundary {
+    void execute(FlipCardInputData inputData);
 }

@@ -1,4 +1,6 @@
 package usecase.study_deck.mark_known;
 
-public class MarkKnownOutputBoundary {
+public interface MarkKnownOutputBoundary {
+    void presentSuccessView(MarkKnownOutputData outputData);
+    void presentFailureView(String errorMessage);
 }

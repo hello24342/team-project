@@ -30,7 +30,8 @@ public class LoadDeckForStudyInteractor implements LoadDeckForStudyInputBoundary
         Flashcard firstCard = flashcardDAO.findByDeck(deckId).get(0);
 
         LoadDeckForStudyOutputData outputData = new LoadDeckForStudyOutputData(deckId, deck.getTitle(),
-                firstCard.getId(), flashcardDAO.findByDeck(deckId).size(), 0, firstCard.getSourceWord());
+                firstCard.getId(), flashcardDAO.findByDeck(deckId).size(), 0, firstCard.getSourceWord(),
+                firstCard.getTargetWord());
 
         presenter.presentSuccessView(outputData);
     }

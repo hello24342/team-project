@@ -1,4 +1,5 @@
 package usecase.study_deck.next_card;
 
-public class NextCardInputBoundary {
+public interface NextCardInputBoundary {
+    void execute(NextCardInputData inputData);
 }

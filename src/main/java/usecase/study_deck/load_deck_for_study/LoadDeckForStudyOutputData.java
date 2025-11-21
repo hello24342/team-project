@@ -8,15 +8,17 @@ public class LoadDeckForStudyOutputData {
     private final int cardCount;
     private final int currentCardIndex;
     private final String sourceWord;
+    private final String targetWord;
 
     public LoadDeckForStudyOutputData(int deckId, String deckTitle, int cardId, int cardCount, int currentCardIndex,
-                                      String sourceWord) {
+                                      String sourceWord, String targetWord) {
         this.deckId = deckId;
         this.deckTitle = deckTitle;
         this.cardId = cardId;
         this.cardCount = cardCount;
         this.currentCardIndex = currentCardIndex;
         this.sourceWord = sourceWord;
+        this.targetWord = targetWord;
     }
 
     public int getDeckId() {
@@ -41,5 +43,9 @@ public class LoadDeckForStudyOutputData {
 
     public String getSourceWord() {
         return sourceWord;
+    }
+
+    public String getTargetWord() {
+        return targetWord;
     }
 }
