@@ -1,10 +1,10 @@
-package usecase.study_deck;
+package usecase.study_deck.load_deck_for_study;
 
-public class StudyDeckInputData {
+public class LoadDeckForStudyInputData {
     private final int userId;
     private final int deckId;
 
-    public StudyDeckInputData(int userId, int deckId) {
+    public LoadDeckForStudyInputData(int userId, int deckId) {
         this.userId = userId;
         this.deckId = deckId;
     }

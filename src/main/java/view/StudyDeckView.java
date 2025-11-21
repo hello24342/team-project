@@ -15,7 +15,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
     private final String viewName = "study deck";
 
     private final JLabel cardLabel;
-    private JLabel deckTitleLabel;
+    private final JLabel deckTitleLabel;
 
     private final JButton flipButton;
     private final JButton nextButton;
@@ -39,27 +39,23 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         this.viewModel = vm;
         this.viewModel.addPropertyChangeListener(this);
 
-
-        // Add buttons
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        JPanel buttonPanel = new JPanel();
         buttonPanel.add(previousButton);
         buttonPanel.add(flipButton);
         buttonPanel.add(nextButton);
-        buttonPanel.add(knowButton);
-        buttonPanel.add(dontKnowButton);
 
-        // Add action listeners
         flipButton.addActionListener(this);
         nextButton.addActionListener(this);
         previousButton.addActionListener(this);
         knowButton.addActionListener(this);
         dontKnowButton.addActionListener(this);
 
-        // Add panels to main view
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(deckTitleLabel);
-        this.add(cardLabel);
-        this.add(buttonPanel);
+        this.setLayout(new BorderLayout());
+        this.add(deckTitleLabel, BorderLayout.NORTH);
+        this.add(cardLabel, BorderLayout.CENTER);
+        this.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(knowButton, BorderLayout.WEST);
+        this.add(dontKnowButton, BorderLayout.EAST);
     }
 
     @Override
