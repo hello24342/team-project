@@ -1,0 +1,4 @@
+package usecase.study_deck.next_card;
+
+public class NextCardOutputData {
+}

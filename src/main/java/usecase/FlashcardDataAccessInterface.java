@@ -7,7 +7,7 @@ import java.util.List;
 public interface FlashcardDataAccessInterface {
     int nextFlashcardId();
 
-    void save(int userId, Flashcard card);
+    void save(Flashcard card);
 
     Flashcard findById(int cardId);
 
