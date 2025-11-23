@@ -2,7 +2,6 @@ package usecase.deck.list_deck;
 
 import data_access.DeckDataAccess;
 import entity.FlashcardDeck;
-import usecase.deck.create_deck.CreateDeckOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
