@@ -7,7 +7,7 @@ public interface FlashcardDataAccessInterface {
 
     int nextFlashcardId();
 
-    void save(int userId, Flashcard card);
+    void save(Flashcard card);
 
     void update(int cardId);
 
