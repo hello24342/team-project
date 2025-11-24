@@ -1,8 +1,12 @@
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private final String name;
     private final String password;
+    private final List<FlashcardDeck> decks;
 
     /*
     Creates a new user with the given name and password,
@@ -17,6 +21,7 @@ public class User {
         }
         this.name = name;
         this.password = password;
+        this.decks = new ArrayList<>();
     }
 
     public String getName() {
@@ -24,4 +29,18 @@ public class User {
     }
 
     public String getPassword() { return password; }
+
+    public List<FlashcardDeck> getUserDecks() {
+        return new ArrayList<>(decks);
+    }
+
+    public void addDeck(FlashcardDeck deck) {
+        if (deck != null) {
+            this.decks.add(deck);
+        }
+    }
+
+    public void removeDeck(FlashcardDeck deck) {
+        this.decks.remove(deck);
+    }
 }
