@@ -35,18 +35,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
     private LogoutController logoutController;
     private ListDecksController listDecksController;
     private CreateDeckController createDeckController;
-    private OpenDeckController openDeckController; //make this
+    private OpenDeckController openDeckController;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+    // Updated constructor to properly initialize all dependencies
+    public LoggedInView(LoggedInViewModel loggedInViewModel,
+                        LogoutController logoutController,
+                        ListDecksController listDecksController,
+                        CreateDeckController createDeckController,
+                        OpenDeckController openDeckController) {
         this.loggedInViewModel = loggedInViewModel;
-        this.listDecksController = listDecksController;
         this.logoutController = logoutController;
+        this.listDecksController = listDecksController;
         this.createDeckController = createDeckController;
         this.openDeckController = openDeckController;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         initializeUI();
-
         setupActionListeners();
     }
 
@@ -89,21 +93,47 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
     }
 
     public void setupActionListeners() {
+        // Add Deck button listener
         addDeckButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                listDecksController.onEnterDeckMenu();
+                String deckName = JOptionPane.showInputDialog(
+                        LoggedInView.this,
+                        "Enter deck name:",
+                        "Create New Deck",
+                        JOptionPane.PLAIN_MESSAGE
+                );
+
+                if (deckName != null && !deckName.trim().isEmpty()) {
+                    createDeckController.onCreate(deckName.trim());
+                } else if (deckName != null) {
+                    JOptionPane.showMessageDialog(
+                            LoggedInView.this,
+                            "Deck name cannot be empty!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
             }
         });
 
+        // Decks button listener
         decksButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 listDecksController.onEnterDeckMenu();
             }
         });
 
+        // Logout button listener
         logOutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 logoutController.execute();
+            }
+        });
+
+        // Home button listener
+        homeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                refreshDeckDisplay();
             }
         });
 
@@ -114,12 +144,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
             }
         })
         */
-
-        homeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                refreshDeckDisplay();
-            }
-        });
     }
 
     public void refreshDeckDisplay() {
@@ -132,15 +156,31 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
             JLabel noDecksLabel = new JLabel("No decks found yet. Click the '+ Add Deck' button to create your first deck!");
             deckPanel.add(noDecksLabel);
         } else {
-            JLabel deckLabel = new JLabel("Your Deck: " + userDecks.get(0));
+            // Display the first deck as a clickable button
+            String firstDeckName = userDecks.get(0);
+            JButton deckButton = new JButton(firstDeckName);
+            deckButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    openDeckController.execute(firstDeckName);
+                }
+            });
+            deckPanel.add(deckButton);
 
-            deckPanel.add(deckLabel);
+            // Optional: Show message if there are more decks
+            if (userDecks.size() > 1) {
+                JLabel moreDecksLabel = new JLabel("... and " + (userDecks.size() - 1) + " more decks");
+                deckPanel.add(moreDecksLabel);
+            }
         }
+
+        // Refresh the panel
+        deckPanel.revalidate();
+        deckPanel.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // Handle other actions if needed
     }
 
     @Override
