@@ -60,10 +60,12 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        StudyDeckState currentState = viewModel.getState();
         if (e.getSource() == flipButton) {
-            controller.flipCard();
+            controller.flipCard(currentState.getDeckId(), currentState.getCardIndex(),
+                    currentState.isShowingFront(), currentState.startsWithSource());
         } else if (e.getSource() == nextButton) {
-            controller.nextCard();
+            controller.nextCard(currentState.getDeckId(), currentState.getCardIndex());
         } else if (e.getSource() == previousButton) {
             controller.previousCard();
         } else if (e.getSource() == knowButton) {
