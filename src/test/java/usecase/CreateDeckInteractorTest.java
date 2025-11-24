@@ -72,7 +72,7 @@ public class CreateDeckInteractorTest {
         int userId = 123;
         String title = "My Deck";
 
-        // 先存一个同名 deck，让 existsByTitleForUser 返回 true
+        // save a deck of the same name，let existsByTitleForUser return true
         dao.save(new FlashcardDeck(1, title, userId));
 
         CreateDeckPresenterMock presenter = new CreateDeckPresenterMock();
