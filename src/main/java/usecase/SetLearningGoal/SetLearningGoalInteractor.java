@@ -17,5 +17,6 @@ public class SetLearningGoalInteractor implements SetLearningGoalInputBoundary {
 
     @Override
     public void execute(SetLearningGoalInputData inputdata){
+
     }
 }
