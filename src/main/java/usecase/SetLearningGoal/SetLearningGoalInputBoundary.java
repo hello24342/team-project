@@ -4,5 +4,5 @@ package usecase.SetLearningGoal;
  * Input Boundary for actions which are related to setting a learning goal.
  */
 public interface SetLearningGoalInputBoundary {
-    void setLearningGoal(SetLearningGoalInputData inputData);
+    void execute(SetLearningGoalInputData inputData);
 }

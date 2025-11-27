@@ -1,4 +1,4 @@
-package interface_adapter.learningGoal;
+package interface_adapter.learning_goal;
 
 public class LearningGoalController {
 }
