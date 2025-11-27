@@ -1,4 +1,4 @@
-package data_access;
+package usecase.flashcard_create;
 
 import entity.Language;
 

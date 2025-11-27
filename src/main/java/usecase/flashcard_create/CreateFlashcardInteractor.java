@@ -1,7 +1,6 @@
 package usecase.flashcard_create;
 
 import data_access.FlashcardDataAccessObject;
-import data_access.TranslatorGateway;
 import entity.Flashcard;
 import entity.Language;
 
