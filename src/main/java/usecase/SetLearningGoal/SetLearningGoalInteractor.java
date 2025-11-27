@@ -10,9 +10,9 @@ public class SetLearningGoalInteractor implements SetLearningGoalInputBoundary {
     private final SetLearningGoalOutputBoundary presenter;
 
     // do i have to have this?
-    public SetLearningGoalInteractor(LearningGoalDataAccess deckDAO,
+    public SetLearningGoalInteractor(LearningGoalDataAccess DAO,
                                      SetLearningGoalOutputBoundary presenter) {
-        this.setLearningGoalDAO = deckDAO;
+        this.setLearningGoalDAO = DAO;
         this.presenter = presenter;
     }
 
@@ -25,7 +25,7 @@ public class SetLearningGoalInteractor implements SetLearningGoalInputBoundary {
             //have a button at the bottom of the progress screen that says set goal.
         }
         else {
-            return;
+            presenter.prepareSuccess(new SetLearningGoalOutputData(dailyTarget));
             //write out what the learning goal is at the bottom of the progress screen
         }
 
