@@ -1,5 +1,4 @@
 package usecase.study_deck.load_deck_for_study;
-import java.util.List;
 
 public class LoadDeckForStudyOutputData {
     private final int deckId;

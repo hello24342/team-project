@@ -1,25 +1,19 @@
 package usecase.study_deck.flip_card;
 
 public class FlipCardOutputData {
-    private final int cardId;
-    private final String text;
-    private final boolean isShowingFrontNow;
+    private final String textToShow;
+    private final boolean isShowingFront;
 
-    public FlipCardOutputData(int cardId, String text, boolean isFrontShowingNow) {
-        this.cardId = cardId;
-        this.text = text;
-        this.isShowingFrontNow = isFrontShowingNow;
-    }
-
-    public int getCardId() {
-        return cardId;
+    public FlipCardOutputData(String text, boolean isShowingFront) {
+        this.textToShow = text;
+        this.isShowingFront = isShowingFront;
     }
 
     public String getTextToShow() {
-        return text;
+        return textToShow;
     }
 
     public boolean isShowingFrontNow() {
-        return isShowingFrontNow;
+        return isShowingFront;
     }
 }
