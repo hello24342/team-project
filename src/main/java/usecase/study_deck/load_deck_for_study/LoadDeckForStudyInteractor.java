@@ -10,7 +10,8 @@ public class LoadDeckForStudyInteractor implements LoadDeckForStudyInputBoundary
     private final DeckDataAccessInterface deckDAO;
     private final FlashcardDataAccessInterface flashcardDAO;
 
-    public LoadDeckForStudyInteractor(LoadDeckForStudyOutputBoundary presenter, DeckDataAccessInterface deckDAO, FlashcardDataAccessInterface flashcardDAO) {
+    public LoadDeckForStudyInteractor(LoadDeckForStudyOutputBoundary presenter, DeckDataAccessInterface deckDAO,
+                                      FlashcardDataAccessInterface flashcardDAO) {
         this.presenter = presenter;
         this.deckDAO = deckDAO;
         this.flashcardDAO = flashcardDAO;
