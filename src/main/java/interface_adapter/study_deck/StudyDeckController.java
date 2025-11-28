@@ -40,14 +40,17 @@ public class StudyDeckController {
 
     public void flipCard(int deckId, int cardIndex, boolean isShowingFront, boolean startWithSource) {
         FlipCardInputData inputData = new FlipCardInputData(deckId, cardIndex, isShowingFront, startWithSource);
+        flipCardInputBoundary.execute(inputData);
     }
 
     public void nextCard(int deckId, int cardIndex) {
         NextCardInputData inputData = new NextCardInputData(deckId, cardIndex);
+        nextCardInputBoundary.execute(inputData);
     }
 
-    public void previousCard() {
-        PreviousCardInputData inputData = new PreviousCardInputData();
+    public void previousCard(int deckId, int cardIndex) {
+        PreviousCardInputData inputData = new PreviousCardInputData(deckId, cardIndex);
+        previousCardInputBoundary.execute(inputData);
     }
 
     public void markKnown() {

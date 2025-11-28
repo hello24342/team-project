@@ -30,6 +30,16 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
 
         cardLabel = new JLabel();
         deckTitleLabel = new JLabel();
+
+        cardLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        deckTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        cardLabel.setOpaque(true);
+        cardLabel.setBackground(Color.WHITE);
+        cardLabel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.BLACK, 2, true),
+                BorderFactory.createEmptyBorder(20, 40, 20, 40)));
+
         flipButton = new JButton("Flip Card");
         nextButton = new JButton("→");
         previousButton = new JButton("←");
@@ -38,6 +48,8 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
 
         this.viewModel = vm;
         this.viewModel.addPropertyChangeListener(this);
+
+        updateView(viewModel.getState());
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(previousButton);
@@ -60,6 +72,10 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (controller == null) {
+            return;
+        }
+
         StudyDeckState currentState = viewModel.getState();
         if (e.getSource() == flipButton) {
             controller.flipCard(currentState.getDeckId(), currentState.getCardIndex(),
@@ -67,7 +83,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         } else if (e.getSource() == nextButton) {
             controller.nextCard(currentState.getDeckId(), currentState.getCardIndex());
         } else if (e.getSource() == previousButton) {
-            controller.previousCard();
+            controller.previousCard(currentState.getDeckId(), currentState.getCardIndex());
         } else if (e.getSource() == knowButton) {
             controller.markKnown();
         } else if (e.getSource() == dontKnowButton) {
@@ -78,6 +94,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final StudyDeckState state = (StudyDeckState) evt.getNewValue();
+        updateView(state);
     }
 
     private void updateView(StudyDeckState state) {

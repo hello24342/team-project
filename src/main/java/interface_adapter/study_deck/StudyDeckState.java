@@ -7,7 +7,6 @@ public class StudyDeckState {
     private String cardText;
     private boolean isShowingFront;
     private boolean startWithSource;
-    private boolean isShowingFrontNow;
     private String deckName;
 
     public int getDeckId() {
@@ -32,10 +31,6 @@ public class StudyDeckState {
 
     public boolean startsWithSource() {
         return startWithSource;
-    }
-
-    public boolean isShowingFrontNow() {
-        return isShowingFrontNow;
     }
 
     public String getDeckName() {
@@ -64,10 +59,6 @@ public class StudyDeckState {
 
     public void setStartWithSource(boolean b) {
         this.startWithSource = b;
-    }
-
-    public void setShowingFrontNow(boolean b) {
-        this.isShowingFrontNow = b;
     }
 
     public void setDeckName(String deckName) {

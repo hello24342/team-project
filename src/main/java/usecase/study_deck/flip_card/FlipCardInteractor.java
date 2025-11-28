@@ -31,7 +31,7 @@ public class FlipCardInteractor implements FlipCardInputBoundary {
         boolean isShowingFrontNow = !inputData.isShowingFront();
         String textToShow = isShowingFrontNow ? front : back;
 
-        FlipCardOutputData outputData = new FlipCardOutputData(card.getId(), textToShow, isShowingFrontNow);
+        FlipCardOutputData outputData = new FlipCardOutputData(textToShow, isShowingFrontNow);
         presenter.presentSuccessView(outputData);
     }
 }
