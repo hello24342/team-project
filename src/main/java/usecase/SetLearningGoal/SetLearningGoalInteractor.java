@@ -18,15 +18,9 @@ public class SetLearningGoalInteractor implements SetLearningGoalInputBoundary {
 
     @Override
     public void execute(SetLearningGoalInputData inputdata){
-        int userId = inputdata.getUserId();
         int dailyTarget = inputdata.getDailyTarget();
-        if (dailyTarget == -1){
-            return;
-            //have a button at the bottom of the progress screen that says set goal.
-        }
-        else {
-            presenter.prepareSuccess(new SetLearningGoalOutputData(dailyTarget));
-            //write out what the learning goal is at the bottom of the progress screen
+        presenter.prepareSuccess(new SetLearningGoalOutputData(dailyTarget));
+        //write out what the learning goal is at the bottom of the progress screen
         }
 
 
