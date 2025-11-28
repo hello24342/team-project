@@ -19,7 +19,6 @@ public class DeckMenuView extends JPanel {
     private final CreateDeckController createCtl;
     private final ListDecksController listCtl;
 
-    //Todo: add opendeckcontroller
     private final ViewManager viewManager;
     private final OpenDeckController openCtl;
 
@@ -41,7 +40,7 @@ public class DeckMenuView extends JPanel {
 
         setLayout(new BorderLayout());
 
-        JLabel title = new JLabel("My Decks");
+        JLabel title = new JLabel("Decks");
         title.setHorizontalAlignment(SwingConstants.CENTER);
         add(title, BorderLayout.NORTH);
 
@@ -86,12 +85,12 @@ public class DeckMenuView extends JPanel {
 
         homeBtn.addActionListener(e -> {
             // TODO: make sure 'loggedin' is the correct view name of homepage view
-            viewManager.show("loggedin");
+            viewManager.show("Loggedin");
         });
 
 
         // automatic load decks when entering the view
-        listCtl.onEnterDeckMenu();
+        this.listCtl.onEnterDeckMenu();
     }
 
     // Handle the "New Deck" button click
@@ -126,9 +125,8 @@ public class DeckMenuView extends JPanel {
     }
 
     private void onOpenDeck(int deckId) {
-        //TODO：（leave it blank for now）switch to DeckDetailView（UC12-OpenDeck）
-        JOptionPane.showMessageDialog(this,
-                "Open deck: " + deckId);
+        openCtl.open(deckId);
+        viewManager.show("DeckDetail");
     }
 
     // Listen to ViewModel property changes
