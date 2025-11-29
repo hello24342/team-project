@@ -3,16 +3,19 @@ import javax.swing.*;
 
 import app.factory.DeckManageUseCaseFactory;
 import app.factory.DeckManageUseCaseFactory.DeckMenuBundle;
-
+import app.factory.StudyDeckUseCaseFactory;
 
 import data_access.DeckDataAccess;
 import data_access.FlashcardDataAccessObject;
 
-
+import entity.Flashcard;
+import entity.FlashcardDeck;
+import entity.Language;
 import usecase.FlashcardDataAccessInterface;
 import usecase.deck.DeckDataAccessInterface;
 
 import view.LoginView;
+import view.StudyDeckView;
 import view.ViewManager;
 import view.deck.DeckDetailView;
 import view.deck.DeckMenuView;
@@ -42,6 +45,9 @@ public class Main {
         DeckMenuBundle deckBundle =
                 DeckManageUseCaseFactory.build(deckDAO, cardDAO, currentUserId);
 
+        // study deck uc2
+        StudyDeckUseCaseFactory.StudyDeckBundle studyBundle = StudyDeckUseCaseFactory.build(deckDAO, cardDAO);
+
         // 4) construct Views
         // TODO: other views
         // LoginView
@@ -59,8 +65,13 @@ public class Main {
         DeckDetailView deckDetailView = new DeckDetailView(
                 deckBundle.detailVM,
                 deckBundle.openController,
+                studyBundle.controller,
+                currentUserId,
                 viewManager
         ); // TODO: Jane pls check and change if the DeckDetailView constructor is changed
+
+        StudyDeckView studyView = new StudyDeckView(studyBundle.vm);
+        studyView.setController(studyBundle.controller);
 
         // 5) register view to ViewManager
         // TODO: register other views
@@ -68,12 +79,13 @@ public class Main {
         // viewManager.add("Login", loginView);
         viewManager.add("DeckMenu", deckMenuView);
         viewManager.add("DeckDetail", deckDetailView);
+        viewManager.add("Study", studyView);
 
         // 6) set initial page, I think it's LoginView?
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                viewManager.show("Login");
+                viewManager.show("DeckMenu");
             }
         });
     }

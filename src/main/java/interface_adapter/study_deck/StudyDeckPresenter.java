@@ -35,6 +35,7 @@ public class StudyDeckPresenter implements FlipCardOutputBoundary, LoadDeckForSt
     public void presentSuccessView(LoadDeckForStudyOutputData outputData) {
         final StudyDeckState studyDeckState = viewModel.getState();
 
+        studyDeckState.setDeckId(outputData.getDeckId());
         studyDeckState.setDeckName(outputData.getDeckTitle());
         studyDeckState.setCardText(outputData.getSourceWord());
         studyDeckState.setCardIndex(0);
