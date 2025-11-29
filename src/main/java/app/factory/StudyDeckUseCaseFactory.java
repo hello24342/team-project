@@ -1,9 +1,9 @@
 package app.factory;
 
-import data_access.FileFlashcardDataAccessObject;
 import interface_adapter.study_deck.StudyDeckController;
 import interface_adapter.study_deck.StudyDeckPresenter;
 import interface_adapter.study_deck.StudyDeckViewModel;
+import usecase.FlashcardDataAccessInterface;
 import usecase.deck.DeckDataAccessInterface;
 import usecase.study_deck.flip_card.FlipCardInputBoundary;
 import usecase.study_deck.flip_card.FlipCardInteractor;
@@ -26,7 +26,7 @@ public class StudyDeckUseCaseFactory {
         }
     }
 
-    public static StudyDeckBundle build(DeckDataAccessInterface deckDAO, FileFlashcardDataAccessObject cardDAO) {
+    public static StudyDeckBundle build(DeckDataAccessInterface deckDAO, FlashcardDataAccessInterface cardDAO) {
         StudyDeckViewModel vm = new StudyDeckViewModel();
 
         StudyDeckPresenter presenter = new StudyDeckPresenter(vm);
