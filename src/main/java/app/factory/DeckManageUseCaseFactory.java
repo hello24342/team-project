@@ -1,8 +1,8 @@
 package app.factory;
 
-import data_access.DeckDataAccess;
 import data_access.FlashcardDataAccessObject;
 import interface_adapter.deck.*;
+import usecase.deck.DeckDataAccessInterface;
 import usecase.deck.create_deck.CreateDeckInteractor;
 import usecase.deck.list_deck.ListDecksInteractor;
 import usecase.deck.open_deck.OpenDeckInteractor;
@@ -29,7 +29,7 @@ public class DeckManageUseCaseFactory {
         }
     }
     // Builds the use case components for managing decks so that they can be used in the UI
-    public static DeckMenuBundle build(DeckDataAccess deckDAO,
+    public static DeckMenuBundle build(DeckDataAccessInterface deckDAO,
                                        FlashcardDataAccessObject cardDAO,
                                        int userId) {
         DeckMenuViewModel vm = new DeckMenuViewModel();

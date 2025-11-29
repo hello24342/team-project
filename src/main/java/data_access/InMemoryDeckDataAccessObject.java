@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DeckDataAccess implements DeckDataAccessInterface {
+public class InMemoryDeckDataAccessObject implements DeckDataAccessInterface {
     private final Map<Integer, List<FlashcardDeck>> decksByUser;
     private final Map<Integer, Integer> dontKnowDeckIdByUser;
     private int nextDeckId;
 
-    public DeckDataAccess() {
+    public InMemoryDeckDataAccessObject() {
         this.decksByUser = new HashMap<>();
         this.dontKnowDeckIdByUser = new HashMap<>();
         this.nextDeckId = 1;
