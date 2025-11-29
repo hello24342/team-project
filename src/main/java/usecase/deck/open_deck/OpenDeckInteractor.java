@@ -1,19 +1,20 @@
 package usecase.deck.open_deck;
 
-import data_access.DeckDataAccess;
 import data_access.FlashcardDataAccessObject;
 import entity.FlashcardDeck;
 import entity.Flashcard;
+import usecase.deck.DeckDataAccessInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenDeckInteractor implements OpenDeckInputBoundary {
 
-    private final DeckDataAccess deckDAO;
+    private final DeckDataAccessInterface deckDAO;
     private final FlashcardDataAccessObject cardDAO;
     private final OpenDeckOutputBoundary presenter;
 
-    public OpenDeckInteractor(DeckDataAccess deckDAO,
+    public OpenDeckInteractor(DeckDataAccessInterface deckDAO,
                               FlashcardDataAccessObject cardDAO,
                               OpenDeckOutputBoundary presenter) {
         this.deckDAO = deckDAO;

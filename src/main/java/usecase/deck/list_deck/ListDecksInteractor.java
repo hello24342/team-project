@@ -1,16 +1,16 @@
 package usecase.deck.list_deck;
 
-import data_access.DeckDataAccess;
 import entity.FlashcardDeck;
+import usecase.deck.DeckDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListDecksInteractor implements  ListDecksInputBoundary {
-    private final DeckDataAccess deckDAO;
+    private final DeckDataAccessInterface deckDAO;
     private final ListDecksOutputBoundary presenter;
 
-    public ListDecksInteractor(DeckDataAccess deckDAO,
+    public ListDecksInteractor(DeckDataAccessInterface deckDAO,
                                ListDecksOutputBoundary presenter) {
         this.deckDAO = deckDAO;
         this.presenter = presenter;
@@ -24,7 +24,6 @@ public class ListDecksInteractor implements  ListDecksInputBoundary {
         int dkId = deckDAO.findOrCreateDontKnowDeckId(userId);
 
         List<FlashcardDeck> decks = deckDAO.findByUser(userId);
-
         // Sort: "Don't know deck" first, others alphabetically
         decks.sort((a, b) -> {
             int aKey = (a.getId() == dkId) ? 0 : 1;
@@ -32,13 +31,11 @@ public class ListDecksInteractor implements  ListDecksInputBoundary {
             if (aKey != bKey) return Integer.compare(aKey, bKey);
             return a.getTitle().compareToIgnoreCase(b.getTitle());
         });
-
-        // Convert entities → DTOs
+        // Convert entities to DTOs
         List<ListDecksOutputData.DeckSummary> summaries = new ArrayList<>();
         for (FlashcardDeck d : decks) {
             summaries.add(new ListDecksOutputData.DeckSummary(d.getId(), d.getTitle()));
         }
-
         // Send to presenter
         presenter.present(new ListDecksOutputData(summaries));
     }
