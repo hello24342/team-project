@@ -1,4 +1,5 @@
 package view.deck;
+import interface_adapter.deck.CreateDeckController;
 import interface_adapter.deck.DeckDetailViewModel;
 import interface_adapter.deck.OpenDeckController;
 import interface_adapter.study_deck.StudyDeckController;
@@ -15,6 +16,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     private final ViewManager viewManager;
     private final OpenDeckController openCtl;
     private final StudyDeckController studyCtl;
+    private final CreateDeckController createCtl;
     private final int currentUserId;
 
     private final JLabel titleLabel;
@@ -24,11 +26,13 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     public DeckDetailView(DeckDetailViewModel vm,
                           OpenDeckController openCtl,
                           StudyDeckController studyCtl,
+                          CreateDeckController createCtl,
                           int currentUserId,
                           ViewManager viewManager) {
         this.vm = vm;
         this.openCtl = openCtl;
         this.studyCtl = studyCtl;
+        this.createCtl = createCtl;
         this.currentUserId = currentUserId;
         this.viewManager = viewManager;
 
@@ -64,10 +68,12 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
         vm.addPropertyChangeListener(this);
 
         backBtn.addActionListener(e -> viewManager.show("DeckMenu"));
+
         addBtn.addActionListener(e -> {
-            // TODO 1: switch to UC1 Create Flashcard page (to be implemented later)
-            JOptionPane.showMessageDialog(this, "TODO: go to UC1 Create Flashcard");
+            createCtl.onCreate(vm.getDeckTitle());
+            viewManager.show("CreateFlashcard"); // TODO: check if createFlashcard name is right??
         });
+
         playBtn.addActionListener(e -> {
             studyCtl.loadDeckForStudy(currentUserId, vm.getDeckId());
             viewManager.show("Study");

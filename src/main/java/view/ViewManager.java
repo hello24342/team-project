@@ -1,5 +1,8 @@
 package view;
+import interface_adapter.ViewManagerModel;
+
 import javax.swing.*;
+import javax.swing.text.View;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,10 +11,12 @@ public class ViewManager {
     // A mapping from view names to their corresponding JPanel instances
     private final Map<String, JPanel> views;
     private String current;
+    private final ViewManagerModel viewManagerModel;
 
     public ViewManager(JFrame frame) {
         this.frame = frame;
         this.views = new HashMap<>();
+        this.viewManagerModel = new ViewManagerModel();
         // Set default JFrame properties
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 600);
@@ -41,6 +46,10 @@ public class ViewManager {
 
     public String current() {
         return current;
+    }
+
+    public ViewManagerModel getViewManagerModel() {
+        return this.viewManagerModel;
     }
 }
 
