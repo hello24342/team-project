@@ -1,8 +1,9 @@
 package usecase.deck.open_deck;
 
-import data_access.FlashcardDataAccessObject;
+import data_access.FileFlashcardDataAccessObject;
 import entity.FlashcardDeck;
 import entity.Flashcard;
+import usecase.FlashcardDataAccessInterface;
 import usecase.deck.DeckDataAccessInterface;
 
 import java.util.ArrayList;
@@ -11,11 +12,11 @@ import java.util.List;
 public class OpenDeckInteractor implements OpenDeckInputBoundary {
 
     private final DeckDataAccessInterface deckDAO;
-    private final FlashcardDataAccessObject cardDAO;
+    private final FlashcardDataAccessInterface cardDAO;
     private final OpenDeckOutputBoundary presenter;
 
     public OpenDeckInteractor(DeckDataAccessInterface deckDAO,
-                              FlashcardDataAccessObject cardDAO,
+                              FlashcardDataAccessInterface cardDAO,
                               OpenDeckOutputBoundary presenter) {
         this.deckDAO = deckDAO;
         this.cardDAO = cardDAO;

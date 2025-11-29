@@ -7,7 +7,7 @@ import app.factory.DeckManageUseCaseFactory.DeckMenuBundle;
 import app.factory.StudyDeckUseCaseFactory;
 
 import data_access.FileDeckDataAccessObject;
-import data_access.FlashcardDataAccessObject;
+import data_access.FileFlashcardDataAccessObject;
 
 import usecase.deck.DeckDataAccessInterface;
 import view.ViewManager;
@@ -33,7 +33,7 @@ public class AppBuilder {
         DeckDataAccessInterface deckDAO =
                 new FileDeckDataAccessObject("decks.csv");
 
-        FlashcardDataAccessObject cardDAO = new FlashcardDataAccessObject();
+        FileFlashcardDataAccessObject cardDAO = new FileFlashcardDataAccessObject("flashcards.csv");
 
         // assume currently only one user, id = 1
         int currentUserId = 1;

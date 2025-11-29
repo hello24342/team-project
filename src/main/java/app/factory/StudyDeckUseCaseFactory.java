@@ -1,6 +1,6 @@
 package app.factory;
 
-import data_access.FlashcardDataAccessObject;
+import data_access.FileFlashcardDataAccessObject;
 import interface_adapter.study_deck.StudyDeckController;
 import interface_adapter.study_deck.StudyDeckPresenter;
 import interface_adapter.study_deck.StudyDeckViewModel;
@@ -26,7 +26,7 @@ public class StudyDeckUseCaseFactory {
         }
     }
 
-    public static StudyDeckBundle build(DeckDataAccessInterface deckDAO, FlashcardDataAccessObject cardDAO) {
+    public static StudyDeckBundle build(DeckDataAccessInterface deckDAO, FileFlashcardDataAccessObject cardDAO) {
         StudyDeckViewModel vm = new StudyDeckViewModel();
 
         StudyDeckPresenter presenter = new StudyDeckPresenter(vm);
