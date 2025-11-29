@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FlashcardDataAccessObject implements FlashcardDataAccessInterface {
+public class InMemoryFlashcardDataAccessObject implements FlashcardDataAccessInterface {
     // temporary DAO for testing will be replaced later
     private final Map<Integer, Flashcard> flashcards = new HashMap<>();
     private int nextId = 1;

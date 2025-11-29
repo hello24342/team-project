@@ -1,6 +1,6 @@
 package usecase.study_deck;
 
-import data_access.FlashcardDataAccessObject;
+import data_access.InMemoryFlashcardDataAccessObject;
 import entity.Flashcard;
 import entity.Language;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class FlipCardInteractorTest {
     @Test
     void TestStartsWithSource_FlipToBack() {
         FlipCardInputData flipCardInputData = new FlipCardInputData(1, 0, true, true);
-        FlashcardDataAccessInterface flashcardDataAccessInterface = new FlashcardDataAccessObject();
+        FlashcardDataAccessInterface flashcardDataAccessInterface = new InMemoryFlashcardDataAccessObject();
         Flashcard card = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH,
                 Language.FRENCH);
         card.addDeck(1);
@@ -38,7 +38,7 @@ class FlipCardInteractorTest {
     @Test
     void TestDoesNotStartWithSource_FlipToFront() {
         FlipCardInputData flipCardInputData = new FlipCardInputData(1, 0, false, false);
-        FlashcardDataAccessInterface flashcardDataAccessInterface = new FlashcardDataAccessObject();
+        FlashcardDataAccessInterface flashcardDataAccessInterface = new InMemoryFlashcardDataAccessObject();
         Flashcard card = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH,
                 Language.FRENCH);
         card.addDeck(1);

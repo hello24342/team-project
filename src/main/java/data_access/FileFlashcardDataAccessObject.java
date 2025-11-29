@@ -22,6 +22,10 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         try {
             if (!csvFile.exists()) {
                 csvFile.createNewFile();
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(csvFile))) {
+                    writer.write(HEADER);
+                    writer.newLine();
+                }
             }
             loadFromFile();
         }
@@ -34,7 +38,7 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
             String header = reader.readLine();
             if (!HEADER.equals(header)) {
-                throw new RuntimeException(String.format("header should be%n: %s%n but was:%n%s", HEADER, header));
+                throw new RuntimeException("Header should be: " + HEADER + "\nBut was: " + header);
             }
 
             String row;

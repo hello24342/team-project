@@ -1,7 +1,7 @@
 package usecase.study_deck;
 
 import data_access.InMemoryDeckDataAccessObject;
-import data_access.FlashcardDataAccessObject;
+import data_access.InMemoryFlashcardDataAccessObject;
 import entity.Flashcard;
 import entity.FlashcardDeck;
 import entity.Language;
@@ -20,7 +20,7 @@ class LoadDeckForStudyInteractorTest {
     @Test
     void testNullDeckFailure() {
         LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(1, 1);
-        FlashcardDataAccessInterface flashcardDataAccessInterface = new FlashcardDataAccessObject();
+        FlashcardDataAccessInterface flashcardDataAccessInterface = new InMemoryFlashcardDataAccessObject();
         DeckDataAccessInterface deckDataAccessInterface = new InMemoryDeckDataAccessObject();
 
         LoadDeckForStudyOutputBoundary presenter = new LoadDeckForStudyOutputBoundary() {
@@ -43,7 +43,7 @@ class LoadDeckForStudyInteractorTest {
     @Test
     void testLoadDeckSuccess() {
         LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(1, 1);
-        FlashcardDataAccessInterface flashcardDataAccessInterface = new FlashcardDataAccessObject();
+        FlashcardDataAccessInterface flashcardDataAccessInterface = new InMemoryFlashcardDataAccessObject();
         DeckDataAccessInterface deckDataAccessInterface = new InMemoryDeckDataAccessObject();
 
         FlashcardDeck deck = new FlashcardDeck(1, "Conversational French Words", 1);
