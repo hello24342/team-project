@@ -22,15 +22,15 @@ public class PreviousCardInteractor implements PreviousCardInputBoundary {
 
         List<Flashcard> cards = flashcardDAO.findByDeck(deckId);
 
-        int prevIndex = inputData.getCardIndex() - 1;
+        int prevIndex = cardIndex - 1;
 
-        if (prevIndex < 0) {
+        if (prevIndex >= 0) {
             Flashcard card = cards.get(prevIndex);
             presenter.presentSuccessView(new PreviousCardOutputData(deckId, prevIndex, card.getSourceWord(),
                     card.getTargetWord()));
         }
         else {
-            presenter.presentFailureView("No more cards in deck.");
+            presenter.presentFailureView("Reached first card in deck.");
         }
     }
 }

@@ -1,6 +1,7 @@
 package view.deck;
 import interface_adapter.deck.DeckDetailViewModel;
 import interface_adapter.deck.OpenDeckController;
+import interface_adapter.study_deck.StudyDeckController;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -13,6 +14,8 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     private final DeckDetailViewModel vm;
     private final ViewManager viewManager;
     private final OpenDeckController openCtl;
+    private final StudyDeckController studyCtl;
+    private final int currentUserId;
 
     private final JLabel titleLabel;
     private final JPanel listPanel;
@@ -20,9 +23,13 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
 
     public DeckDetailView(DeckDetailViewModel vm,
                           OpenDeckController openCtl,
+                          StudyDeckController studyCtl,
+                          int currentUserId,
                           ViewManager viewManager) {
         this.vm = vm;
         this.openCtl = openCtl;
+        this.studyCtl = studyCtl;
+        this.currentUserId = currentUserId;
         this.viewManager = viewManager;
 
         setLayout(new BorderLayout());
@@ -62,8 +69,8 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
             JOptionPane.showMessageDialog(this, "TODO: go to UC1 Create Flashcard");
         });
         playBtn.addActionListener(e -> {
-            // TODO 2: switch to UC2 Study Deck page (to be implemented later)
-            JOptionPane.showMessageDialog(this, "TODO: go to UC2 Study Deck");
+            studyCtl.loadDeckForStudy(currentUserId, vm.getDeckId());
+            viewManager.show("Study");
         });
     }
 

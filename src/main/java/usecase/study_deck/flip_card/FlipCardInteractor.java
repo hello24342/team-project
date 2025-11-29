@@ -14,7 +14,9 @@ public class FlipCardInteractor implements FlipCardInputBoundary {
 
     @Override
     public void execute(FlipCardInputData inputData) {
-        Flashcard card =  flashcardDAO.findByDeck(inputData.getDeckId()).get(inputData.getCardIndex());
+        int deckId = inputData.getDeckId();
+        int cardIndex = inputData.getCardIndex();
+        Flashcard card = flashcardDAO.findByDeck(deckId).get(cardIndex);
         String front;
         String back;
 
