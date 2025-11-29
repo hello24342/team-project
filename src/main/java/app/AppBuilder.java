@@ -101,6 +101,7 @@ public class AppBuilder {
                 deckBundle.openController,
                 studyBundle.controller,
                 deckBundle.createController,
+                deckBundle.editController,
                 currentUserId,
                 viewManager
         );
@@ -118,6 +119,7 @@ public class AppBuilder {
         viewManager.add("LoggedIn", loggedInView);
         viewManager.add("DeckMenu", deckMenuView);
         viewManager.add("DeckDetail", deckDetailView);
+        viewManager.add("EditFlashcard", editFlashcardView);
         viewManager.add("Study", studyView);
 
         return viewManager;
