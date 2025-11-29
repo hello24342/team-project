@@ -1,22 +1,22 @@
 package usecase.logout;
 
+import usecase.login.LoginUserDataAccessInterface;
+
 public class LogoutInteractor implements LogoutInputBoundary {
+    private final LoginUserDataAccessInterface userDataAccess;
+    private final LogoutOutputBoundary logoutPresenter;
 
-    private LogoutUserDataAccessInterface userDataAccessObject;
-    private LogoutOutputBoundary logoutPresenter;
-
-    public LogoutInteractor(LogoutUserDataAccessInterface userDataAccessObject,
+    public LogoutInteractor(LoginUserDataAccessInterface userDataAccess,
                             LogoutOutputBoundary logoutPresenter) {
-        this.userDataAccessObject = userDataAccessObject;
+        this.userDataAccess = userDataAccess;
         this.logoutPresenter = logoutPresenter;
     }
 
     @Override
     public void execute() {
-        String username = userDataAccessObject.getCurrentUsername();
-        userDataAccessObject.setCurrentUsername(null);
+        String username = userDataAccess.getCurrentUsername();
+        userDataAccess.setCurrentUsername(null);
         LogoutOutputData logoutOutputData = new LogoutOutputData(username);
         logoutPresenter.logoutSuccessView(logoutOutputData);
     }
 }
-
