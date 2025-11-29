@@ -19,13 +19,13 @@ public class LoadDeckForStudyInteractor implements LoadDeckForStudyInputBoundary
 
     @Override
     public void execute(LoadDeckForStudyInputData inputData) {
-        int userId = inputData.getUserId();
         int deckId = inputData.getDeckId();
 
         FlashcardDeck deck = deckDAO.findById(deckId);
 
         if (deck == null) {
             presenter.presentFailureView("Deck not found.");
+            return;
         }
 
         Flashcard firstCard = flashcardDAO.findByDeck(deckId).get(0);

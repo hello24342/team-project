@@ -21,7 +21,7 @@ public class NextCardInteractor implements NextCardInputBoundary {
 
         List<Flashcard> cards = flashcardDAO.findByDeck(deckId);
 
-        int nextIndex = inputData.getCardIndex() + 1;
+        int nextIndex = cardIndex + 1;
 
         if (nextIndex < cards.size()) {
             Flashcard card = cards.get(nextIndex);
