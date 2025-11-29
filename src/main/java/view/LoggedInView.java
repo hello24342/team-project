@@ -137,6 +137,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
             }
         });
 
+        //TODO: Implement activity button when progress tracker controller is available
         /*
         activityButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
