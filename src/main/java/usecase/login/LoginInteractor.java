@@ -44,10 +44,11 @@ public class LoginInteractor implements LoginInputBoundary {
     public List<String> getUserDeckNames(User user) {
         List<String> userDeckNames = new ArrayList<>();
 
-        if (user.getDecks() != null) {
-            for (FlashcardDeck deck : user.getDecks()) {
-                userDeckNames.add(deck.getName());
-            }
-        }
+//        if (user.getDecks() != null) {
+//            for (FlashcardDeck deck : user.getDecks()) {
+//                userDeckNames.add(deck.getTitle());
+//            }
+//        }
+    return null; // added temporarily so code could run
     }
 }

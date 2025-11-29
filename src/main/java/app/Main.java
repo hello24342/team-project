@@ -45,7 +45,7 @@ public class Main {
         // 4) construct Views
         // TODO: other views
         // LoginView
-        LoginView loginView = new LoginView(viewManager);// TODO: implement appropriate constructor here just a placeholder
+        // LoginView loginView = new LoginView(viewManager);// TODO: implement appropriate constructor here just a placeholder
         // DeckMenuView
         DeckMenuView deckMenuView = new DeckMenuView(
                 deckBundle.vm,
@@ -65,7 +65,7 @@ public class Main {
         // 5) register view to ViewManager
         // TODO: register other views
         // notice that the name should be the same as the one used in viewManager.show(name)
-        viewManager.add("Login", loginView);
+        // viewManager.add("Login", loginView);
         viewManager.add("DeckMenu", deckMenuView);
         viewManager.add("DeckDetail", deckDetailView);
 

@@ -34,6 +34,15 @@ public class FlashcardDataAccessObject implements FlashcardDataAccessInterface {
     }
 
     @Override
+    public void update(int cardId) {
+    }
+
+    @Override
+    public void delete(int cardId) {
+
+    }
+
+    @Override
     public Flashcard findById(int cardId) {
         return null;
     }

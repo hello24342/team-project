@@ -161,7 +161,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
             JButton deckButton = new JButton(firstDeckName);
             deckButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    openDeckController.execute(firstDeckName);
+                    // openDeckController.execute(firstDeckName);
                 }
             });
             deckPanel.add(deckButton);
