@@ -20,3 +20,5 @@ public class CreateFlashcardInputData {
     public Language getTargetLang() { return targetLang; }
 
 }
+
+//DONE

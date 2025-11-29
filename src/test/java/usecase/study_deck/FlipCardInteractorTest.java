@@ -19,7 +19,7 @@ class FlipCardInteractorTest {
         FlipCardInputData flipCardInputData = new FlipCardInputData(1, 0, true, true);
         FlashcardDataAccessInterface flashcardDataAccessInterface = new FlashcardDataAccessObject();
         Flashcard card = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH,
-                Language.FRENCH_FRANCE);
+                Language.FRENCH);
         card.addDeck(1);
         flashcardDataAccessInterface.save(card);
 
@@ -40,7 +40,7 @@ class FlipCardInteractorTest {
         FlipCardInputData flipCardInputData = new FlipCardInputData(1, 0, false, false);
         FlashcardDataAccessInterface flashcardDataAccessInterface = new FlashcardDataAccessObject();
         Flashcard card = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH,
-                Language.FRENCH_FRANCE);
+                Language.FRENCH);
         card.addDeck(1);
         flashcardDataAccessInterface.save(card);
 

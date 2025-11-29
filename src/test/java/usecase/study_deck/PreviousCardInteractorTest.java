@@ -18,7 +18,7 @@ class PreviousCardInteractorTest {
         PreviousCardInputData nextCardInputData = new PreviousCardInputData(1, 0);
         FlashcardDataAccessInterface flashcardDAO = new FlashcardDataAccessObject();
 
-        Flashcard card = new Flashcard(9, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH_FRANCE);
+        Flashcard card = new Flashcard(9, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH);
         card.addDeck(1);
         flashcardDAO.save(card);
 
@@ -42,10 +42,10 @@ class PreviousCardInteractorTest {
         PreviousCardInputData nextCardInputData = new PreviousCardInputData(10, 1);
         FlashcardDataAccessInterface flashcardDAO = new FlashcardDataAccessObject();
 
-        Flashcard firstCard = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH_FRANCE);
+        Flashcard firstCard = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH);
         firstCard.addDeck(10);
         flashcardDAO.save(firstCard);
-        Flashcard secondCard = new Flashcard(2, "Thank you", "Merci", Language.ENGLISH, Language.FRENCH_FRANCE);
+        Flashcard secondCard = new Flashcard(2, "Thank you", "Merci", Language.ENGLISH, Language.FRENCH);
         secondCard.addDeck(10);
         flashcardDAO.save(secondCard);
 

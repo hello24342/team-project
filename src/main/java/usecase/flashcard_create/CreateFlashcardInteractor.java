@@ -7,7 +7,7 @@ import entity.Language;
 public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
 
     private final TranslatorGateway translatorGateway;
-    private final FlashcardDataAccessObject flashcardDataAccess;
+    private final FlashcardDataAccessObject flashcardDataAccessObject;
     // Check to make sure this ^ does what we need it to do
     private final CreateFlashcardOutputBoundary presenter;
 
@@ -17,7 +17,7 @@ public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
     // this too ----------------------------^
     {
         this.translatorGateway = translatorGateway;
-        this.flashcardDataAccess = flashcardDataAccess;
+        this.flashcardDataAccessObject = flashcardDataAccess;
         this.presenter = presenter;
     }
 
@@ -32,7 +32,7 @@ public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
         String targetWord = translatorGateway.translate(sourceWord, sourceLang, targetLang);
 
         // Generate ID using your data access layer
-        int id = flashcardDataAccess.generateId();
+        int id = flashcardDataAccessObject.nextFlashcardId();
 
         Flashcard flashcard = new Flashcard(
                 id,
@@ -42,9 +42,9 @@ public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
                 targetLang
         );
 
-        flashcardDataAccess.save(flashcard);
+        flashcardDataAccessObject.save(flashcard);
 
-        CreateFlashcardInputData response = new CreateFlashcardInputData(
+        CreateFlashcardOutputData response = new CreateFlashcardOutputData(
                 id,
                 sourceWord,
                 targetWord,

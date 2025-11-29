@@ -5,7 +5,6 @@ import usecase.flashcard_create.TranslationException;
 import usecase.flashcard_create.TranslatorGateway;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URLEncoder;
@@ -47,16 +46,14 @@ public class ApiTranslatorGateway implements TranslatorGateway {
                 throw new TranslationException("HTTP error: " + response.statusCode());
             }
 
-            JSONObject json = new JSONObject(response.body());
-            JSONArray sentences = json.getJSONArray("sentences");
+            JSONArray jsonArray = new JSONArray(response.body());
 
-            if (sentences.isEmpty()) {
+            if (jsonArray.isEmpty()) {
                 // Not a real word, iso code not supported, etc.
                 throw new TranslationException("No translation returned.");
             }
 
-            JSONObject translation = sentences.getJSONObject(0);
-            return translation.getString("trans");
+            return jsonArray.getString(0);
 
         } catch (InterruptedException ie) {
             // Interruption error (added to fix SonarQube warning)
@@ -69,3 +66,5 @@ public class ApiTranslatorGateway implements TranslatorGateway {
         }
     }
 }
+
+//DONE

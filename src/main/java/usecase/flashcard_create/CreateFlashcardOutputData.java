@@ -2,12 +2,17 @@ package usecase.flashcard_create;
 
 import entity.Language;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class CreateFlashcardOutputData {
     private final int id;
     private final String sourceWord;
     private final String targetWord;
     private final Language sourceLang;
     private final Language targetLang;
+    private final List<Integer> deckIds;
 
     public CreateFlashcardOutputData(int id,
                                         String sourceWord,
@@ -19,6 +24,7 @@ public class CreateFlashcardOutputData {
         this.targetWord = targetWord;
         this.sourceLang = sourceLang;
         this.targetLang = targetLang;
+        this.deckIds = new ArrayList<>();
     }
 
     public int getId() { return id; }
@@ -26,4 +32,10 @@ public class CreateFlashcardOutputData {
     public String getTargetWord() { return targetWord; }
     public Language getSourceLang() { return sourceLang; }
     public Language getTargetLang() { return targetLang; }
+
+    public void addDeckId(int deckId) { deckIds.add(deckId); }
+
+    public List<Integer> getDeckIds() {
+        return Collections.unmodifiableList(deckIds); }
+
 }

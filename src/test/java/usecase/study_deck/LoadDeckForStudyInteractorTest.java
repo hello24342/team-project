@@ -49,7 +49,7 @@ class LoadDeckForStudyInteractorTest {
         FlashcardDeck deck = new FlashcardDeck(1, "Conversational French Words", 1);
         deckDataAccessInterface.save(deck);
 
-        Flashcard card = new Flashcard(9, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH_FRANCE);
+        Flashcard card = new Flashcard(9, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH);
         card.addDeck(deck.getId());
         flashcardDataAccessInterface.save(card);
 
