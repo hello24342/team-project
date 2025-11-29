@@ -31,12 +31,12 @@ public class AppBuilder {
 //        Flashcard card1 = new Flashcard(99, "hello", "bonjour", Language.ENGLISH, Language.FRENCH);
 //        Flashcard card2 = new Flashcard(100, "cat", "chat", Language.ENGLISH, Language.FRENCH);
 //        Flashcard card3 = new Flashcard(101, "dog", "chien", Language.ENGLISH, Language.FRENCH);
-//        cardDAO.save(card1);
-//        cardDAO.save(card2);
-//        cardDAO.save(card3);
 //        card1.addDeck(demoDeckId);
 //        card2.addDeck(demoDeckId);
 //        card3.addDeck(demoDeckId);
+//        cardDAO.save(card1);
+//        cardDAO.save(card2);
+//        cardDAO.save(card3);
 //    }
 
 
