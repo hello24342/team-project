@@ -6,9 +6,10 @@ import app.factory.DeckManageUseCaseFactory;
 import app.factory.DeckManageUseCaseFactory.DeckMenuBundle;
 import app.factory.StudyDeckUseCaseFactory;
 
-import data_access.DeckDataAccess;
+import data_access.FileDeckDataAccessObject;
 import data_access.FlashcardDataAccessObject;
 
+import usecase.deck.DeckDataAccessInterface;
 import view.ViewManager;
 import view.StudyDeckView;
 import view.deck.DeckDetailView;
@@ -27,8 +28,11 @@ public class AppBuilder {
         ViewManager viewManager = new ViewManager(frame);
 
         // 2) create Data Access instances
-        // TODO: other DAOs & can be replaced by DB implementations later
-        DeckDataAccess deckDAO = new DeckDataAccess();
+        // TODO: other DAOs & can be replaced by DB implementations later if needed
+        // Deck DAO (uses CSV file for storage)
+        DeckDataAccessInterface deckDAO =
+                new FileDeckDataAccessObject("decks.csv");
+
         FlashcardDataAccessObject cardDAO = new FlashcardDataAccessObject();
 
         // assume currently only one user, id = 1

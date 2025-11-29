@@ -1,6 +1,6 @@
 package usecase;
 
-import data_access.DeckDataAccess;
+import data_access.InMemoryDeckDataAccessObject;
 import entity.FlashcardDeck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ public class ListDeckInteractorTest {
     // ===== Test 1: the user does not have any deck =====
     @Test
     void testExecute_createsDontKnowDeckWhenNoDecks() {
-        DeckDataAccess dao = new DeckDataAccess();
+        InMemoryDeckDataAccessObject dao = new InMemoryDeckDataAccessObject();
         ListDecksPresenterMock presenter = new ListDecksPresenterMock();
         ListDecksInteractor interactor =
                 new ListDecksInteractor(dao, presenter);
@@ -55,7 +55,7 @@ public class ListDeckInteractorTest {
     // ===== Test 2: the user already have serveral decks =====
     @Test
     void testExecute_sortsDontKnowFirstAndOthersAlphabetically() {
-        DeckDataAccess dao = new DeckDataAccess();
+        InMemoryDeckDataAccessObject dao = new InMemoryDeckDataAccessObject();
         int userId = 456;
 
         // Pre-create 2 decks for the user

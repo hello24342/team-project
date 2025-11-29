@@ -1,6 +1,6 @@
 package usecase;
 
-import data_access.DeckDataAccess;
+import data_access.InMemoryDeckDataAccessObject;
 import data_access.FlashcardDataAccessObject;
 import entity.Flashcard;
 import entity.FlashcardDeck;
@@ -37,12 +37,12 @@ class OpenDeckInteractorTest {
 
     /**
      * branch 1：找不到 deck 的情况。
-     * DeckDataAccess 里没有任何 deck，findById 返回 null，
+     * InMemoryDeckDataAccessObject 里没有任何 deck，findById 返回 null，
      * 应该调用 presentNotFound 然后直接 return。
      */
     @Test
     void open_whenDeckNotFound_callsPresentNotFound() {
-        DeckDataAccess deckDAO = new DeckDataAccess();
+        InMemoryDeckDataAccessObject deckDAO = new InMemoryDeckDataAccessObject();
         FlashcardDataAccessObject cardDAO = new FlashcardDataAccessObject();
         PresenterStub presenter = new PresenterStub();
 
@@ -61,13 +61,13 @@ class OpenDeckInteractorTest {
 
     /**
      * 分支 2：deck 存在：
-     *  - DeckDataAccess 里 save 了一个 deck
+     *  - InMemoryDeckDataAccessObject 里 save 了一个 deck
      *  - FlashcardDataAccessObject 里 save 了两张属于该 deck 的卡片
      *  - interactor 应该查到卡片，构造 CardSummary，并调用 present。
      */
     @Test
     void open_whenDeckFound_buildsSummariesAndCallsPresent() {
-        DeckDataAccess deckDAO = new DeckDataAccess();
+        InMemoryDeckDataAccessObject deckDAO = new InMemoryDeckDataAccessObject();
         FlashcardDataAccessObject cardDAO = new FlashcardDataAccessObject();
         PresenterStub presenter = new PresenterStub();
 
@@ -77,7 +77,7 @@ class OpenDeckInteractorTest {
         int userId = 7;
         int deckId = 1;
 
-        // 准备一个 deck 并保存到 DeckDataAccess
+        // 准备一个 deck 并保存到 InMemoryDeckDataAccessObject
         FlashcardDeck deck =
                 new FlashcardDeck(deckId, "My Deck", userId);
         deckDAO.save(deck);

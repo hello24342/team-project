@@ -1,5 +1,5 @@
 package usecase;
-import data_access.DeckDataAccess;
+import data_access.InMemoryDeckDataAccessObject;
 import entity.FlashcardDeck;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ public class CreateDeckInteractorTest {
     // ----- Test 1: title is null -----
     @Test
     void testCreateDeck_nullTitle_fails() {
-        DeckDataAccess dao = new DeckDataAccess();
+        InMemoryDeckDataAccessObject dao = new InMemoryDeckDataAccessObject();
         CreateDeckPresenterMock presenter = new CreateDeckPresenterMock();
         CreateDeckInteractor interactor = new CreateDeckInteractor(dao, presenter);
 
@@ -52,7 +52,7 @@ public class CreateDeckInteractorTest {
     // ----- Test 2: title only blank space -----
     @Test
     void testCreateDeck_blankTitle_fails() {
-        DeckDataAccess dao = new DeckDataAccess();
+        InMemoryDeckDataAccessObject dao = new InMemoryDeckDataAccessObject();
         CreateDeckPresenterMock presenter = new CreateDeckPresenterMock();
         CreateDeckInteractor interactor = new CreateDeckInteractor(dao, presenter);
 
@@ -68,7 +68,7 @@ public class CreateDeckInteractorTest {
     // ----- Test 3: title already existed -----
     @Test
     void testCreateDeck_duplicateTitle_fails() {
-        DeckDataAccess dao = new DeckDataAccess();
+        InMemoryDeckDataAccessObject dao = new InMemoryDeckDataAccessObject();
         int userId = 123;
         String title = "My Deck";
 
@@ -90,7 +90,7 @@ public class CreateDeckInteractorTest {
     // ----- Test 4: Deck successfully created + sort logic -----
     @Test
     void testCreateDeck_success_createsAndSortsDecks() {
-        DeckDataAccess dao = new DeckDataAccess();
+        InMemoryDeckDataAccessObject dao = new InMemoryDeckDataAccessObject();
         int userId = 123;
 
         // add a deck first, let it be alphabetically sorted after "Don't know deck"
