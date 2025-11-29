@@ -1,52 +1,102 @@
 package view.deck;
-
 import interface_adapter.deck.DeckDetailViewModel;
+import interface_adapter.deck.OpenDeckController;
+import interface_adapter.study_deck.StudyDeckController;
+import view.ViewManager;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class DeckDetailView extends JPanel {
-    private final DeckDetailViewModel viewModel;
+public class DeckDetailView extends JPanel implements PropertyChangeListener {
 
-    private final JLabel titleLabel = new JLabel();
-    private final JButton addButton = new JButton("Add Flashcard");
-    private final JButton playButton = new JButton("Study Deck");
-    private final JButton backButton = new JButton("Back to Menu");
+    private final DeckDetailViewModel vm;
+    private final ViewManager viewManager;
+    private final OpenDeckController openCtl;
+    private final StudyDeckController studyCtl;
+    private final int currentUserId;
 
-    public DeckDetailView(DeckDetailViewModel viewModel) {
-        this.viewModel = viewModel;
+    private final JLabel titleLabel;
+    private final JPanel listPanel;
+    private final JLabel errorLabel;
+
+    public DeckDetailView(DeckDetailViewModel vm,
+                          OpenDeckController openCtl,
+                          StudyDeckController studyCtl,
+                          int currentUserId,
+                          ViewManager viewManager) {
+        this.vm = vm;
+        this.openCtl = openCtl;
+        this.studyCtl = studyCtl;
+        this.currentUserId = currentUserId;
+        this.viewManager = viewManager;
+
         setLayout(new BorderLayout());
 
-        JPanel top = new JPanel();
-        top.add(titleLabel);
-        add(top, BorderLayout.NORTH);
+        // Header
+        JPanel header = new JPanel(new BorderLayout());
+        titleLabel = new JLabel("Deck");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 18f));
+        header.add(titleLabel, BorderLayout.CENTER);
+        add(header, BorderLayout.NORTH);
 
-        JPanel buttons = new JPanel();
-        buttons.add(addButton);
-        buttons.add(playButton);
-        buttons.add(backButton);
-        add(buttons, BorderLayout.SOUTH);
+        // Cards list
+        listPanel = new JPanel();
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+        add(new JScrollPane(listPanel), BorderLayout.CENTER);
 
-        // placeholder for flashcards list
-        add(new JScrollPane(new JPanel()), BorderLayout.CENTER);
+        // Footer (buttons)
+        JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton backBtn = new JButton("Deck Menu");
+        JButton addBtn = new JButton("+ New Flashcards");
+        JButton playBtn = new JButton("Play");
 
-        // TODO: add button listeners (to UC1, UC2, UC9) later
+        footer.add(backBtn);
+        footer.add(addBtn);
+        footer.add(playBtn);
+
+        errorLabel = new JLabel("");
+        footer.add(errorLabel);
+        add(footer, BorderLayout.SOUTH);
+
+        vm.addPropertyChangeListener(this);
+
+        backBtn.addActionListener(e -> viewManager.show("DeckMenu"));
+        addBtn.addActionListener(e -> {
+            // TODO 1: switch to UC1 Create Flashcard page (to be implemented later)
+            JOptionPane.showMessageDialog(this, "TODO: go to UC1 Create Flashcard");
+        });
+        playBtn.addActionListener(e -> {
+            studyCtl.loadDeckForStudy(currentUserId, vm.getDeckId());
+            viewManager.show("Study");
+        });
     }
 
-    public void setTitle(String title) {
-        titleLabel.setText(title);
+    // TODO 3: Clicking a flashcard in the list → open UC9 (edit/delete that flashcard)
+
+    private void refresh() {
+        titleLabel.setText(vm.getDeckTitle());
+        listPanel.removeAll();
+        for (DeckDetailViewModel.CardVM c : vm.getCards()) {
+            JPanel row = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            row.add(new JLabel("#" + c.id));
+            row.add(new JLabel("  " + c.sourceWord + "  →  " + c.targetWord));
+            listPanel.add(row);
+        }
+        listPanel.revalidate();
+        listPanel.repaint();
     }
 
-    public void addAddFlashcardListener(ActionListener listener) {
-        addButton.addActionListener(listener);
-    }
-
-    public void addPlayListener(ActionListener listener) {
-        playButton.addActionListener(listener);
-    }
-
-    public void addBackListener(ActionListener listener) {
-        backButton.addActionListener(listener);
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        String name = evt.getPropertyName();
+        if (DeckDetailViewModel.DETAIL_PROPERTY.equals(name)) {
+            refresh();
+        } else if (DeckDetailViewModel.ERROR_PROPERTY.equals(name)) {
+            String m = vm.getErrorMessage();
+            errorLabel.setText(m == null ? "" : m);
+        }
     }
 }
-
