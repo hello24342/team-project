@@ -92,6 +92,12 @@ public class AppBuilder {
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
                 StudyDeckUseCaseFactory.build(deckDAO, cardDAO);
 
+        // edit flashcard UC9
+        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
+        // EditFlashcardUseCaseFactory.EditFlashcardBundle editBundle =
+        //        EditFlashcardUseCaseFactory.build(cardDAO);
+
+
         // 4) construct Views
         // TODO: other views
         // LoginView
@@ -124,7 +130,7 @@ public class AppBuilder {
                 deckBundle.openController,
                 studyBundle.controller,
                 deckBundle.createController,
-                /*deckBundle.editController,*/ null,
+                /*editBundle.controller,*/ null,
                 currentUserId,
                 viewManager
         );
@@ -132,6 +138,11 @@ public class AppBuilder {
         // StudyDeckView
         StudyDeckView studyView = new StudyDeckView(studyBundle.vm);
         studyView.setController(studyBundle.controller);
+
+        // EditFlashcardView
+        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
+        // EditFlashcardView editFlashcardView =
+        //        new EditFlashcardView(editBundle.vm, editBundle.controller);
 
         // 5) register views to ViewManager
         // notice that the name should be the same as the one
