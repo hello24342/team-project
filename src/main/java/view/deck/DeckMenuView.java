@@ -76,16 +76,10 @@ public class DeckMenuView extends JPanel {
         });
 
         //register button listener
-        newDeckBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onClickNewDeck();
-            }
-        });
+        newDeckBtn.addActionListener(e -> onClickNewDeck());
 
         homeBtn.addActionListener(e -> {
-            // TODO: make sure 'loggedin' is the correct view name of homepage view
-            viewManager.show("Loggedin");
+            viewManager.show("LoggedIn");
         });
 
 
@@ -111,12 +105,7 @@ public class DeckMenuView extends JPanel {
         for (DeckMenuViewModel.DeckTileVM t : tiles) {
             JButton b = new JButton(t.title);
             // register button listener
-            b.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    onOpenDeck(t.deckId);
-                }
-            });
+            b.addActionListener(e -> onOpenDeck(t.deckId));
 
             grid.add(b);
         }
