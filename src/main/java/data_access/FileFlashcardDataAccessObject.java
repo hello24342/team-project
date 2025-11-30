@@ -177,4 +177,18 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         }
         return result;
     }
+    @Override
+    public void markCardAsKnown(int userId, int deckId, int cardIndex) {
+        // To track that the user knows this card (no need to move)
+        // TODO: Implement method for mark known
+    }
+
+    @Override
+    public void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId) {
+        List<Flashcard> fromDeck = findByDeck(fromDeckId);
+
+        Flashcard cardToMove = fromDeck.get(cardIndex);
+        cardToMove.getDeckIds().add(toDeckId);
+    }
+
 }

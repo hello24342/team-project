@@ -16,24 +16,13 @@ public class LearningGoal {
         this.endDate = endDate;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id;}
+    public int getUserId() { return userId;}
+    public int getDailyTarget() { return dailyTarget;}
+    public LocalDate getStartDate() { return startDate;}
+    public LocalDate getEndDate() { return endDate;}
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public int getDailyTarget() {
-        return dailyTarget;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
+    public void setDailyTarget(int dailyTarget) { this.dailyTarget = dailyTarget;}
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate;}
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate;}
 }
