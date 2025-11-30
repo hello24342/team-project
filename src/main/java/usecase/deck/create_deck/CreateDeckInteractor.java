@@ -1,15 +1,16 @@
 package usecase.deck.create_deck;
 
-import data_access.DeckDataAccess;
+
 import entity.FlashcardDeck;
+import usecase.deck.DeckDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CreateDeckInteractor implements CreateDeckInputBoundary {
-    private final DeckDataAccess deckDAO;
+    private final usecase.deck.DeckDataAccessInterface deckDAO;
     private final CreateDeckOutputBoundary presenter;
-    public CreateDeckInteractor(DeckDataAccess deckDAO,
+    public CreateDeckInteractor(DeckDataAccessInterface deckDAO,
                                 CreateDeckOutputBoundary presenter) {
         this.deckDAO = deckDAO;
         this.presenter = presenter;
@@ -54,3 +55,9 @@ public class CreateDeckInteractor implements CreateDeckInputBoundary {
         presenter.prepareSuccess(new CreateDeckOutputData(list));
     }
 }
+
+
+
+
+
+
