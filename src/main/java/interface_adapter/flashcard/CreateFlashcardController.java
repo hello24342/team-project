@@ -1,8 +1,8 @@
 package interface_adapter.flashcard;
 
 import entity.Language;
-import usecase.flashcard_create.CreateFlashcardInputBoundary;
-import usecase.flashcard_create.CreateFlashcardInputData;
+import use_case.flashcard_create.CreateFlashcardInputBoundary;
+import use_case.flashcard_create.CreateFlashcardInputData;
 
 public class CreateFlashcardController {
 

@@ -1,17 +1,17 @@
 package interface_adapter.study_deck;
 
-import usecase.study_deck.flip_card.FlipCardOutputBoundary;
-import usecase.study_deck.flip_card.FlipCardOutputData;
-import usecase.study_deck.load_deck_for_study.LoadDeckForStudyOutputBoundary;
-import usecase.study_deck.load_deck_for_study.LoadDeckForStudyOutputData;
-import usecase.study_deck.mark_known.MarkKnownOutputBoundary;
-import usecase.study_deck.mark_known.MarkKnownOutputData;
-import usecase.study_deck.mark_unknown.MarkUnknownOutputData;
-import usecase.study_deck.mark_unknown.MarkUnknownOutputBoundary;
-import usecase.study_deck.next_card.NextCardOutputBoundary;
-import usecase.study_deck.next_card.NextCardOutputData;
-import usecase.study_deck.previous_card.PreviousCardOutputBoundary;
-import usecase.study_deck.previous_card.PreviousCardOutputData;
+import use_case.study_deck.flip_card.FlipCardOutputBoundary;
+import use_case.study_deck.flip_card.FlipCardOutputData;
+import use_case.study_deck.load_deck_for_study.LoadDeckForStudyOutputBoundary;
+import use_case.study_deck.load_deck_for_study.LoadDeckForStudyOutputData;
+import use_case.study_deck.mark_known.MarkKnownOutputBoundary;
+import use_case.study_deck.mark_known.MarkKnownOutputData;
+import use_case.study_deck.mark_unknown.MarkUnknownOutputData;
+import use_case.study_deck.mark_unknown.MarkUnknownOutputBoundary;
+import use_case.study_deck.next_card.NextCardOutputBoundary;
+import use_case.study_deck.next_card.NextCardOutputData;
+import use_case.study_deck.previous_card.PreviousCardOutputBoundary;
+import use_case.study_deck.previous_card.PreviousCardOutputData;
 
 public class StudyDeckPresenter implements FlipCardOutputBoundary, LoadDeckForStudyOutputBoundary,
         NextCardOutputBoundary, PreviousCardOutputBoundary, MarkKnownOutputBoundary, MarkUnknownOutputBoundary {
@@ -90,5 +90,6 @@ public class StudyDeckPresenter implements FlipCardOutputBoundary, LoadDeckForSt
 
     @Override
     public void presentFailureView(String errorMessage) {
+        viewModel.setErrorMessage(errorMessage);
     }
 }
