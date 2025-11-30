@@ -5,10 +5,10 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
-import usecase.login.LoginInteractor;
-import usecase.login.LoginInputBoundary;
-import usecase.login.LoginOutputBoundary;
-import usecase.login.LoginUserDataAccessInterface;
+import use_case.login.LoginInteractor;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginOutputBoundary;
+import use_case.login.LoginUserDataAccessInterface;
 import view.ViewManager;
 
 public class LoginUseCaseFactory {

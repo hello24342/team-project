@@ -1,11 +1,11 @@
 package app.factory;
 
 import interface_adapter.deck.*;
-import usecase.FlashcardDataAccessInterface;
-import usecase.deck.DeckDataAccessInterface;
-import usecase.deck.create_deck.CreateDeckInteractor;
-import usecase.deck.list_deck.ListDecksInteractor;
-import usecase.deck.open_deck.OpenDeckInteractor;
+import use_case.FlashcardDataAccessInterface;
+import use_case.deck.DeckDataAccessInterface;
+import use_case.deck.create_deck.CreateDeckInteractor;
+import use_case.deck.list_deck.ListDecksInteractor;
+import use_case.deck.open_deck.OpenDeckInteractor;
 
 
 public class DeckManageUseCaseFactory {

@@ -1,13 +1,11 @@
 package view;
 
 import interface_adapter.flashcard.CreateFlashcardController;
-import usecase.flashcard_create.CreateFlashcardInputData;
-import usecase.flashcard_create.CreateFlashcardOutputData;
+import use_case.flashcard_create.CreateFlashcardInputData;
+import use_case.flashcard_create.CreateFlashcardOutputData;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class CreateFlashcardView extends JFrame {
 
