@@ -8,6 +8,7 @@ public class StudyDeckState {
     private boolean isShowingFront;
     private boolean startWithSource;
     private String deckName;
+    private String errorMessage;
 
     public int getDeckId() {
         return deckId;

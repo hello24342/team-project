@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.Flashcard;
-import usecase.FlashcardDataAccessInterface;
+import use_case.FlashcardDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;

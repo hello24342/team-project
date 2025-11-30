@@ -1,7 +1,7 @@
 package interface_adapter.learning_goal;
 
 import interface_adapter.ViewModel;
-import usecase.SetLearningGoal.SetLearningGoalOutputBoundary;
+import use_case.SetLearningGoal.SetLearningGoalOutputBoundary;
 import view.SetLearningGoalView;
 
 public class LearningGoalPresenter implements SetLearningGoalOutputBoundary {

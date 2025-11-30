@@ -101,6 +101,11 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (viewModel.ERROR_PROPERTY.equals(evt.getPropertyName())) {
+            String error = viewModel.getErrorMessage();
+            JOptionPane.showMessageDialog(this, error, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         final StudyDeckState state = (StudyDeckState) evt.getNewValue();
         updateView(state);
     }
