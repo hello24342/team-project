@@ -36,12 +36,12 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
 
         changeLearningGoalButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // work on this bit
+                // switch screen to set learning goal view
             }
         });
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // work on this bit
+                // switch screen to main view
             }
         });
 
