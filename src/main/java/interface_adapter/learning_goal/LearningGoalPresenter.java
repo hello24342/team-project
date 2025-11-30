@@ -1,17 +1,25 @@
 package interface_adapter.learning_goal;
 
-import interface_adapter.ViewModel;
+import interface_adapter.ViewManagerModel;
 import usecase.SetLearningGoal.SetLearningGoalOutputBoundary;
-import view.SetLearningGoalView;
+import usecase.SetLearningGoal.SetLearningGoalOutputData;
 
 public class LearningGoalPresenter implements SetLearningGoalOutputBoundary {
-    private final SetLearningGoalView view;
-    private final ViewModel viewModel;
+    private final LearningGoalViewModel learningGoalViewModel;
+    private final ViewManagerModel viewManagerModel;
 
-    public LearningGoalPresenter(SetLearningGoalView view, ViewModel viewModel) {
-        this.view = view;
-        this.viewModel = viewModel;
+
+    public LearningGoalPresenter(LearningGoalViewModel viewModel, ViewManagerModel viewManager) {
+        this.learningGoalViewModel = viewModel;
+        this.viewManagerModel = viewManager;
     }
 
-    public void
+    @Override
+    public void prepareSuccess(SetLearningGoalOutputData outputData) {
+        // work on this
+    }
+    @Override
+    public void prepareFailure(String message) {
+        // work on this
+    }
 }

@@ -9,10 +9,9 @@ public class SetLearningGoalInteractor implements SetLearningGoalInputBoundary {
     private final LearningGoalDataAccess setLearningGoalDAO;
     private final SetLearningGoalOutputBoundary presenter;
 
-    // do i have to have this?
-    public SetLearningGoalInteractor(LearningGoalDataAccess DAO,
+    public SetLearningGoalInteractor(LearningGoalDataAccess learningGoalDataAccess,
                                      SetLearningGoalOutputBoundary presenter) {
-        this.setLearningGoalDAO = DAO;
+        this.setLearningGoalDAO = learningGoalDataAccess;
         this.presenter = presenter;
     }
 
