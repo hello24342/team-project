@@ -1,6 +1,8 @@
 package view.deck;
+import interface_adapter.deck.CreateDeckController;
 import interface_adapter.deck.DeckDetailViewModel;
 import interface_adapter.deck.OpenDeckController;
+import interface_adapter.edit_flashcard.EditFlashcardController;
 import interface_adapter.study_deck.StudyDeckController;
 import view.ViewManager;
 
@@ -15,6 +17,8 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     private final ViewManager viewManager;
     private final OpenDeckController openCtl;
     private final StudyDeckController studyCtl;
+    private final CreateDeckController createCtl;
+    private final EditFlashcardController editCtl;
     private final int currentUserId;
 
     private final JLabel titleLabel;
@@ -24,11 +28,15 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     public DeckDetailView(DeckDetailViewModel vm,
                           OpenDeckController openCtl,
                           StudyDeckController studyCtl,
+                          CreateDeckController createCtl,
+                          EditFlashcardController editCtl,
                           int currentUserId,
                           ViewManager viewManager) {
         this.vm = vm;
         this.openCtl = openCtl;
         this.studyCtl = studyCtl;
+        this.createCtl = createCtl;
+        this.editCtl = editCtl;
         this.currentUserId = currentUserId;
         this.viewManager = viewManager;
 
@@ -64,10 +72,13 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
         vm.addPropertyChangeListener(this);
 
         backBtn.addActionListener(e -> viewManager.show("DeckMenu"));
+
         addBtn.addActionListener(e -> {
-            // TODO 1: switch to UC1 Create Flashcard page (to be implemented later)
-            JOptionPane.showMessageDialog(this, "TODO: go to UC1 Create Flashcard");
+            createCtl.onCreate(vm.getDeckTitle());
+            viewManager.show("CreateFlashcard");
+            // TODO: check if createFlashcard name is right when view is made in appbuilder
         });
+
         playBtn.addActionListener(e -> {
             studyCtl.loadDeckForStudy(currentUserId, vm.getDeckId());
             viewManager.show("Study");
@@ -75,6 +86,53 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     }
 
     // TODO 3: Clicking a flashcard in the list → open UC9 (edit/delete that flashcard)
+    private JPanel createCardRow(DeckDetailViewModel.CardVM card) {
+        JPanel row = new JPanel(new BorderLayout());
+        row.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.BLACK, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        row.setBackground(Color.WHITE);
+        row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+
+        // Cards will be on the left
+        JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // Label cards with ID
+        JLabel idLabel = new JLabel("#" + card.id);
+        idLabel.setForeground(Color.BLACK);
+        idLabel.setPreferredSize(new Dimension(50, 20));
+
+        // Setting a card label with the source word and target words
+        JLabel cardLabel = new JLabel("  " + card.sourceWord + "  →  " + card.targetWord);
+        cardLabel.setFont(cardLabel.getFont().deriveFont(Font.PLAIN, 14f));
+
+        contentPanel.add(idLabel);
+        contentPanel.add(cardLabel);
+
+        // Edit button on the right of each flashcard to navigate to EditFlashcardView
+        JButton editButton = new JButton("Edit");
+        editButton.setPreferredSize(new Dimension(80, 30));
+        editButton.addActionListener(e -> {
+            // Navigate to CreateFlashcardView in edit mode for existing flashcard
+            int deckId = vm.getDeckId();
+            String deckTitle = vm.getDeckTitle();
+
+            if (deckId > 0 && deckTitle != null && !deckTitle.isEmpty()) {
+                editCtl.prepareViewForEdit(card.id, deckId, deckTitle, card.sourceWord, card.targetWord);
+                viewManager.show("EditFlashcard");
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid deck information",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        row.add(contentPanel, BorderLayout.CENTER);
+        row.add(editButton, BorderLayout.EAST);
+
+        return row;
+    }
 
     private void refresh() {
         titleLabel.setText(vm.getDeckTitle());

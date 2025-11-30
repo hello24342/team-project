@@ -1,6 +1,6 @@
 package usecase.study_deck;
 
-import data_access.FlashcardDataAccessObject;
+import data_access.InMemoryFlashcardDataAccessObject;
 import entity.Flashcard;
 import entity.Language;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ class NextCardInteractorTest {
     @Test
     void testNoMoreCardsFailure() {
         NextCardInputData nextCardInputData = new NextCardInputData(1, 0);
-        FlashcardDataAccessInterface flashcardDAO = new FlashcardDataAccessObject();
+        FlashcardDataAccessInterface flashcardDAO = new InMemoryFlashcardDataAccessObject();
 
         Flashcard card = new Flashcard(9, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH);
         card.addDeck(1);
@@ -40,7 +40,7 @@ class NextCardInteractorTest {
     @Test
     void testNextCardSuccess() {
         NextCardInputData nextCardInputData = new NextCardInputData(10, 0);
-        FlashcardDataAccessInterface flashcardDAO = new FlashcardDataAccessObject();
+        FlashcardDataAccessInterface flashcardDAO = new InMemoryFlashcardDataAccessObject();
 
         Flashcard firstCard = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH);
         firstCard.addDeck(10);

@@ -179,8 +179,9 @@ The system switches the logged in view to the login view.
 
 Use Case #6: Sign Up,
 Use Case #7: Log In,
-Use Case #11: Open Decks
-Use Case #12: Log Out
+Use Case #11: Open Decks,
+Use Case #12: Log Out, 
+Use Case #8: Marking Unknown Words
 
 ### Jennifer
 

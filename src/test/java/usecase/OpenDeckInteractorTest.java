@@ -1,7 +1,7 @@
 package usecase;
 
 import data_access.InMemoryDeckDataAccessObject;
-import data_access.FlashcardDataAccessObject;
+import data_access.InMemoryFlashcardDataAccessObject;
 import entity.Flashcard;
 import entity.FlashcardDeck;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class OpenDeckInteractorTest {
     @Test
     void open_whenDeckNotFound_callsPresentNotFound() {
         InMemoryDeckDataAccessObject deckDAO = new InMemoryDeckDataAccessObject();
-        FlashcardDataAccessObject cardDAO = new FlashcardDataAccessObject();
+        InMemoryFlashcardDataAccessObject cardDAO = new InMemoryFlashcardDataAccessObject();
         PresenterStub presenter = new PresenterStub();
 
         OpenDeckInteractor interactor =
@@ -68,7 +68,7 @@ class OpenDeckInteractorTest {
     @Test
     void open_whenDeckFound_buildsSummariesAndCallsPresent() {
         InMemoryDeckDataAccessObject deckDAO = new InMemoryDeckDataAccessObject();
-        FlashcardDataAccessObject cardDAO = new FlashcardDataAccessObject();
+        InMemoryFlashcardDataAccessObject cardDAO = new InMemoryFlashcardDataAccessObject();
         PresenterStub presenter = new PresenterStub();
 
         OpenDeckInteractor interactor =
