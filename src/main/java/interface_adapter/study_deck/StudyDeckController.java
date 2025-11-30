@@ -53,8 +53,8 @@ public class StudyDeckController {
         previousCardInputBoundary.execute(inputData);
     }
 
-    public void markKnown() {
-        MarkKnownInputData inputData = new MarkKnownInputData();
+    public void markKnown(int userId, int deckId, int cardIndex) {
+        MarkKnownInputData inputData = new MarkKnownInputData(userId, deckId, cardIndex);
     }
 
     public void markUnknown(int userId, int deckId, int cardIndex) {
