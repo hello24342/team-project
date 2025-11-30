@@ -42,12 +42,20 @@ public class User {
         return new ArrayList<>(decks);
     }
 
+    /**
+     * Add a deck to the user's list of decks.
+     * @param deck the deck to add
+     */
     public void addDeck(FlashcardDeck deck) {
         if (deck != null) {
             this.decks.add(deck);
         }
     }
 
+    /**
+     * Remove a deck from the user's list of decks.
+     * @param deck the deck to remove
+     */
     public void removeDeck(FlashcardDeck deck) {
         this.decks.remove(deck);
     }

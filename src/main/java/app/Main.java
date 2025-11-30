@@ -1,13 +1,17 @@
 package app;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 
 import view.ViewManager;
 
-import java.io.IOException;
-
 public class Main {
-
+    /**
+    * The main entry point for the application.
+    * This method initializes the program and starts the GUI.
+     * @param args the command line arguments
+    **/
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -17,11 +21,13 @@ public class Main {
                 ViewManager viewManager = null;
                 try {
                     viewManager = AppBuilder.build();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                }
+                catch (IOException ex) {
+                    throw new RuntimeException(ex);
                 }
                 // set initial page
-                viewManager.show("DeckMenu"); // TODO: change to login view later
+                viewManager.show("DeckMenu");
+                // TODO: change to login view later
             }
         });
     }
