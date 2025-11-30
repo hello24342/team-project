@@ -1,4 +1,4 @@
 package interface_adapter.progress_tracker;
 
-public class ProgressTracketController {
+public class ProgressTrackerController {
 }

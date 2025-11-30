@@ -5,8 +5,12 @@ import interface_adapter.learning_goal.LearningGoalController;
 import interface_adapter.learning_goal.LearningGoalViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
@@ -41,6 +45,52 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
         final JPanel buttonPanel = new JPanel();
         buttonPanel.add(setLearningGoalButton);
         buttonPanel.add(cancelButton);
+
+        setLearningGoalButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // work on this bit
+            }
+        });
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // work on this bit
+            }
+        });
+
+        learningGoalInputField.getDocument().addDocumentListener(new DocumentListener() {
+            public void documentListenerHelper() {
+                // work on this bit
+            }
+        });
+        // work on these
+        @Override
+        public void insertUpdate(DocumentEvent e) {documentListenerHelper();}
+
+        @Override
+        public void removeUpdate(DocumentEvent e) {documentListenerHelper();}
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(learningGoalLabel);
+        this.add(learningGoal);
+        this.add(learningGoalLabel2);
+        this.add(buttonPanel);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 
 }
