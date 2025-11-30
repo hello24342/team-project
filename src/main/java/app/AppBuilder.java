@@ -12,10 +12,10 @@ import data_access.FileUserDataAccessObject;
 import entity.Flashcard;
 import entity.FlashcardDeck;
 import entity.Language;
-import usecase.FlashcardDataAccessInterface;
-import usecase.deck.DeckDataAccessInterface;
-import usecase.login.LoginUserDataAccessInterface;
-import usecase.signup.SignupUserDataAccessInterface;
+import use_case.FlashcardDataAccessInterface;
+import use_case.deck.DeckDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 import view.*;
 import view.deck.DeckDetailView;
 import view.deck.DeckMenuView;
@@ -92,6 +92,12 @@ public class AppBuilder {
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
                 StudyDeckUseCaseFactory.build(deckDAO, cardDAO);
 
+        // edit flashcard UC9
+        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
+        // EditFlashcardUseCaseFactory.EditFlashcardBundle editBundle =
+        //        EditFlashcardUseCaseFactory.build(cardDAO);
+
+
         // 4) construct Views
         // TODO: other views
         // LoginView
@@ -124,7 +130,7 @@ public class AppBuilder {
                 deckBundle.openController,
                 studyBundle.controller,
                 deckBundle.createController,
-                /*deckBundle.editController,*/ null,
+                /*editBundle.editController,*/ null,
                 currentUserId,
                 viewManager
         );
@@ -132,6 +138,11 @@ public class AppBuilder {
         // StudyDeckView
         StudyDeckView studyView = new StudyDeckView(studyBundle.vm);
         studyView.setController(studyBundle.controller);
+
+        // EditFlashcardView
+        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
+        // EditFlashcardView editFlashcardView =
+        //        new EditFlashcardView(editBundle.vm, editBundle.controller);
 
         // 5) register views to ViewManager
         // notice that the name should be the same as the one

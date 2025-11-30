@@ -13,7 +13,7 @@ import java.util.Map;
 
 import entity.Flashcard;
 import entity.Language;
-import usecase.FlashcardDataAccessInterface;
+import use_case.FlashcardDataAccessInterface;
 
 public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterface {
     private static final String HEADER = "id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds";
