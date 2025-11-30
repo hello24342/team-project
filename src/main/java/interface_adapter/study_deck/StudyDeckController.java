@@ -57,7 +57,8 @@ public class StudyDeckController {
         MarkKnownInputData inputData = new MarkKnownInputData();
     }
 
-    public void markUnknown() {
-        MarkUnknownInputData inputData = new MarkUnknownInputData();
+    public void markUnknown(int userId, int deckId, int cardIndex) {
+        MarkUnknownInputData inputData = new MarkUnknownInputData(userId, deckId, cardIndex);
+        markUnknownInputBoundary.execute(inputData);
     }
 }
