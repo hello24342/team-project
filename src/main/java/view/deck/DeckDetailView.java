@@ -76,7 +76,6 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
         addBtn.addActionListener(e -> {
             createCtl.onCreate(vm.getDeckTitle());
             viewManager.show("CreateFlashcard");
-            // TODO: check if createFlashcard name is right when view is made in appbuilder
         });
 
         playBtn.addActionListener(e -> {
@@ -84,7 +83,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
             viewManager.show("Study");
         });
     }
-
+    /*
     // TODO 3: Clicking a flashcard in the list → open UC9 (edit/delete that flashcard)
     private JPanel createCardRow(DeckDetailViewModel.CardVM card) {
         JPanel row = new JPanel(new BorderLayout());
@@ -133,7 +132,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
 
         return row;
     }
-
+    */
     private void refresh() {
         titleLabel.setText(vm.getDeckTitle());
         listPanel.removeAll();
