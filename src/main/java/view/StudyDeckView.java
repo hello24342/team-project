@@ -87,7 +87,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         } else if (e.getSource() == knowButton) {
             controller.markKnown();
         } else if (e.getSource() == dontKnowButton) {
-            controller.markUnknown();
+            controller.markUnknown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex());
         }
     }
 
