@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.*;
-import javax.swing.text.View;
 
 import interface_adapter.ViewManagerModel;
 
