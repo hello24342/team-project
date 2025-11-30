@@ -26,8 +26,7 @@ public class Main {
                     throw new RuntimeException(ex);
                 }
                 // set initial page
-                viewManager.show("DeckMenu");
-                // TODO: change to login view later
+                viewManager.show("Login");
             }
         });
     }

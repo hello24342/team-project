@@ -130,7 +130,7 @@ public class AppBuilder {
                 deckBundle.openController,
                 studyBundle.controller,
                 deckBundle.createController,
-                /*editBundle.editController,*/ null,
+                /*editBundle.controller,*/ null,
                 currentUserId,
                 viewManager
         );
