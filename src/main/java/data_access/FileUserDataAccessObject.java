@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import entity.User;
-import usecase.login.LoginUserDataAccessInterface;
-import usecase.signup.SignupUserDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 
 public class FileUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface {
     private final String filePath;
