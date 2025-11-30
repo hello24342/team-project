@@ -16,4 +16,8 @@ public interface FlashcardDataAccessInterface {
     Flashcard findById(int cardId);
 
     List<Flashcard> findByDeck(int deckId);
+
+    void markCardAsKnown(int userId, int deckId, int cardIndex);
+
+    void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId);
 }
