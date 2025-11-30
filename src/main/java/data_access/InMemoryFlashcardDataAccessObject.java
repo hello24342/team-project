@@ -30,15 +30,16 @@ public class InMemoryFlashcardDataAccessObject implements FlashcardDataAccessInt
 
     @Override
     public void markCardAsKnown(int userId, int deckId, int cardIndex) {
-        // To track that the user knows this card (no need to move)
-        // TODO: Implement method for mark known
+        List<Flashcard> deck = findByDeck(deckId);
+        Flashcard card = deck.get(cardIndex);
+        card.setKnown(true);
     }
 
     @Override
     public void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId) {
         List<Flashcard> fromDeck = findByDeck(fromDeckId);
-
         Flashcard cardToMove = fromDeck.get(cardIndex);
+        cardToMove.setKnown(false);
         cardToMove.getDeckIds().add(toDeckId);
     }
 

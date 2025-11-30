@@ -18,7 +18,7 @@ public class MarkKnownInteractor implements MarkKnownInputBoundary {
         int deckId = inputData.getDeckId();
         int cardIndex = inputData.getCardIndex();
 
-        // Mark the card as known (no movement needed)
+        // Mark the card as known
         flashcardDataAccess.markCardAsKnown(userId, deckId, cardIndex);
 
         MarkKnownOutputData outputData = new MarkKnownOutputData(deckId, cardIndex);
