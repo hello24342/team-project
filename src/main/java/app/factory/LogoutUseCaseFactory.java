@@ -5,11 +5,10 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import usecase.logout.LogoutInteractor;
-import usecase.logout.LogoutInputBoundary;
-import usecase.logout.LogoutOutputBoundary;
-import usecase.login.LoginUserDataAccessInterface;
-import view.LoginView;
+import use_case.logout.LogoutInteractor;
+import use_case.logout.LogoutInputBoundary;
+import use_case.logout.LogoutOutputBoundary;
+import use_case.login.LoginUserDataAccessInterface;
 import view.ViewManager;
 
 public class LogoutUseCaseFactory {

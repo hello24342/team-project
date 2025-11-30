@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.FlashcardDeck;
-import usecase.deck.DeckDataAccessInterface;
+import use_case.deck.DeckDataAccessInterface;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

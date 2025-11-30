@@ -9,13 +9,10 @@ import data_access.FileDeckDataAccessObject;
 import data_access.FileFlashcardDataAccessObject;
 import data_access.FileUserDataAccessObject;
 
-import entity.Flashcard;
-import entity.FlashcardDeck;
-import entity.Language;
-import usecase.FlashcardDataAccessInterface;
-import usecase.deck.DeckDataAccessInterface;
-import usecase.login.LoginUserDataAccessInterface;
-import usecase.signup.SignupUserDataAccessInterface;
+import use_case.FlashcardDataAccessInterface;
+import use_case.deck.DeckDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 import view.*;
 import view.deck.DeckDetailView;
 import view.deck.DeckMenuView;

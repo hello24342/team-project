@@ -2,7 +2,7 @@ package data_access;
 
 import entity.Flashcard;
 import entity.Language;
-import usecase.FlashcardDataAccessInterface;
+import use_case.FlashcardDataAccessInterface;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package interface_adapter.deck;
 
-import usecase.deck.create_deck.CreateDeckOutputBoundary;
-import usecase.deck.create_deck.CreateDeckOutputData;
+import use_case.deck.create_deck.CreateDeckOutputBoundary;
+import use_case.deck.create_deck.CreateDeckOutputData;
 
 import java.util.ArrayList;
 import java.util.List;
