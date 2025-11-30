@@ -1,25 +1,23 @@
 package data_access;
 
-import entity.FlashcardDeck;
-import use_case.deck.DeckDataAccessInterface;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import entity.FlashcardDeck;
+import usecase.deck.DeckDataAccessInterface;
+
 /**
  * DAO for deck data implemented using a CSV file
  * to persist the data.
- *
  * This class belongs in the data_access layer and
  * implements the DeckDataAccessInterface from the
  * usecase layer. Use cases do not know that the
