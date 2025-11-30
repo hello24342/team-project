@@ -3,7 +3,7 @@ package view;
 import data_access.LearningGoalDataAccess;
 import interface_adapter.learning_goal.LearningGoalController;
 import interface_adapter.learning_goal.LearningGoalViewModel;
-import interface_adapter.login.LoginState;
+import interface_adapter.learning_goal.LearningGoalState;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -60,8 +60,8 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
 
         learningGoalInputField.getDocument().addDocumentListener(new DocumentListener() {
             public void documentListenerHelper() {
-                final LoginState currentState = LearningGoalViewModel.getState();
-                currentState.setUsername(learningGoalInputField.getText());
+                final LearningGoalState currentState = LearningGoalViewModel.getState();
+                currentState.setLearningGoal(learningGoalInputField.getText()); // a string needs to be an int
                 LearningGoalViewModel.setState(currentState);
             }
         });
