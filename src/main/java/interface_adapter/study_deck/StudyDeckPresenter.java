@@ -48,14 +48,12 @@ public class StudyDeckPresenter implements FlipCardOutputBoundary, LoadDeckForSt
 
     @Override
     public void presentSuccessView(MarkKnownOutputData outputData) {
-        final StudyDeckState studyDeckState = viewModel.getState();
-        // will be written after interactor is implemented
+        // no UI change needed for now
     }
 
     @Override
     public void presentSuccessView(MarkUnknownOutputData outputData) {
-        final StudyDeckState studyDeckState = viewModel.getState();
-        // will be written after interactor is implemented
+        // no UI change needed for now
     }
 
 
