@@ -1,17 +1,19 @@
 package data_access;
 
-import entity.User;
-import usecase.login.LoginUserDataAccessInterface;
-import usecase.signup.SignupUserDataAccessInterface;
-
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import entity.User;
+import usecase.login.LoginUserDataAccessInterface;
+import usecase.signup.SignupUserDataAccessInterface;
+
 public class FileUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface {
     private final String filePath;
-    private final Map<String, User> usersByUsername = new HashMap<>(); // Key: username
-    private final Map<String, User> usersByEmail = new HashMap<>();    // Key: email
+    // Key: username
+    private final Map<String, User> usersByUsername = new HashMap<>();
+    // Key: email
+    private final Map<String, User> usersByEmail = new HashMap<>();
     private String currentUsername;
 
     public FileUserDataAccessObject(String filePath) throws IOException {
@@ -102,10 +104,19 @@ public class FileUserDataAccessObject implements LoginUserDataAccessInterface, S
         return currentUsername;
     }
 
+    /**
+     * Clear the current user.
+     */
     public void clearCurrentUser() {
         this.currentUsername = null;
     }
 
+    /**
+     * Validate a user's credentials.
+     * @param username username
+     * @param password password
+     * @return true if the credentials are valid, false otherwise
+     */
     public boolean validateUser(String username, String password) {
         User user = usersByUsername.get(username);
         return user != null && user.getPassword().equals(password);

@@ -3,12 +3,16 @@
   <component name="CheckStyle-IDEA" serialisationVersion="2">
     <checkstyleVersion>11.0.1</checkstyleVersion>
     <scanScope>JavaOnly</scanScope>
+    <suppressErrors>true</suppressErrors>
     <option name="thirdPartyClasspath" />
-    <option name="activeLocationIds" />
+    <option name="activeLocationIds">
+      <option value="9aae2b02-ac85-49fc-a5fb-bbdac4956038" />
+    </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="9aae2b02-ac85-49fc-a5fb-bbdac4956038" type="PROJECT_RELATIVE" scope="All" description="csc207">$PROJECT_DIR$/../../Downloads/mystyle.xml</ConfigurationLocation>
       </list>
     </option>
   </component>

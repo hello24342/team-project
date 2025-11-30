@@ -1,10 +1,12 @@
 package view;
-import interface_adapter.ViewManagerModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 import javax.swing.text.View;
-import java.util.HashMap;
-import java.util.Map;
+
+import interface_adapter.ViewManagerModel;
 
 public class ViewManager {
     private final JFrame frame;
@@ -23,12 +25,22 @@ public class ViewManager {
         frame.setVisible(true);
     }
 
-    // Add a new view to the manager
+    /**
+     * Add a new view to the manager.
+     *
+     * @param name the name of the view to add
+     * @param panel the JPanel instance to add
+     */
     public void add(String name, JPanel panel) {
         views.put(name, panel);
     }
 
-    // Show the view corresponding to the given name
+    /**
+     * Show the view corresponding to the given name.
+     *
+     * @param name the name of the view to show
+     * @throws IllegalArgumentException if the view does not exist
+     */
     public void show(String name) {
         JPanel panel = views.get(name);
         // Throw an exception if the view does not exist
@@ -44,6 +56,10 @@ public class ViewManager {
         current = name;
     }
 
+    /**
+     * Get the name of the currently displayed view.
+     * @return the name of the currently displayed view
+     */
     public String current() {
         return current;
     }
