@@ -58,6 +58,6 @@ public class FlashcardDataAccessObject implements FlashcardDataAccessInterface {
 
     @Override
     public Flashcard findById(int cardId) {
-        return null;
+        return flashcards.get(cardId);
     }
 }
