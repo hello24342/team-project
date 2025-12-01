@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.Flashcard;
-import usecase.FlashcardDataAccessInterface;
+import use_case.FlashcardDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,6 +29,21 @@ public class InMemoryFlashcardDataAccessObject implements FlashcardDataAccessInt
     }
 
     @Override
+    public void markCardAsKnown(int userId, int deckId, int cardIndex) {
+        List<Flashcard> deck = findByDeck(deckId);
+        Flashcard card = deck.get(cardIndex);
+        card.setKnown(true);
+    }
+
+    @Override
+    public void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId) {
+        List<Flashcard> fromDeck = findByDeck(fromDeckId);
+        Flashcard cardToMove = fromDeck.get(cardIndex);
+        cardToMove.setKnown(false);
+        cardToMove.getDeckIds().add(toDeckId);
+    }
+
+    @Override
     public void save(Flashcard flashcard) {
         flashcards.put(flashcard.getId(), flashcard);
     }
@@ -44,6 +59,6 @@ public class InMemoryFlashcardDataAccessObject implements FlashcardDataAccessInt
 
     @Override
     public Flashcard findById(int cardId) {
-        return null;
+        return flashcards.get(cardId);
     }
 }

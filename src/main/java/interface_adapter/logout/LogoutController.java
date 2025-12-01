@@ -1,6 +1,6 @@
 package interface_adapter.logout;
 
-import usecase.logout.LogoutInputBoundary;
+import use_case.logout.LogoutInputBoundary;
 
 public class LogoutController {
 

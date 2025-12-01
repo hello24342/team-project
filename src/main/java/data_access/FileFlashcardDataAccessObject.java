@@ -1,14 +1,19 @@
 package data_access;
 
-import entity.Flashcard;
-import entity.Language;
-import usecase.FlashcardDataAccessInterface;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import entity.Flashcard;
+import entity.Language;
+import use_case.FlashcardDataAccessInterface;
 
 public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterface {
     private static final String HEADER = "id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds";
@@ -16,6 +21,7 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
     private final File csvFile;
     private int nextId = 1;
     private final Map<Integer, Flashcard> flashcards = new HashMap<>();
+    private final Map<Integer, Integer> knownCountCache = new HashMap<>(); // deckId to knownCount
 
     public FileFlashcardDataAccessObject(String csvPath) {
         csvFile = new File(csvPath);
@@ -29,14 +35,14 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
             }
             loadFromFile();
         }
-        catch (IOException e) {
-            throw new RuntimeException("Failed to initialize Flashcard DAO", e);
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to initialize Flashcard DAO", ex);
         }
     }
 
     private void loadFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            String header = reader.readLine();
+            final String header = reader.readLine();
             if (!HEADER.equals(header)) {
                 throw new RuntimeException("Header should be: " + HEADER + "\nBut was: " + header);
             }
@@ -61,8 +67,8 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
                 nextId = Math.max(nextId, id + 1);
             }
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -106,19 +112,19 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         return tokens.toArray(new String[0]);
     }
 
-    private List<Integer> parseDeckIds(String s) {
+    private List<Integer> parseDeckIds(String deckIds) {
         List<Integer> list = new ArrayList<>();
-        if (s == null || s.isEmpty()) {
+        if (deckIds == null || deckIds.isEmpty()) {
             return list;
         }
 
         // Remove surrounding quotes
-        s = s.replace("\"", "");
-        if (s.trim().isEmpty()) {
+        deckIds = deckIds.replace("\"", "");
+        if (deckIds.trim().isEmpty()) {
             return list;
         }
 
-        for (String part : s.split(",")) {
+        for (String part : deckIds.split(",")) {
             list.add(Integer.parseInt(part));
         }
         return list;
@@ -172,4 +178,53 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         }
         return result;
     }
+    @Override
+    public void markCardAsKnown(int userId, int deckId, int cardIndex) {
+        List<Flashcard> deckCards = findByDeck(deckId);
+
+        if (cardIndex >= 0 && cardIndex < deckCards.size()) {
+            Flashcard card = deckCards.get(cardIndex);
+
+            if (!card.isKnown()) {
+                card.setKnown(true);
+                knownCountCache.put(deckId, knownCountCache.getOrDefault(deckId, 0) + 1);
+                saveToFile();
+            }
+        }
+    }
+
+    @Override
+    public void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId) {
+        List<Flashcard> fromDeck = findByDeck(fromDeckId);
+
+        if (cardIndex >= 0 && cardIndex < fromDeck.size()) {
+            Flashcard cardToMove = fromDeck.get(cardIndex);
+
+            // If the card was known, update cache for the from deck
+            if (cardToMove.isKnown()) {
+                knownCountCache.put(fromDeckId,
+                        Math.max(0, knownCountCache.getOrDefault(fromDeckId, 0) - 1));
+            }
+
+            cardToMove.getDeckIds().add(toDeckId);
+
+            // If the card is known, update cache for the to deck
+            if (cardToMove.isKnown()) {
+                knownCountCache.put(toDeckId, knownCountCache.getOrDefault(toDeckId, 0) + 1);
+            }
+
+            saveToFile();
+        }
+    }
+
+    @Override
+    public int getKnownCardsCount(int userId, int deckId) {
+        return knownCountCache.get(deckId);
+    }
+
+    @Override
+    public int getDeckSize(int userId, int deckId) {
+        return findByDeck(deckId).size();
+    }
+
 }

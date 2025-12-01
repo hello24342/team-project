@@ -87,6 +87,10 @@ System prompts user to create a deck.
 User types in deck title.
 User clicks create deck button to create the deck.
 
+Alternate Flow:
+User tries to create a deck with an existing deck title -> System prompts user to choose a different deck title.
+user tries to create a deck without a title -> System prompts user to enter a non-empty deck title.
+
 ### Use Case #6 Title: Sign Up
 
 Related User Story #6: As a user I want to be able to sign up for an account so my progress is saved.
@@ -179,8 +183,9 @@ The system switches the logged in view to the login view.
 
 Use Case #6: Sign Up,
 Use Case #7: Log In,
-Use Case #11: Open Decks
-Use Case #12: Log Out
+Use Case #11: Open Decks,
+Use Case #12: Log Out, 
+Use Case #8: Marking Unknown Words
 
 ### Jennifer
 

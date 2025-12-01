@@ -1,26 +1,24 @@
 package app;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 import app.factory.*;
 import app.factory.DeckManageUseCaseFactory.DeckMenuBundle;
-
 import data_access.FileDeckDataAccessObject;
 import data_access.FileFlashcardDataAccessObject;
 import data_access.FileUserDataAccessObject;
-
 import entity.Flashcard;
 import entity.FlashcardDeck;
 import entity.Language;
-import usecase.FlashcardDataAccessInterface;
-import usecase.deck.DeckDataAccessInterface;
-import usecase.login.LoginUserDataAccessInterface;
-import usecase.signup.SignupUserDataAccessInterface;
+import use_case.FlashcardDataAccessInterface;
+import use_case.deck.DeckDataAccessInterface;
+import use_case.login.LoginUserDataAccessInterface;
+import use_case.signup.SignupUserDataAccessInterface;
 import view.*;
 import view.deck.DeckDetailView;
 import view.deck.DeckMenuView;
-
-import java.io.IOException;
 
 public class AppBuilder {
 
@@ -41,10 +39,9 @@ public class AppBuilder {
 //        cardDAO.save(card2);
 //        cardDAO.save(card3);
 //    }
-
-
     /**
      * Build DAOs, use cases, views and register them into ViewManager.
+     * @throws IOException when reading from CSV files fails
      */
     public static ViewManager build() throws IOException {
 
@@ -67,7 +64,7 @@ public class AppBuilder {
         FlashcardDataAccessInterface cardDAO = new FileFlashcardDataAccessObject("flashcards.csv");
 
         // line below is for testing, delete once create flashcard works
-//        seedDemoData(deckDAO, cardDAO);
+        // seedDemoData(deckDAO, cardDAO);
 
         // assume currently only one user, id = 1
         int currentUserId = 1;
@@ -93,7 +90,13 @@ public class AppBuilder {
 
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
-                StudyDeckUseCaseFactory.build(deckDAO, cardDAO);
+                StudyDeckUseCaseFactory.build(deckDAO, userDAO, cardDAO);
+
+        // edit flashcard UC9
+        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
+        // EditFlashcardUseCaseFactory.EditFlashcardBundle editBundle =
+        //        EditFlashcardUseCaseFactory.build(cardDAO);
+
 
         // 4) construct Views
         // TODO: other views
@@ -127,7 +130,7 @@ public class AppBuilder {
                 deckBundle.openController,
                 studyBundle.controller,
                 deckBundle.createController,
-                deckBundle.editController,
+                /*editBundle.controller,*/ null,
                 currentUserId,
                 viewManager
         );
@@ -135,6 +138,11 @@ public class AppBuilder {
         // StudyDeckView
         StudyDeckView studyView = new StudyDeckView(studyBundle.vm);
         studyView.setController(studyBundle.controller);
+
+        // EditFlashcardView
+        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
+        // EditFlashcardView editFlashcardView =
+        //        new EditFlashcardView(editBundle.vm, editBundle.controller);
 
         // 5) register views to ViewManager
         // notice that the name should be the same as the one
@@ -145,7 +153,7 @@ public class AppBuilder {
         viewManager.add("LoggedIn", loggedInView);
         viewManager.add("DeckMenu", deckMenuView);
         viewManager.add("DeckDetail", deckDetailView);
-        viewManager.add("EditFlashcard", editFlashcardView);
+        // viewManager.add("EditFlashcard", editFlashcardView);
         viewManager.add("Study", studyView);
 
         return viewManager;

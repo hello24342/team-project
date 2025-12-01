@@ -1,8 +1,40 @@
 package interface_adapter.edit_flashcard;
 
+import use_case.flashcard_edit.EditFlashcardInputBoundary;
+import use_case.flashcard_edit.EditFlashcardInputData;
+
 public class EditFlashcardController {
+    private final EditFlashcardInputBoundary editFlashcardInteractor;
+    private int currentCardId;
+    private String currentSourceWord;
+    private String currentTargetWord;
 
-    public void prepareViewForEdit(int cardId, int deckId, String deckTitle, String sourceWord, String targetWord) {
-
+    public EditFlashcardController(EditFlashcardInputBoundary editFlashcardInteractor) {
+        this.editFlashcardInteractor = editFlashcardInteractor;
     }
+
+    public void prepareViewForEdit(int cardId, String sourceWord, String targetWord) {
+        this.currentCardId = cardId;
+        this.currentSourceWord = sourceWord;
+        this.currentTargetWord = targetWord;
+    }
+
+    public void executeEdit(String newSourceWord, String newTargetWord,
+                            String newSourceLang, String newTargetLang) {
+        EditFlashcardInputData inputData = new EditFlashcardInputData(
+                currentCardId, newSourceWord, newTargetWord, newSourceLang, newTargetLang, false
+        );
+        editFlashcardInteractor.execute(inputData);
+    }
+
+    public void executeDelete() {
+        EditFlashcardInputData inputData = new EditFlashcardInputData(
+                currentCardId, null, null, null, null, true
+        );
+        editFlashcardInteractor.execute(inputData);
+    }
+
+    public int getCurrentCardId() { return currentCardId; }
+    public String getCurrentSourceWord() { return currentSourceWord; }
+    public String getCurrentTargetWord() { return currentTargetWord; }
 }
