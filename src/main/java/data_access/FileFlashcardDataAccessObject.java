@@ -200,22 +200,22 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
 
         Flashcard cardToMove = fromDeck.get(cardIndex);
 
-        // 如果之前是 known，需要先把 fromDeck 的已知计数减 1
+        // if the card was known, decrement the known count for the fromDeck
         if (cardToMove.isKnown()) {
             int oldCount = knownCountCache.getOrDefault(fromDeckId, 0);
             knownCountCache.put(fromDeckId, Math.max(0, oldCount - 1));
         }
 
-        // 点击 "Don't know" 之后，这张卡应该变成 unknown
+        // clicked don't know, so set known to false
         cardToMove.setKnown(false);
 
-        // 把卡加入 don’t know deck（避免重复添加）
+        // add to the don't know deck
         List<Integer> deckIds = cardToMove.getDeckIds();
         if (!deckIds.contains(toDeckId)) {
             deckIds.add(toDeckId);
         }
 
-        // 对于 don’t know deck，一般不需要把它计入 "known" 计数，所以这里不要再 +1 了
+        // for don't know deck, known count does not change since the card is unknown
 
         saveToFile();
     }
