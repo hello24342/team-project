@@ -88,8 +88,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
             viewManager.show("Study");
         });
     }
-    /*
-    // TODO 3: Clicking a flashcard in the list → open UC9 (edit/delete that flashcard)
+
     private JPanel createCardRow(DeckDetailViewModel.CardVM card) {
         JPanel row = new JPanel(new BorderLayout());
         row.setBorder(BorderFactory.createCompoundBorder(
@@ -136,7 +135,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
 
         return row;
     }
-    */
+
     private void refresh() {
         titleLabel.setText(vm.getDeckTitle());
         listPanel.removeAll();
