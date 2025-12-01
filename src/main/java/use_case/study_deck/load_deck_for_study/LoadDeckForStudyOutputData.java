@@ -1,6 +1,7 @@
 package use_case.study_deck.load_deck_for_study;
 
 public class LoadDeckForStudyOutputData {
+    private final int userId;
     private final int deckId;
     private final String deckTitle;
     private final int cardId;
@@ -9,8 +10,9 @@ public class LoadDeckForStudyOutputData {
     private final String sourceWord;
     private final String targetWord;
 
-    public LoadDeckForStudyOutputData(int deckId, String deckTitle, int cardId, int cardCount, int currentCardIndex,
+    public LoadDeckForStudyOutputData(int userId, int deckId, String deckTitle, int cardId, int cardCount, int currentCardIndex,
                                       String sourceWord, String targetWord) {
+        this.userId = userId;
         this.deckId = deckId;
         this.deckTitle = deckTitle;
         this.cardId = cardId;
@@ -20,6 +22,9 @@ public class LoadDeckForStudyOutputData {
         this.targetWord = targetWord;
     }
 
+    public int getUserId() {
+        return userId;
+    }
     public int getDeckId() {
         return deckId;
     }

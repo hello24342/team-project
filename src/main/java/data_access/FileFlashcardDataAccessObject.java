@@ -194,29 +194,35 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
     public void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId) {
         List<Flashcard> fromDeck = findByDeck(fromDeckId);
 
-        if (cardIndex >= 0 && cardIndex < fromDeck.size()) {
-            Flashcard cardToMove = fromDeck.get(cardIndex);
-
-            // If the card was known, update cache for the from deck
-            if (cardToMove.isKnown()) {
-                knownCountCache.put(fromDeckId,
-                        Math.max(0, knownCountCache.getOrDefault(fromDeckId, 0) - 1));
-            }
-
-            cardToMove.getDeckIds().add(toDeckId);
-
-            // If the card is known, update cache for the to deck
-            if (cardToMove.isKnown()) {
-                knownCountCache.put(toDeckId, knownCountCache.getOrDefault(toDeckId, 0) + 1);
-            }
-
-            saveToFile();
+        if (cardIndex < 0 || cardIndex >= fromDeck.size()) {
+            return;
         }
+
+        Flashcard cardToMove = fromDeck.get(cardIndex);
+
+        // if the card was known, decrement the known count for the fromDeck
+        if (cardToMove.isKnown()) {
+            int oldCount = knownCountCache.getOrDefault(fromDeckId, 0);
+            knownCountCache.put(fromDeckId, Math.max(0, oldCount - 1));
+        }
+
+        // clicked don't know, so set known to false
+        cardToMove.setKnown(false);
+
+        // add to the don't know deck
+        List<Integer> deckIds = cardToMove.getDeckIds();
+        if (!deckIds.contains(toDeckId)) {
+            deckIds.add(toDeckId);
+        }
+
+        // for don't know deck, known count does not change since the card is unknown
+
+        saveToFile();
     }
 
     @Override
     public int getKnownCardsCount(int userId, int deckId) {
-        return knownCountCache.get(deckId);
+        return knownCountCache.getOrDefault(deckId, 0);
     }
 
     @Override
