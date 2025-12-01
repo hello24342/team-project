@@ -9,14 +9,24 @@ public class EditFlashcardController {
     private String currentSourceWord;
     private String currentTargetWord;
 
-    public EditFlashcardController(EditFlashcardInputBoundary editFlashcardInteractor) {
+    public EditFlashcardController(EditFlashcardInputBoundary editFlashcardInteractor,
+                                   EditFlashcardViewModel viewModel) {
         this.editFlashcardInteractor = editFlashcardInteractor;
+        this.viewModel = viewModel;
+
     }
 
     public void prepareViewForEdit(int cardId, String sourceWord, String targetWord) {
         this.currentCardId = cardId;
         this.currentSourceWord = sourceWord;
         this.currentTargetWord = targetWord;
+
+        EditFlashcardState state = viewModel.getState();
+        state.setFlashcardId(cardId);
+        state.setSourceWord(sourceWord);
+        state.setTargetWord(targetWord);
+        viewModel.setState(state);
+        viewModel.firePropertyChange();
     }
 
     public void executeEdit(String newSourceWord, String newTargetWord,

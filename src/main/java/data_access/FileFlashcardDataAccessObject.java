@@ -142,6 +142,20 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
             }
         }
         return sb.toString();
+
+        void rebuildKnownCountCache() {
+            knownCountCache.clear();
+
+            for (Flashcard card : flashcards.values()) {
+                if (card.isKnown()) {
+                    for (Integer deckId : card.getDeckIds()) {
+                        int oldCount = knownCountCache.getOrDefault(deckId, 0);
+                        knownCountCache.put(deckId, oldCount + 1);
+                    }
+                }
+            }
+        }
+
     }
 
     // interface methods
@@ -158,12 +172,21 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
 
     @Override
     public void update(int cardId) {
-
+        if (!flashcards.containsKey(cardId)) {
+            return;
+        }
+        rebuildKnownCountCache();
+        saveToFile();
     }
 
     @Override
     public void delete(int cardId) {
-
+        Flashcard removed = flashcards.remove(cardId);
+        if (removed == null) {
+            return;
+        }
+        rebuildKnownCountCache();
+        saveToFile();
     }
 
     @Override

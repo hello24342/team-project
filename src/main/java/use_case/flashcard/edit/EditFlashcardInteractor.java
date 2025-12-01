@@ -6,74 +6,68 @@ import use_case.flashcard.FlashcardDataAccessInterface;
 
 public class EditFlashcardInteractor implements EditFlashcardInputBoundary {
 
-    private final FlashcardDataAccessInterface flashcardDAO;
+    private final FlashcardDataAccessInterface flashcardDataAccess;
     private final EditFlashcardOutputBoundary presenter;
 
-    public EditFlashcardInteractor(FlashcardDataAccessInterface flashcardDAO,
+    public EditFlashcardInteractor(FlashcardDataAccessInterface flashcardDataAccess,
                                    EditFlashcardOutputBoundary presenter) {
-        this.flashcardDAO = flashcardDAO;
+        this.flashcardDataAccess = flashcardDataAccess;
         this.presenter = presenter;
     }
 
     @Override
     public void execute(EditFlashcardInputData inputData) {
+        int cardId = inputData.getFlashcardId();
 
-        int id = inputData.getFlashcardId();
-        Flashcard card = flashcardDAO.findById(id);
-
+        // 1. Load the existing flashcard
+        Flashcard card = flashcardDataAccess.findById(cardId);
         if (card == null) {
-            presenter.prepareFailView("Flashcard not found: " + id);
+            presenter.prepareFailView("Flashcard " + cardId + " not found.");
             return;
         }
 
+        // 2. Alternative flow: delete
         if (inputData.isDelete()) {
-            flashcardDAO.delete(id);
-            presenter.prepareSuccessView(
-                    new EditFlashcardOutputData(id, "Flashcard deleted.")
-            );
+            flashcardDataAccess.delete(cardId);
+            EditFlashcardOutputData outputData =
+                    new EditFlashcardOutputData(cardId, "Flashcard deleted.");
+            presenter.prepareSuccessView(outputData);
             return;
         }
 
-        String newSourceWord = inputData.getNewSourceWord();
-        String newTargetWord = inputData.getNewTargetWord();
-        String newSourceLangStr = inputData.getNewSourceLang();
-        String newTargetLangStr = inputData.getNewTargetLang();
-
-        if (newSourceWord == null || newSourceWord.trim().isEmpty()
-                || newTargetWord == null || newTargetWord.trim().isEmpty()) {
-            presenter.prepareFailView("Source and target words cannot be empty.");
-            return;
+        // 3. Main flow: edit (null means "leave unchanged")
+        if (inputData.getNewSourceWord() != null) {
+            card.setSourceWord(inputData.getNewSourceWord());
+        }
+        if (inputData.getNewTargetWord() != null) {
+            card.setTargetWord(inputData.getNewTargetWord());
         }
 
-        try {
-            Language newSourceLang = Language.valueOf(newSourceLangStr);
-            Language newTargetLang = Language.valueOf(newTargetLangStr);
-
-            card.setSourceWord(newSourceWord.trim());
-            card.setTargetWord(newTargetWord.trim());
-            card.setSourceLang(newSourceLang);
-            card.setTargetLang(newTargetLang);
-
-            flashcardDAO.update(id);
-
-            presenter.prepareSuccessView(
-                    new EditFlashcardOutputData(id, "Flashcard updated.")
-            );
-        } catch (IllegalArgumentException e) {
-            presenter.prepareFailView("Invalid languages for flashcard.");
+        if (inputData.getNewSourceLang() != null) {
+            try {
+                Language newSourceLang = Language.valueOf(inputData.getNewSourceLang());
+                card.setSourceLang(newSourceLang);
+            } catch (IllegalArgumentException e) {
+                presenter.prepareFailView("Invalid source language: " + inputData.getNewSourceLang());
+                return;
+            }
         }
-    }
 
-    @Override
-    public void delete(EditFlashcardInputData inputData) {
-        EditFlashcardInputData deleteInput = new EditFlashcardInputData(
-                inputData.getFlashcardId(),
-                inputData.getNewSourceWord(),
-                inputData.getNewTargetWord(),
-                inputData.getNewSourceLang(),
-                inputData.getNewTargetLang(),
-                true
-        );
-        execute(deleteInput);
+        if (inputData.getNewTargetLang() != null) {
+            try {
+                Language newTargetLang = Language.valueOf(inputData.getNewTargetLang());
+                card.setTargetLang(newTargetLang);
+            } catch (IllegalArgumentException e) {
+                presenter.prepareFailView("Invalid target language: " + inputData.getNewTargetLang());
+                return;
+            }
+        }
+
+        // 4. Persist the updated flashcard
+        flashcardDataAccess.update(cardId);
+
+        EditFlashcardOutputData outputData =
+                new EditFlashcardOutputData(cardId, "Flashcard updated.");
+        presenter.prepareSuccessView(outputData);
     }
 }
