@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class ProgressTrackerView extends JPanel implements PropertyChangeListener,ActionListener {
@@ -49,5 +50,15 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
         this.add(title);
         this.add(progressBar);
         this.add(buttonPanel);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }

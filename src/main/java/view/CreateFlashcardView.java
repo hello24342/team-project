@@ -73,7 +73,7 @@ public class CreateFlashcardView extends JFrame {
         );
 
         try {
-            CreateFlashcardOutputData response = controller.createFlashcard(request);
+            CreateFlashcardOutputData response = controller.create(request);
             outputArea.setText("Flashcard created!\n"
                     + "Source word: " + response.getSourceWord() + "\n"
                     + "Translated word: " + response.getTargetWord() + "\n"

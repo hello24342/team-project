@@ -86,7 +86,7 @@ public class AppBuilder {
 
         // deck UC5 & 10 & 11
         DeckMenuBundle deckBundle =
-                DeckManageUseCaseFactory.build(deckDAO, cardDAO, currentUserId);
+                DeckManageUseCaseFactory.build(deckDAO, cardDAO, userDAO, currentUserId);
 
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
