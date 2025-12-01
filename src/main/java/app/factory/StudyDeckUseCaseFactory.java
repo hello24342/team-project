@@ -1,18 +1,23 @@
 package app.factory;
 
+import data_access.FileUserDataAccessObject;
 import interface_adapter.study_deck.StudyDeckController;
 import interface_adapter.study_deck.StudyDeckPresenter;
 import interface_adapter.study_deck.StudyDeckViewModel;
-import usecase.FlashcardDataAccessInterface;
-import usecase.deck.DeckDataAccessInterface;
-import usecase.study_deck.flip_card.FlipCardInputBoundary;
-import usecase.study_deck.flip_card.FlipCardInteractor;
-import usecase.study_deck.load_deck_for_study.LoadDeckForStudyInputBoundary;
-import usecase.study_deck.load_deck_for_study.LoadDeckForStudyInteractor;
-import usecase.study_deck.next_card.NextCardInputBoundary;
-import usecase.study_deck.next_card.NextCardInteractor;
-import usecase.study_deck.previous_card.PreviousCardInputBoundary;
-import usecase.study_deck.previous_card.PreviousCardInteractor;
+import use_case.FlashcardDataAccessInterface;
+import use_case.deck.DeckDataAccessInterface;
+import use_case.study_deck.flip_card.FlipCardInputBoundary;
+import use_case.study_deck.flip_card.FlipCardInteractor;
+import use_case.study_deck.load_deck_for_study.LoadDeckForStudyInputBoundary;
+import use_case.study_deck.load_deck_for_study.LoadDeckForStudyInteractor;
+import use_case.study_deck.mark_known.MarkKnownInputBoundary;
+import use_case.study_deck.mark_known.MarkKnownInteractor;
+import use_case.study_deck.mark_unknown.MarkUnknownInputBoundary;
+import use_case.study_deck.mark_unknown.MarkUnknownInteractor;
+import use_case.study_deck.next_card.NextCardInputBoundary;
+import use_case.study_deck.next_card.NextCardInteractor;
+import use_case.study_deck.previous_card.PreviousCardInputBoundary;
+import use_case.study_deck.previous_card.PreviousCardInteractor;
 
 public class StudyDeckUseCaseFactory {
 
@@ -26,7 +31,7 @@ public class StudyDeckUseCaseFactory {
         }
     }
 
-    public static StudyDeckBundle build(DeckDataAccessInterface deckDAO, FlashcardDataAccessInterface cardDAO) {
+    public static StudyDeckBundle build(DeckDataAccessInterface deckDAO, FileUserDataAccessObject userDAO, FlashcardDataAccessInterface cardDAO) {
         StudyDeckViewModel vm = new StudyDeckViewModel();
 
         StudyDeckPresenter presenter = new StudyDeckPresenter(vm);
@@ -40,11 +45,12 @@ public class StudyDeckUseCaseFactory {
         PreviousCardInputBoundary prevInteractor =
                 new PreviousCardInteractor(cardDAO, presenter);
 
-        // MarkKnownInputBoundary markKnownInteractor = new MarkKnownInteractor();
-        // MarkUnknownInputBoundary markUnknownInteractor = new MarkUnknownInteractor();
+         MarkKnownInputBoundary markKnownInteractor = new MarkKnownInteractor(cardDAO, userDAO, presenter);
+
+         MarkUnknownInputBoundary markUnknownInteractor = new MarkUnknownInteractor(deckDAO, cardDAO, presenter);
 
         StudyDeckController controller = new StudyDeckController(loadInteractor, flipInteractor, nextInteractor,
-                prevInteractor, /* markKnownInteractor */ null, /* markUnknownInteractor */ null
+                prevInteractor, markKnownInteractor, markUnknownInteractor
         );
 
         return new StudyDeckBundle(vm, controller);

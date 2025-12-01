@@ -5,9 +5,11 @@ public class StudyDeckState {
     private int userId;
     private int cardIndex;
     private String cardText;
+    public String username;
     private boolean isShowingFront;
     private boolean startWithSource;
     private String deckName;
+    private String errorMessage;
 
     public int getDeckId() {
         return deckId;
@@ -23,6 +25,9 @@ public class StudyDeckState {
 
     public String getCardText() {
         return cardText;
+    }
+
+    public String getUsername() { return username;
     }
 
     public boolean isShowingFront() {

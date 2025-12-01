@@ -31,14 +31,4 @@ public class SignupState {
     public String getEmailError() { return emailError; }
     public String getConfirmPasswordError() { return confirmPasswordError; }
 
-    @Override
-    public String toString() {
-        return "SignupState{"
-                + "username='" + username + '\''
-                + ", password='" + password + '\''
-                + ", email='" + email + '\''
-                + ", confirmPassword='" + confirmPassword + '\''
-                + '}';
-    }
-
 }

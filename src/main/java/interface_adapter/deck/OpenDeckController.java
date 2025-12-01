@@ -1,7 +1,7 @@
 package interface_adapter.deck;
 
-import usecase.deck.open_deck.OpenDeckInputBoundary;
-import usecase.deck.open_deck.OpenDeckInputData;
+import use_case.deck.open_deck.OpenDeckInputBoundary;
+import use_case.deck.open_deck.OpenDeckInputData;
 
 public class OpenDeckController {
 

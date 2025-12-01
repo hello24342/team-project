@@ -1,17 +1,17 @@
 package interface_adapter.study_deck;
 
-import usecase.study_deck.flip_card.FlipCardInputBoundary;
-import usecase.study_deck.flip_card.FlipCardInputData;
-import usecase.study_deck.load_deck_for_study.LoadDeckForStudyInputBoundary;
-import usecase.study_deck.load_deck_for_study.LoadDeckForStudyInputData;
-import usecase.study_deck.mark_known.MarkKnownInputBoundary;
-import usecase.study_deck.mark_known.MarkKnownInputData;
-import usecase.study_deck.mark_unknown.MarkUnknownInputBoundary;
-import usecase.study_deck.mark_unknown.MarkUnknownInputData;
-import usecase.study_deck.next_card.NextCardInputBoundary;
-import usecase.study_deck.next_card.NextCardInputData;
-import usecase.study_deck.previous_card.PreviousCardInputBoundary;
-import usecase.study_deck.previous_card.PreviousCardInputData;
+import use_case.study_deck.flip_card.FlipCardInputBoundary;
+import use_case.study_deck.flip_card.FlipCardInputData;
+import use_case.study_deck.load_deck_for_study.LoadDeckForStudyInputBoundary;
+import use_case.study_deck.load_deck_for_study.LoadDeckForStudyInputData;
+import use_case.study_deck.mark_known.MarkKnownInputBoundary;
+import use_case.study_deck.mark_known.MarkKnownInputData;
+import use_case.study_deck.mark_unknown.MarkUnknownInputBoundary;
+import use_case.study_deck.mark_unknown.MarkUnknownInputData;
+import use_case.study_deck.next_card.NextCardInputBoundary;
+import use_case.study_deck.next_card.NextCardInputData;
+import use_case.study_deck.previous_card.PreviousCardInputBoundary;
+import use_case.study_deck.previous_card.PreviousCardInputData;
 
 public class StudyDeckController {
     private final LoadDeckForStudyInputBoundary loadDeckForStudyInputBoundary;
@@ -53,8 +53,9 @@ public class StudyDeckController {
         previousCardInputBoundary.execute(inputData);
     }
 
-    public void markKnown(int userId, int deckId, int cardIndex) {
-        MarkKnownInputData inputData = new MarkKnownInputData(userId, deckId, cardIndex);
+    public void markKnown(int userId, int deckId, int cardIndex, String username) {
+        MarkKnownInputData inputData = new MarkKnownInputData(userId, deckId, cardIndex, username);
+        markKnownInputBoundary.execute(inputData);
     }
 
     public void markUnknown(int userId, int deckId, int cardIndex) {
