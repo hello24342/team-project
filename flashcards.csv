@@ -1,15 +1,7 @@
 id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds
-<<<<<<< HEAD
-1,Hello,안녕하세요,ENGLISH,KOREAN,false,""
-2,two,둘,ENGLISH,KOREAN,false,""
-3,two,둘,ENGLISH,KOREAN,false,""
-4,two,둘,ENGLISH,KOREAN,false,""
-5,two,둘,ENGLISH,KOREAN,false,""
-=======
 1,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
 2,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
 3,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
 4,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,"2,4,4,4,1"
 5,dog,狗,ENGLISH,CHINESE_SIMPLIFIED,false,"2,4"
 6,,,ABKHAZ,ABKHAZ,false,"2"
->>>>>>> 7cf491530977beaba2bea28a627f964595a8785b

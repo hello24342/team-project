@@ -40,14 +40,13 @@ public class LoginUseCaseFactory {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
-        ViewManagerModel viewManagerModel = viewManager.getViewManagerModel();
         UserFactory userFactory = new UserFactory();
 
         // Presenter
         LoginOutputBoundary loginPresenter = new LoginPresenter(
-                viewManagerModel, loggedInViewModel, loginViewModel);
+                viewManager, loggedInViewModel, loginViewModel);
         SignupOutputBoundary signupPresenter = new SignupPresenter(
-                viewManagerModel, loginViewModel, signupViewModel
+                viewManager, loginViewModel, signupViewModel
         );
 
         // Interactor

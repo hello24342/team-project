@@ -58,9 +58,6 @@ public class AppBuilder {
 
         FlashcardDataAccessInterface cardDAO = new FileFlashcardDataAccessObject("flashcards.csv");
 
-        // assume currently only one user, id = 1
-        int currentUserId = 1;
-
         // 3) construct use case components
         // TODO: other use case components
 
@@ -81,7 +78,7 @@ public class AppBuilder {
 
         // deck UC5 & 10 & 11
         DeckMenuBundle deckBundle =
-                DeckManageUseCaseFactory.build(deckDAO, cardDAO, fileUserDataAccessObject, currentUserId);
+                DeckManageUseCaseFactory.build(deckDAO, cardDAO, fileUserDataAccessObject);
 
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
@@ -105,6 +102,7 @@ public class AppBuilder {
         // LoggedInView
         LoggedInView loggedInView = new LoggedInView(
                 logoutBundle.loggedInViewModel,
+                deckBundle.vm,
                 logoutBundle.logoutController,
                 deckBundle.listController,
                 deckBundle.createController,
@@ -128,12 +126,12 @@ public class AppBuilder {
                 studyBundle.controller,
                 /*editBundle.controller,*/ null,
                 createBundle.vm,
-                currentUserId,
+                userDAO.getCurrentUserId(),
                 viewManager
         );
 
         // StudyDeckView
-        StudyDeckView studyView = new StudyDeckView(studyBundle.vm, viewManager);
+        StudyDeckView studyView = new StudyDeckView(studyBundle.vm, viewManager, fileUserDataAccessObject);
         studyView.setController(studyBundle.controller);
 
         //CreateFlashcardView

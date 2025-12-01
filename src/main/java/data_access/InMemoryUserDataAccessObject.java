@@ -11,6 +11,7 @@ public class InMemoryUserDataAccessObject implements UserDataAccessInterface {
     private final Map<String, User> usersByUsername = new HashMap<>();
     private final Map<String, User> usersByEmail = new HashMap<>();
     private String currentUsername;
+    private int userId;
 
     @Override
     public boolean usernameExists(String username) {
@@ -25,6 +26,11 @@ public class InMemoryUserDataAccessObject implements UserDataAccessInterface {
     @Override
     public int getNextUserId() {
         return usersByUsername.size() + 1;
+    }
+
+    @Override
+    public int getCurrentUserId() {
+        return usersByUsername.size();
     }
 
     @Override
@@ -55,9 +61,7 @@ public class InMemoryUserDataAccessObject implements UserDataAccessInterface {
             }
         }
         return null;
-    }
-
-    ;
+    };
 
     @Override
     public void addDeckToUser(String username, int deckId) {
@@ -72,5 +76,10 @@ public class InMemoryUserDataAccessObject implements UserDataAccessInterface {
             deckIds.add(deckId);
             user.setDeckIds(deckIds);
         }
+    }
+
+    @Override
+    public void setCurrentUserId(int userId) {
+        this.userId = userId;
     }
 }

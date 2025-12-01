@@ -182,11 +182,15 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         return result;
     }
     @Override
-    public void markCardAsKnown(int userId, int deckId, int cardIndex) {
+    public void markCardAsKnown(int userId, int deckId, int cardIndex, int dontKnowDeckId) {
         List<Flashcard> deck = findByDeck(deckId);
         Flashcard card = deck.get(cardIndex);
         card.setKnown(true);
         knownCountCache.put(deckId, knownCountCache.getOrDefault(deckId, 0) + 1);
+        if (dontKnowDeckId != -1) {
+            List<Integer> deckIds = card.getDeckIds();
+            deckIds.remove(Integer.valueOf(dontKnowDeckId));
+        }
         saveToFile();
     }
 
@@ -216,7 +220,6 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         }
 
         // for don't know deck, known count does not change since the card is unknown
-
         saveToFile();
     }
 

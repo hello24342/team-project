@@ -4,3 +4,12 @@ deck_id,user_id,title,is_dont_know
 3,1,Beverage,false
 4,0,Don't know deck,true
 5,1,Food,false
+6,-1,Don't know deck,true
+7,2,Don't know deck,true
+8,2,food,false
+9,2,beverage,false
+10,2,animals,false
+11,2,new deck,false
+12,3,Don't know deck,true
+13,3,new deck again,false
+14,2,hello,false

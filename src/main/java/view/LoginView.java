@@ -177,7 +177,6 @@ public class LoginView extends JPanel implements PropertyChangeListener {
                     return;
                 }
                 loginController.execute(username.trim(), password.trim());
-                viewManager.show("LoggedIn");
             }
         });
 
@@ -210,32 +209,33 @@ public class LoginView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             LoginState state = (LoginState) evt.getNewValue();
 
-            // DEBUG
-            System.out.println("=== PROPERTY CHANGE ===");
-            System.out.println("New state username: '" + state.getUsername() + "'");
-            System.out.println("New state password length: " + state.getPassword().length());
+            System.out.println("=== LOGIN VIEW PROPERTY CHANGE ===");
             System.out.println("Login error: " + state.getLoginError());
+            System.out.println("Username in state: '" + state.getUsername() + "'");
 
             String error = state.getLoginError();
             if (error != null && !error.isEmpty()) {
+                // Show error
                 usernameErrorField.setText(error);
                 passwordErrorField.setText(error);
-                if (!state.getUsername().equals(usernameInputField.getText())) {
-                    usernameInputField.setText(state.getUsername());
-                }
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        error,
+                        "Login Error",
+                        JOptionPane.ERROR_MESSAGE
+                );
+
+                state.setLoginError(null);
+                loginViewModel.setState(state);
+            } else if (state.getUsername() != null && !state.getUsername().isEmpty()) {
+                clearForm();
+                SwingUtilities.invokeLater(() -> {
+                    viewManager.show("LoggedIn");
+                });
             } else {
                 usernameErrorField.setText("");
                 passwordErrorField.setText("");
-            }
-
-            if (state.getUsername().isEmpty() && !usernameInputField.getText().isEmpty()) {
-                System.out.println("Clearing username field in UI");
-                usernameInputField.setText("");
-            }
-
-            if (state.getPassword().isEmpty() && passwordInputField.getPassword().length > 0) {
-                System.out.println("Clearing password field in UI");
-                passwordInputField.setText("");
             }
         }
     }

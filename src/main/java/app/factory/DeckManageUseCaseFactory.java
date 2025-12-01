@@ -35,8 +35,7 @@ public class DeckManageUseCaseFactory {
     // Builds the use case components for managing decks so that they can be used in the UI
     public static DeckMenuBundle build(DeckDataAccessInterface deckDAO,
                                        FlashcardDataAccessInterface cardDAO,
-                                       FileUserDataAccessObject userDAO,
-                                       int userId) {
+                                       FileUserDataAccessObject userDAO) {
         DeckMenuViewModel vm = new DeckMenuViewModel();
 
         // Presenters
@@ -51,9 +50,9 @@ public class DeckManageUseCaseFactory {
 
         // Controllers
         CreateDeckController createCtl =
-                new CreateDeckController(createInteractor, userId);
+                new CreateDeckController(createInteractor, userDAO);
         ListDecksController listCtl =
-                new ListDecksController(listInteractor, userId);
+                new ListDecksController(listInteractor, userDAO);
 
         //Detail VM + OpenDeck
         DeckDetailViewModel detailVM = new DeckDetailViewModel();
@@ -62,8 +61,5 @@ public class DeckManageUseCaseFactory {
         OpenDeckController openCtl = new OpenDeckController(openInteractor);
 
         return new DeckMenuBundle(vm, createCtl, listCtl, openCtl, detailVM, userDAO);
-
-
-
     }
 }

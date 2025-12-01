@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
+import data_access.FileUserDataAccessObject;
 import interface_adapter.study_deck.StudyDeckController;
 import interface_adapter.study_deck.StudyDeckState;
 import interface_adapter.study_deck.StudyDeckViewModel;
@@ -26,12 +27,16 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
     private final JButton exitButton;
 
     private final StudyDeckViewModel viewModel;
+    private final FileUserDataAccessObject userDAO;
     private StudyDeckController controller;
 
     private final ViewManager viewManager;
 
-    public StudyDeckView(StudyDeckViewModel viewModel, ViewManager viewManager) {
+    public StudyDeckView(StudyDeckViewModel viewModel, ViewManager viewManager, FileUserDataAccessObject userDAO) {
         this.viewManager = viewManager;
+        this.viewModel = viewModel;
+        this.viewModel.addPropertyChangeListener(this);
+        this.userDAO = userDAO;
 
         cardLabel = new JLabel();
         deckTitleLabel = new JLabel();
@@ -51,9 +56,6 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         knowButton = new JButton("Know it");
         dontKnowButton = new JButton("Don't know it");
         exitButton = new JButton("Exit");
-
-        this.viewModel = viewModel;
-        this.viewModel.addPropertyChangeListener(this);
 
         updateView(this.viewModel.getState());
 
@@ -99,7 +101,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         else if (e.getSource() == previousButton) {
             controller.previousCard(currentState.getDeckId(), currentState.getCardIndex());
         } else if (e.getSource() == knowButton) {
-            controller.markKnown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex(), currentState.getUsername());
+            controller.markKnown(currentState.getDeckId(), currentState.getCardIndex(), currentState.getDontKnowDeckId());
         } else if (e.getSource() == dontKnowButton) {
             controller.markUnknown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex());
         }
