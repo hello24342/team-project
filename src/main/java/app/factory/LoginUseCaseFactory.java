@@ -8,7 +8,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginOutputBoundary;
-import use_case.login.LoginUserDataAccessInterface;
+import use_case.UserDataAccessInterface;
 import view.ViewManager;
 
 public class LoginUseCaseFactory {
@@ -23,7 +23,7 @@ public class LoginUseCaseFactory {
         }
     }
 
-    public static LoginBundle build(LoginUserDataAccessInterface userDataAccess,
+    public static LoginBundle build(UserDataAccessInterface userDataAccess,
                                     ViewManager viewManager) {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();

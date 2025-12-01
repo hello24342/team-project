@@ -13,7 +13,7 @@ class SignupInteractorTest {
     @Test
     void successTest() {
         SignupInputData inputData = new SignupInputData("Paul", "paul123@example.com", "password", "password");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        UserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
             @Override
@@ -40,7 +40,7 @@ class SignupInteractorTest {
     @Test
     void failurePasswordMismatchTest() {
         SignupInputData inputData = new SignupInputData("Paul", "paul123@example.com", "password", "wrong");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        UserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
@@ -67,7 +67,7 @@ class SignupInteractorTest {
     @Test
     void failureUserExistsTest() {
         SignupInputData inputData = new SignupInputData("Paul", "paul123@example.com", "password", "wrong");
-        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+        UserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         UserFactory factory = new UserFactory();
         User user = factory.create(1,"Paul", "paul123@example.com", "pwd");

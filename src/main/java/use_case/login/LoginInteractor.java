@@ -2,18 +2,19 @@ package use_case.login;
 
 import entity.FlashcardDeck;
 import entity.User;
+import use_case.UserDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginInteractor implements LoginInputBoundary {
 
-    public LoginUserDataAccessInterface loginUserDataAccessObject;
+    public UserDataAccessInterface userDataAccessObject;
     public LoginOutputBoundary loginPresenter;
 
-    public LoginInteractor(LoginUserDataAccessInterface loginUserDataAccessInterface,
+    public LoginInteractor(UserDataAccessInterface userDataAccessObject,
                            LoginOutputBoundary loginPresenter) {
-        this.loginUserDataAccessObject = loginUserDataAccessInterface;
+        this.userDataAccessObject = userDataAccessObject;
         this.loginPresenter = loginPresenter;
     }
 
@@ -21,17 +22,17 @@ public class LoginInteractor implements LoginInputBoundary {
     public void execute(LoginInputData loginInputData) {
         final String username = loginInputData.getUsername();
         final String password = loginInputData.getPassword();
-        if (!loginUserDataAccessObject.usernameExists(username)) {
+        if (!userDataAccessObject.usernameExists(username)) {
             loginPresenter.loginFailureView(username + ": This account does not exist!");
         }
         else {
-            final String pwd = loginUserDataAccessObject.getUser(username).getPassword();
+            final String pwd = userDataAccessObject.getUser(username).getPassword();
             if (!password.equals(pwd)) {
                 loginPresenter.loginFailureView("Incorrect password for \"" + username + "\".");
             }
             else {
-                final User user = loginUserDataAccessObject.getUser(loginInputData.getUsername());
-                loginUserDataAccessObject.setCurrentUsername(username);
+                final User user = userDataAccessObject.getUser(loginInputData.getUsername());
+                userDataAccessObject.setCurrentUsername(username);
 
                 List<String> userDeckNames = getUserDeckNames(user);
 

@@ -1,14 +1,15 @@
 package app.factory;
 
+import entity.User;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import use_case.UserDataAccessInterface;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.login.LoginUserDataAccessInterface;
 import view.ViewManager;
 
 public class LogoutUseCaseFactory {
@@ -24,7 +25,7 @@ public class LogoutUseCaseFactory {
     }
 
     public static LogoutBundle build(ViewManager viewManager,
-                                     LoginUserDataAccessInterface userDataAccess) {
+                                     UserDataAccessInterface userDataAccess) {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
 
