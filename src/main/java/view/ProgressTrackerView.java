@@ -15,7 +15,7 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
     private final String viewName = "progress tracker";
 
     private final JButton changeLearningGoalButton = new JButton("Change Learning Goal");
-    private final JButton cancelButton = new JButton("Cancel");
+    private final JButton cancelButton = new JButton("Home");
     private final JProgressBar progressBar = new JProgressBar(0,100);
 
     private final ProgressTrackerViewModel progressTrackerViewModel;
@@ -49,10 +49,7 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
                 }
             }
         });
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // switch screen to main view
-            }
+        cancelButton.addActionListener(e -> {ViewManager.show("LoggedIn");
         });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

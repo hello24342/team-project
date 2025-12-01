@@ -4,6 +4,7 @@ import data_access.LearningGoalDataAccess;
 import interface_adapter.learning_goal.LearningGoalController;
 import interface_adapter.learning_goal.LearningGoalViewModel;
 import interface_adapter.learning_goal.LearningGoalState;
+import view.ViewManager;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -56,10 +57,7 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
                 }
             }
         });
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // work on this bit
-            }
+        cancelButton.addActionListener(e -> {ViewManager.show("Progress"); // change this if needed
         });
 
         learningGoalInputField.getDocument().addDocumentListener(new DocumentListener() {
