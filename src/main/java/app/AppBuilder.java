@@ -127,8 +127,8 @@ public class AppBuilder {
                 deckBundle.detailVM,
                 deckBundle.openController,
                 studyBundle.controller,
-                deckBundle.createController,
                 /*editBundle.controller,*/ null,
+                createBundle.vm,
                 currentUserId,
                 viewManager
         );
@@ -139,7 +139,7 @@ public class AppBuilder {
 
         //CreateFlashcardView
         CreateFlashcardView createFlashcardView =
-                new CreateFlashcardView(createBundle.controller, createBundle.vm);
+                new CreateFlashcardView(createBundle.controller, createBundle.vm, viewManager);
 
         // EditFlashcardView
         // TODO: uncomment when EditFlashcardUseCaseFactory is ready

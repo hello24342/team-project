@@ -1,8 +1,4 @@
 deck_id,user_id,title,is_dont_know
 1,1,Don't know deck,true
-2,1,food,false
-3,1,drinks,false
-4,1,art,false
-5,1,jane,false
-6,1,toiletries,false
-7,1,snacks,false
+2,1,Animal,false
+3,1,Beverage,false
