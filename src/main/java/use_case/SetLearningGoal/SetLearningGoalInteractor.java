@@ -9,18 +9,16 @@ public class SetLearningGoalInteractor implements SetLearningGoalInputBoundary {
     private final LearningGoalDataAccess setLearningGoalDAO;
     private final SetLearningGoalOutputBoundary presenter;
 
-    // do i have to have this?
-    public SetLearningGoalInteractor(LearningGoalDataAccess DAO,
+    public SetLearningGoalInteractor(LearningGoalDataAccess learningGoalDataAccess,
                                      SetLearningGoalOutputBoundary presenter) {
-        this.setLearningGoalDAO = DAO;
+        this.setLearningGoalDAO = learningGoalDataAccess;
         this.presenter = presenter;
     }
 
     @Override
     public void execute(SetLearningGoalInputData inputdata){
         int dailyTarget = inputdata.getDailyTarget();
-        presenter.prepareSuccess(new SetLearningGoalOutputData(dailyTarget));
-        //write out what the learning goal is at the bottom of the progress screen
+        presenter.presentSuccess(new SetLearningGoalOutputData(dailyTarget));
         }
 
 
