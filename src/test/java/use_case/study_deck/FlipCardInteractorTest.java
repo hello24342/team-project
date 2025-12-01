@@ -4,7 +4,7 @@ import data_access.InMemoryFlashcardDataAccessObject;
 import entity.Flashcard;
 import entity.Language;
 import org.junit.jupiter.api.Test;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.study_deck.flip_card.FlipCardInputData;
 import use_case.study_deck.flip_card.FlipCardInteractor;
 import use_case.study_deck.flip_card.FlipCardOutputBoundary;

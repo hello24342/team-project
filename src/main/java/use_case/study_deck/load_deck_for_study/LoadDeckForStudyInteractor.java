@@ -2,7 +2,7 @@ package use_case.study_deck.load_deck_for_study;
 
 import entity.Flashcard;
 import entity.FlashcardDeck;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 
 public class LoadDeckForStudyInteractor implements LoadDeckForStudyInputBoundary {

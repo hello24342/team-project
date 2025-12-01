@@ -1,85 +1,77 @@
 package view;
 
-import interface_adapter.flashcard.CreateFlashcardController;
-import use_case.flashcard_create.CreateFlashcardInputData;
-import use_case.flashcard_create.CreateFlashcardOutputData;
+import interface_adapter.create_flashcard.CreateFlashcardController;
+import interface_adapter.create_flashcard.CreateFlashcardViewModel;
+import entity.Language;
+import use_case.flashcard.create.CreateFlashcardInputData;
 
 import javax.swing.*;
 import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class CreateFlashcardView extends JFrame {
+public class CreateFlashcardView extends JPanel implements PropertyChangeListener {
 
-    private final CreateFlashcardController controller;
+    private final transient CreateFlashcardController controller;
+    private final CreateFlashcardViewModel viewModel;
 
     private final JTextField sourceWordField;
-    private final JTextField sourceLangField;
-    private final JTextField targetLangField;
-    private final JTextField deckIdField;
+    private final JComboBox<Language> sourceLangDropdown;
+    private final JComboBox<Language> targetLangDropdown;
     private final JTextArea outputArea;
 
-    public CreateFlashcardView(CreateFlashcardController controller) {
+    public CreateFlashcardView(CreateFlashcardController controller,
+                               CreateFlashcardViewModel viewModel) {
+
         this.controller = controller;
+        this.viewModel = viewModel;
 
-        setTitle("Create Flashcard");
-        setSize(400, 400);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        this.viewModel.addPropertyChangeListener(this);
 
-        // Input panel
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new GridLayout(5, 2));
+        this.setLayout(new BorderLayout());
+
+        JPanel inputPanel = new JPanel(new GridLayout(4, 2));
 
         inputPanel.add(new JLabel("Source word:"));
         sourceWordField = new JTextField();
         inputPanel.add(sourceWordField);
 
-        inputPanel.add(new JLabel("Source language code:"));
-        sourceLangField = new JTextField();
-        inputPanel.add(sourceLangField);
+        inputPanel.add(new JLabel("Source language:"));
+        sourceLangDropdown = new JComboBox<>(Language.values());
+        inputPanel.add(sourceLangDropdown);
 
-        inputPanel.add(new JLabel("Target language code:"));
-        targetLangField = new JTextField();
-        inputPanel.add(targetLangField);
-
-        inputPanel.add(new JLabel("Deck ID (optional):"));
-        deckIdField = new JTextField();
-        inputPanel.add(deckIdField);
+        inputPanel.add(new JLabel("Target language:"));
+        targetLangDropdown = new JComboBox<>(Language.values());
+        inputPanel.add(targetLangDropdown);
 
         JButton createButton = new JButton("Create Flashcard");
         inputPanel.add(createButton);
 
-        add(inputPanel, BorderLayout.NORTH);
+        this.add(inputPanel, BorderLayout.NORTH);
 
-        // Output area
         outputArea = new JTextArea();
         outputArea.setEditable(false);
-        add(new JScrollPane(outputArea), BorderLayout.CENTER);
+        this.add(new JScrollPane(outputArea), BorderLayout.CENTER);
 
-        // Button action
+        // Action listener
         createButton.addActionListener(e -> createFlashcard());
     }
 
     private void createFlashcard() {
-        String sourceWord = sourceWordField.getText();
-        String sourceLang = sourceLangField.getText();
-        String targetLang = targetLangField.getText();
-        String deckId = deckIdField.getText();
+        String word = sourceWordField.getText();
+        Language sourceLang = (Language) sourceLangDropdown.getSelectedItem();
+        Language targetLang = (Language) targetLangDropdown.getSelectedItem();
 
-        CreateFlashcardInputData request = new CreateFlashcardInputData(
-                sourceWord,
-                sourceLang,
-                targetLang,
-                deckId.isEmpty() ? null : deckId
-        );
+        CreateFlashcardInputData input =
+                new CreateFlashcardInputData(word, sourceLang, targetLang);
 
-        try {
-            CreateFlashcardOutputData response = controller.createFlashcard(request);
-            outputArea.setText("Flashcard created!\n"
-                    + "Source word: " + response.getSourceWord() + "\n"
-                    + "Translated word: " + response.getTargetWord() + "\n"
-                    + "Deck IDs: " + response.getDeckIds());
-        } catch (Exception ex) {
-            outputArea.setText("Error creating flashcard: " + ex.getMessage());
+        controller.createFlashcard(input);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("message".equals(evt.getPropertyName())) {
+            outputArea.setText(viewModel.getMessage());
         }
     }
 }

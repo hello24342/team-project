@@ -1,0 +1,31 @@
+package interface_adapter.create_flashcard;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public class CreateFlashcardViewModel {
+
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
+    private String message = "";
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String newMessage) {
+        String oldMessage = this.message;
+        this.message = newMessage;
+        pcs.firePropertyChange("message", oldMessage, newMessage);
+    }
+
+    // The View will register itself as a listener
+    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+        pcs.addPropertyChangeListener(pcl);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        pcs.removePropertyChangeListener(pcl);
+    }
+}
+

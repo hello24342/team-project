@@ -2,7 +2,7 @@ package use_case.deck.open_deck;
 
 import entity.FlashcardDeck;
 import entity.Flashcard;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 
 import java.util.ArrayList;

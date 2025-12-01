@@ -2,7 +2,7 @@ package use_case.study_deck.mark_known;
 
 import data_access.FileUserDataAccessObject;
 import entity.User;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 
 public class MarkKnownInteractor implements MarkKnownInputBoundary {
     private final FlashcardDataAccessInterface flashcardDataAccess;
