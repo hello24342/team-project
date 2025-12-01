@@ -30,13 +30,11 @@ public class SignupUseCaseFactory {
                                      ViewManager viewManager) {
         SignupViewModel signupViewModel = new SignupViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
-
-        ViewManagerModel viewManagerModel = viewManager.getViewManagerModel();
         UserFactory userFactory = new UserFactory();
 
         // Presenter
         SignupOutputBoundary signupPresenter = new SignupPresenter(
-                viewManagerModel, loginViewModel, signupViewModel);
+                viewManager, loginViewModel, signupViewModel);
 
         // Interactor
         SignupInputBoundary signupInteractor = new SignupInteractor(

@@ -105,6 +105,7 @@ public class AppBuilder {
         // LoggedInView
         LoggedInView loggedInView = new LoggedInView(
                 logoutBundle.loggedInViewModel,
+                deckBundle.vm,
                 logoutBundle.logoutController,
                 deckBundle.listController,
                 deckBundle.createController,

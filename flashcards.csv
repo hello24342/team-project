@@ -1,1 +1,2 @@
 id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds
+1,cheese,keju,ENGLISH,INDONESIAN,false,""
