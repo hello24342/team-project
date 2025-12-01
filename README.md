@@ -5,7 +5,7 @@ Please keep this up-to-date with information about your project throughout the t
 The readme should include information such as:
 - a summary of what your application is all about
 - a list of the user stories, along with who is responsible for each one
-- information about the API(s) that your project uses 
+- information about the API(s) that your project uses
 - screenshots or animations demonstrating current functionality
 
 ## **Domain**
@@ -24,8 +24,7 @@ Our project’s domain is Education, with the main purpose being a language lear
 - User Story #9: As a user, I want to be able to edit and delete existing flashcards so I can correct mistakes or remove ones I don’t need.
 - User Story #10: As a user, I want to see all my decks listed on the deck menu, and there’s a Don’t Know Deck on the top
 - User Story #11: As a user, I want to open each deck on the deck menu, and on each deck’s panel, I can see all the flashcards of the deck and can do further execution of adding flashcards (UC#1), studying the flashcards (UC#2), and editing flashcards (UC#9)
-- User Story #12: As a user, I want to be able to change my password.
-- User Story #13: As a user, I want to be able to log out of my account.
+- User Story #12: As a user, I want to be able to log out of my account.
 
 ## **Use Cases**
 
@@ -63,7 +62,7 @@ The user clicks on the activity menu.
 The system displays a histogram of the user’s daily goal completion rate for the week (for instance, if the user studied 10 flashcards out of their daily goal of 20 flashcards, they will get a 50% daily goal completion rate).
 The system will display a new histogram every week.
 
-### Use Case #4 Title: Setting Daily Learning Goals  
+### Use Case #4 Title: Setting Daily Learning Goals
 
 Related User Story #4: As a user I want to be able to set and modify learning goals (e.g. I wanna learn X new words a day).
 
@@ -87,6 +86,10 @@ User clicks on the create decks button.
 System prompts user to create a deck.
 User types in deck title.
 User clicks create deck button to create the deck.
+
+Alternate Flow:
+User tries to create a deck with an existing deck title -> System prompts user to choose a different deck title.
+user tries to create a deck without a title -> System prompts user to enter a non-empty deck title.
 
 ### Use Case #6 Title: Sign Up
 
@@ -163,26 +166,16 @@ System navigates to the Deck Detail panel.
 System displays: deck title, list of flashcards (preview), and buttons: Deck Menu, +New Flashcard (UC#1), Play (UC#2)
 The user clicks each flashcard to edit it (UC#9)
 
-### Use Case #12 Title: Change Password
+### Use Case #12 Title: Log Out
 
-Related User Story #11: As a user, I want to be able to change my password.
-
-Main Flow: 
-The user enters their username and password. 
-The user clicks on the login button. 
-The user inputted a wrong password, so a "wrong password" error shows up. 
-The system prompts the user to try again or change passwords. 
-
-### Use Case #13 Title: Log Out
-
-Related User Story #11: As a user, I want to be able to log out of my account.
+Related User Story #12: As a user, I want to be able to log out of my account.
 
 Main Flow:
 The user is on the logged in view.
 The user clicks on the log-out button on the navigation bar.
-The system asks the user if they are sure they want to log out. 
-The user clicks yes. 
-The system switches the logged in view to the login view. 
+The system asks the user if they are sure they want to log out.
+The user clicks yes.
+The system switches the logged in view to the login view.
 
 ## Leads for Use Cases
 
@@ -190,9 +183,9 @@ The system switches the logged in view to the login view.
 
 Use Case #6: Sign Up,
 Use Case #7: Log In,
-Use Case #11: Open Decks
-User Story #12: Change Password
-User Story #13: Log Out
+Use Case #11: Open Decks,
+Use Case #12: Log Out, 
+Use Case #8: Marking Unknown Words
 
 ### Jennifer
 
@@ -202,11 +195,11 @@ User Story #2
 User Story #8
 
 ### Krista
-
+Use Case #1: Flashcard Creation
 Use Case #5: Create Deck
 Use Case #10: List Deck
 Use Case #11: Open Deck
-User Story #5 #10 #11
+User Story #1 #5 #10 #11
 
 ### Mei
 
@@ -229,10 +222,10 @@ User Story #9
 ## API for the Project
 
 Google Cloud Translation API: https://cloud.google.com/translate?hl=en
-This API offers robust machine learning translation capabilities for a wide range of media, across 189 languages. 
-The API allows us to translate a quote from a source language (optional since the API can detect source languages) to a 
+This API offers robust machine learning translation capabilities for a wide range of media, across 189 languages.
+The API allows us to translate a quote from a source language (optional since the API can detect source languages) to a
 target language. We can also create our own glossaries to translate proper nouns and product names into another language
-in a custom glossary.csv file. 
+in a custom glossary.csv file.
 
 ## Current Functionality Screenshots
 

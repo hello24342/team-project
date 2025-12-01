@@ -1,7 +1,7 @@
 package interface_adapter.deck;
 
-import usecase.deck.create_deck.CreateDeckInputBoundary;
-import usecase.deck.create_deck.CreateDeckInputData;
+import use_case.deck.create_deck.CreateDeckInputBoundary;
+import use_case.deck.create_deck.CreateDeckInputData;
 
 public class CreateDeckController {
 

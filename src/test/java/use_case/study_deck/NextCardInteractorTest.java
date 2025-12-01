@@ -1,0 +1,70 @@
+package use_case.study_deck;
+
+import data_access.InMemoryFlashcardDataAccessObject;
+import entity.Flashcard;
+import entity.Language;
+import org.junit.jupiter.api.Test;
+import use_case.flashcard.FlashcardDataAccessInterface;
+import use_case.study_deck.next_card.NextCardInputData;
+import use_case.study_deck.next_card.NextCardInteractor;
+import use_case.study_deck.next_card.NextCardOutputBoundary;
+import use_case.study_deck.next_card.NextCardOutputData;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class NextCardInteractorTest {
+    @Test
+    void testNoMoreCardsFailure() {
+        NextCardInputData nextCardInputData = new NextCardInputData(1, 0);
+        FlashcardDataAccessInterface flashcardDAO = new InMemoryFlashcardDataAccessObject();
+
+        Flashcard card = new Flashcard(9, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH);
+        card.addDeck(1);
+        flashcardDAO.save(card);
+
+        NextCardOutputBoundary presenter = new NextCardOutputBoundary() {
+            @Override
+            public void presentSuccessView(NextCardOutputData outputData) {
+                fail("Unexpected success");
+            }
+            @Override
+            public void presentFailureView(String error) {
+                assertEquals("No more cards in deck.", error);
+            }
+        };
+
+        NextCardInteractor interactor = new NextCardInteractor(flashcardDAO, presenter);
+        interactor.execute(nextCardInputData);
+    }
+
+    @Test
+    void testNextCardSuccess() {
+        NextCardInputData nextCardInputData = new NextCardInputData(10, 0);
+        FlashcardDataAccessInterface flashcardDAO = new InMemoryFlashcardDataAccessObject();
+
+        Flashcard firstCard = new Flashcard(1, "Hello", "Bonjour", Language.ENGLISH, Language.FRENCH);
+        firstCard.addDeck(10);
+        flashcardDAO.save(firstCard);
+        Flashcard secondCard = new Flashcard(2, "Thank you", "Merci", Language.ENGLISH, Language.FRENCH);
+        secondCard.addDeck(10);
+        flashcardDAO.save(secondCard);
+
+        NextCardOutputBoundary presenter = new NextCardOutputBoundary() {
+            @Override
+            public void presentSuccessView(NextCardOutputData data) {
+                assertEquals(10, data.getDeckId());
+                assertEquals(1, data.getCardIndex());
+                assertEquals("Thank you", data.getSourceWord());
+                assertEquals("Merci", data.getTargetWord());
+            }
+
+            @Override
+            public void presentFailureView(String error) {
+                fail("Unexpected failure");
+            }
+        };
+
+        NextCardInteractor interactor = new NextCardInteractor(flashcardDAO, presenter);
+        interactor.execute(nextCardInputData);
+    }
+}

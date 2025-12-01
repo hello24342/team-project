@@ -1,7 +1,7 @@
 package interface_adapter.deck;
 
-import usecase.deck.list_deck.ListDecksInputBoundary;
-import usecase.deck.list_deck.ListDecksInputData;
+import use_case.deck.list_deck.ListDecksInputBoundary;
+import use_case.deck.list_deck.ListDecksInputData;
 
 public class ListDecksController {
     private final ListDecksInputBoundary interactor;

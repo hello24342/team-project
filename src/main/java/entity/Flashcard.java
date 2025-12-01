@@ -10,7 +10,7 @@ public class Flashcard {
     private Language sourceLang;
     private Language targetLang;
     private boolean known;
-    private List<String> deckIds;
+    private List<Integer> deckIds;
 
     public Flashcard(int id, String sourceWord, String targetWord, Language sourceLang, Language targetLang) {
         this.id = id;
@@ -46,30 +46,48 @@ public class Flashcard {
         return targetWord;
     }
 
-    public void setKnown() {
-        this.known = true;
+    public void setKnown(boolean known) {
+        this.known = known;
     }
 
     public boolean isKnown() {
         return this.known;
     }
 
-    public void addDeck(String deckId) {
+    /**
+     * Add a deck to the list of decks this flashcard belongs to.
+     * @param deckId the ID of the deck to add
+     */
+    public void addDeck(Integer deckId) {
         if (!deckIds.contains(deckId)) {
             deckIds.add(deckId);
         }
     }
 
-    public void removeDeck(String deckId) {
+    /**
+     * Remove a deck from the list of decks this flashcard belongs to.
+     * @param deckId the ID of the deck to remove
+     */
+    public void removeDeck(Integer deckId) {
         deckIds.remove(deckId);
     }
 
-    public List<String> getDeckIds() {
+    public List<Integer> getDeckIds() {
         return deckIds;
     }
+
+    /**
+     * Get the language of the source word.
+     * @return the language of the source word
+     */
     public Language getSourceLang() {
         return sourceLang;
     }
+
+    /**
+     * Get the language of the target word.
+     * @return the language of the target word
+     */
     public Language getTargetLang() {
         return targetLang;
     }

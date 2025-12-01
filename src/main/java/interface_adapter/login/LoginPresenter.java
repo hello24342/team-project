@@ -3,8 +3,8 @@ package interface_adapter.login;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import usecase.login.LoginOutputBoundary;
-import usecase.login.LoginOutputData;
+import use_case.login.LoginOutputBoundary;
+import use_case.login.LoginOutputData;
 
 public class LoginPresenter implements LoginOutputBoundary {
     private final LoginViewModel loginViewModel;
@@ -25,6 +25,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         // update the loggedInViewModel's state
         final LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setUsername(loginOutputData.getUsername());
+        loggedInState.setUserDecks(loginOutputData.getUserDeckNames());
         this.loggedInViewModel.firePropertyChange();
 
         // clear the LoginViewModel's state
@@ -38,8 +39,8 @@ public class LoginPresenter implements LoginOutputBoundary {
 
     @Override
     public void loginFailureView(String errorMessage) {
-        final LoginState loginState = loginViewModel.getState();
+        LoginState loginState = loginViewModel.getState();
         loginState.setLoginError(errorMessage);
-        loginViewModel.firePropertyChange();
+        loginViewModel.setState(loginState);
     }
 }
