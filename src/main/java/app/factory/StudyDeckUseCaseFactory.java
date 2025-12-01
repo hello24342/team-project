@@ -50,7 +50,7 @@ public class StudyDeckUseCaseFactory {
          MarkUnknownInputBoundary markUnknownInteractor = new MarkUnknownInteractor(deckDAO, cardDAO, presenter);
 
         StudyDeckController controller = new StudyDeckController(loadInteractor, flipInteractor, nextInteractor,
-                prevInteractor, markKnownInteractor, markUnknownInteractor
+                prevInteractor, markKnownInteractor, markUnknownInteractor, userDAO
         );
 
         return new StudyDeckBundle(vm, controller);

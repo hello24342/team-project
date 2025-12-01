@@ -108,14 +108,14 @@ public class InMemoryFlashcardDataAccessObject implements FlashcardDataAccessInt
     }
 
     @Override
-    public void markCardAsKnown(int userId, int deckId, int cardIndex) {
+    public void markCardAsKnown(int userId, int deckId, int cardIndex, int dontKnowDeckId) {
         List<Flashcard> deck = findByDeck(deckId);
-        if (cardIndex >= 0 && cardIndex < deck.size()) {
-            Flashcard card = deck.get(cardIndex);
-            if (!card.isKnown()) {
-                card.setKnown(true);
-                knownCountCache.put(deckId, knownCountCache.getOrDefault(deckId, 0) + 1);
-            }
+        Flashcard card = deck.get(cardIndex);
+        card.setKnown(true);
+        knownCountCache.put(deckId, knownCountCache.getOrDefault(deckId, 0) + 1);
+        if (dontKnowDeckId != -1) {
+            List<Integer> deckIds = card.getDeckIds();
+            deckIds.remove(Integer.valueOf(dontKnowDeckId));
         }
     }
 

@@ -2,6 +2,7 @@ package app.factory;
 
 import entity.User;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.deck.DeckMenuViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
@@ -17,16 +18,19 @@ public class LogoutUseCaseFactory {
     public static class LogoutBundle {
         public final LoggedInViewModel loggedInViewModel;
         public final LogoutController logoutController;
+        public DeckMenuViewModel deckMenuViewModel;
 
-        public LogoutBundle(LoggedInViewModel loggedInViewModel, LogoutController logoutController) {
+        public LogoutBundle(LoggedInViewModel loggedInViewModel, LogoutController logoutController, DeckMenuViewModel deckMenuViewModel) {
             this.loggedInViewModel = loggedInViewModel;
             this.logoutController = logoutController;
+            this.deckMenuViewModel = deckMenuViewModel;
         }
     }
 
     public static LogoutBundle build(ViewManager viewManager,
                                      UserDataAccessInterface userDataAccess) {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
+        DeckMenuViewModel deckMenuViewModel = new DeckMenuViewModel();
         LoginViewModel loginViewModel = new LoginViewModel();
 
         ViewManagerModel viewManagerModel = viewManager.getViewManagerModel();
@@ -41,6 +45,6 @@ public class LogoutUseCaseFactory {
         // Controller
         LogoutController logoutController = new LogoutController(logoutInteractor);
 
-        return new LogoutBundle(loggedInViewModel, logoutController);
+        return new LogoutBundle(loggedInViewModel, logoutController, deckMenuViewModel);
     }
 }

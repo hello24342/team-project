@@ -1,2 +1,5 @@
-#username,email,password,totalKnownFlashcards,totalFlashcards,deckIds
-1,1,1,1,1,0,[2]
+#userId,username,email,password,totalKnownFlashcards,totalFlashcards,deckIds
+4,jane3,janetest3@mail.com,12345,0,0,[]
+3,jane2,janetest@mail.com,12345,0,0,[13]
+1,Krista,kristalulu020514@gmail.com,123456,3,0,[2]
+2,jane,jane123@mail.com,12345,1,0,[8]

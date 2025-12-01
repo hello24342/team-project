@@ -24,11 +24,11 @@ public class LoginInteractor implements LoginInputBoundary {
         final String password = loginInputData.getPassword();
 
         System.out.println("=== LOGIN INTERACTOR ===");
-        System.out.println("Input username: '" + loginInputData.getUsername() + "'");
-        System.out.println("Input password: '" + loginInputData.getPassword() + "'");
+        System.out.println("Input username: '" + username + "'");
+        System.out.println("Input password: '" + password + "'");
 
         // Check if user exists
-        boolean userExists = userDataAccessObject.usernameExists(loginInputData.getUsername());
+        boolean userExists = userDataAccessObject.usernameExists(username);
         System.out.println("User exists: " + userExists);
 
         if (!userExists) {
@@ -37,24 +37,22 @@ public class LoginInteractor implements LoginInputBoundary {
             return;
         }
 
-        if (!userDataAccessObject.usernameExists(username)) {
-            loginPresenter.loginFailureView(username + ": This account does not exist!");
+        final String storedPassword = userDataAccessObject.getUser(username).getPassword();
+        if (!password.equals(storedPassword)) {
+            System.out.println("LOGIN FAIL: Incorrect password");
+            loginPresenter.loginFailureView("Incorrect password for \"" + username + "\".");
+            return;
         }
-        else {
-            final String pwd = userDataAccessObject.getUser(username).getPassword();
-            if (!password.equals(pwd)) {
-                loginPresenter.loginFailureView("Incorrect password for \"" + username + "\".");
-            }
-            else {
-                final User user = userDataAccessObject.getUser(loginInputData.getUsername());
-                userDataAccessObject.setCurrentUsername(username);
 
-                List<String> userDeckNames = getUserDeckNames(user);
+        System.out.println("LOGIN SUCCESS: " + username);
+        final User user = userDataAccessObject.getUser(username);
+        userDataAccessObject.setCurrentUsername(username);
+        userDataAccessObject.setCurrentUserId(user.getUserId());
 
-                final LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), userDeckNames);
-                loginPresenter.loginSuccessView(loginOutputData);
-            }
-        }
+        List<String> userDeckNames = getUserDeckNames(user);
+
+        final LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), userDeckNames);
+        loginPresenter.loginSuccessView(loginOutputData);
     }
 
     public List<String> getUserDeckNames(User user) {
@@ -65,6 +63,6 @@ public class LoginInteractor implements LoginInputBoundary {
                 userDeckNames.add(deck.getTitle());
             }
         }
-    return userDeckNames;
+        return userDeckNames;
     }
 }

@@ -5,12 +5,14 @@ public class MarkKnownInputData {
     private final int deckId;
     private final int cardIndex;
     private final String username;
+    private final int dontKnowDeckId;
 
-    public MarkKnownInputData(int userId, int deckId, int cardIndex, String username) {
+    public MarkKnownInputData(int userId, int deckId, int cardIndex, String username, int dontKnowDeckId) {
         this.userId = userId;
         this.deckId = deckId;
         this.cardIndex = cardIndex;
         this.username = username;
+        this.dontKnowDeckId = dontKnowDeckId;
     }
 
     public int getUserId() {
@@ -26,4 +28,6 @@ public class MarkKnownInputData {
     }
 
     public String getUsername() { return username; }
+
+    public int getDontKnowDeckId() { return dontKnowDeckId; }
 }

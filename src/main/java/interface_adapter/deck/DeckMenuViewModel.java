@@ -20,7 +20,6 @@ public class DeckMenuViewModel {
         this.errorMessage = null;
     }
 
-
     public void addPropertyChangeListener(PropertyChangeListener l) {
         support.addPropertyChangeListener(l);
     }
