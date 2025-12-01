@@ -113,12 +113,11 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
         JButton editButton = new JButton("Edit");
         editButton.setPreferredSize(new Dimension(80, 30));
         editButton.addActionListener(e -> {
-            // Navigate to CreateFlashcardView in edit mode for existing flashcard
             int deckId = vm.getDeckId();
             String deckTitle = vm.getDeckTitle();
 
             if (deckId > 0 && deckTitle != null && !deckTitle.isEmpty()) {
-                editCtl.prepareViewForEdit(card.id, deckId, deckTitle, card.sourceWord, card.targetWord);
+                editCtl.prepareViewForEdit(card.id, card.sourceWord, card.targetWord);
                 viewManager.show("EditFlashcard");
             } else {
                 JOptionPane.showMessageDialog(this,

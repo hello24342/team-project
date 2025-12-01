@@ -1,5 +1,6 @@
 package use_case.login;
 
+import entity.FlashcardDeck;
 import entity.User;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class LoginInteractor implements LoginInputBoundary {
 
                 List<String> userDeckNames = getUserDeckNames(user);
 
-                final LoginOutputData loginOutputData = new LoginOutputData(user.getName(), userDeckNames);
+                final LoginOutputData loginOutputData = new LoginOutputData(user.getUsername(), userDeckNames);
                 loginPresenter.loginSuccessView(loginOutputData);
             }
         }
@@ -43,11 +44,12 @@ public class LoginInteractor implements LoginInputBoundary {
     public List<String> getUserDeckNames(User user) {
         List<String> userDeckNames = new ArrayList<>();
 
-//        if (user.getDecks() != null) {
-//            for (FlashcardDeck deck : user.getDecks()) {
-//                userDeckNames.add(deck.getTitle());
-//            }
-//        }
-    return null; // added temporarily so code could run
+        if (user.getDecks() != null) {
+            for (FlashcardDeck deck : user.getDecks()) {
+                userDeckNames.add(deck.getTitle());
+            }
+        }
+
+        return userDeckNames;
     }
 }

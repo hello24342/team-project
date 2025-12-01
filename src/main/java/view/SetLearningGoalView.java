@@ -61,16 +61,18 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
             public void documentListenerHelper() {
                 // work on this bit
             }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {documentListenerHelper();}
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {documentListenerHelper();}
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
+
         });
-        // work on these
-        @Override
-        public void insertUpdate(DocumentEvent e) {documentListenerHelper();}
 
-        @Override
-        public void removeUpdate(DocumentEvent e) {documentListenerHelper();}
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
