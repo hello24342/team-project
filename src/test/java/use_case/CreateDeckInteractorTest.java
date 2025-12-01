@@ -22,7 +22,7 @@ public class CreateDeckInteractorTest {
 
     @BeforeAll
     static void setupTestFile() throws IOException {
-        // 准备一个包含 userId=123 的测试用户文件
+        // prepare a userId=123 in the csv file for testing
         try (FileWriter writer = new FileWriter(TEST_USERS_CSV)) {
             writer.write("#userId,username,email,password,totalKnownFlashcards,totalFlashcards,deckIds\n");
             writer.write("123,testuser,test@email.com,password123,0,0,[]\n");
@@ -66,7 +66,7 @@ public class CreateDeckInteractorTest {
         CreateDeckInteractor interactor =
                 new CreateDeckInteractor(deckDAO, userDAO, presenter);
 
-        // userId=999 不在 csv 里，getUsernameFromId 会返回 null
+        // userId=999 is not in csv，getUsernameFromId will return null
         CreateDeckInputData input = new CreateDeckInputData(999, "Some Deck");
 
         interactor.createDeck(input);
