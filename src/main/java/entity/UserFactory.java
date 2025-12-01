@@ -10,7 +10,7 @@ public class UserFactory {
      * @return a new User object initialized with the provided name, email, and password
      * @throws IllegalArgumentException if any of the parameters are null or empty
      */
-    public User create(String name, String email, String password) {
-        return new User(name, email, password);
+    public User create(int userId, String name, String email, String password) {
+        return new User(userId, name, email, password);
     }
 }

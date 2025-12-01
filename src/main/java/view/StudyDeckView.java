@@ -7,11 +7,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import interface_adapter.study_deck.StudyDeckController;
 import interface_adapter.study_deck.StudyDeckState;
@@ -93,7 +89,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         else if (e.getSource() == previousButton) {
             controller.previousCard(currentState.getDeckId(), currentState.getCardIndex());
         } else if (e.getSource() == knowButton) {
-            controller.markKnown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex());
+            controller.markKnown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex(), currentState.getUsername());
         } else if (e.getSource() == dontKnowButton) {
             controller.markUnknown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex());
         }

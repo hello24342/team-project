@@ -218,12 +218,12 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
     }
 
     @Override
-    public int getKnownCardsCount(int deckId) {
+    public int getKnownCardsCount(int userId, int deckId) {
         return knownCountCache.get(deckId);
     }
 
     @Override
-    public int getDeckSize(int deckId) {
+    public int getDeckSize(int userId, int deckId) {
         return findByDeck(deckId).size();
     }
 

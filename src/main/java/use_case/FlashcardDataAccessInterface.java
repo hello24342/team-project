@@ -21,7 +21,7 @@ public interface FlashcardDataAccessInterface {
 
     void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId);
 
-    int getKnownCardsCount(int deckId);
+    int getKnownCardsCount(int userId, int deckId);
 
-    int getDeckSize(int deckId);
+    int getDeckSize(int userId, int deckId);
 }
