@@ -1,11 +1,8 @@
 package view;
 
-import data_access.LearningGoalDataAccess;
-import interface_adapter.ViewManagerModel;
 import interface_adapter.learning_goal.LearningGoalController;
 import interface_adapter.learning_goal.LearningGoalViewModel;
 import interface_adapter.learning_goal.LearningGoalState;
-import view.ViewManager;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

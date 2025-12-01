@@ -1,4 +1,6 @@
-package usecase.progressTracker;
+package use_case.progressTracker;
+
+import use_case.progressTracker.progressTrackerOutputData;
 
 /**
  * The output boundary for the progress tracker usecase.

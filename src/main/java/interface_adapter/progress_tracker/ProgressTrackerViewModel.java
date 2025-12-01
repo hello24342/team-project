@@ -5,8 +5,8 @@ import interface_adapter.ViewModel;
 import interface_adapter.login.LoginState;
 
 public class ProgressTrackerViewModel extends ViewModel<ProgressTrackerState> {
-    public LoginViewModel() {
+    public ProgressTrackerViewModel() {
         super("log in");
-        setState(new LoginState());
+        setState(new ProgressTrackerState());
     }
 }
