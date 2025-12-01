@@ -1,8 +1,10 @@
 package use_case.progressTracker;
-import entity.ProgressTracker;
+import entity.User;
+import entity.LearningGoal;
 
 public interface progressTrackerDataAccessInterface {
-    int getKnownCardsCount(int userID, int deckID);
-
+    int getTotalKnownFlashcards();
+    int getTotalFlashcards();
+    int getDailyTarget();
 
 }
