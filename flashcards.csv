@@ -1,7 +1,4 @@
 id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds
-1,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
-2,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
-3,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
-4,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,"2,4,4,4,1"
-5,dog,狗,ENGLISH,CHINESE_SIMPLIFIED,false,"2,4"
-6,,,ABKHAZ,ABKHAZ,false,"2"
+1,hello,Bonjour,ENGLISH,FRENCH,false,"2,1"
+2,bye,au revoir,ENGLISH,FRENCH,false,"2,1"
+3,thank you,merci,ENGLISH,FRENCH,false,"2,1"

@@ -36,7 +36,7 @@ public class StudyDeckUseCaseFactory {
 
         StudyDeckPresenter presenter = new StudyDeckPresenter(vm);
 
-        LoadDeckForStudyInputBoundary loadInteractor = new LoadDeckForStudyInteractor(presenter, deckDAO, cardDAO);
+        LoadDeckForStudyInputBoundary loadInteractor = new LoadDeckForStudyInteractor(presenter, deckDAO, cardDAO, userDAO);
 
         FlipCardInputBoundary flipInteractor = new FlipCardInteractor(cardDAO, presenter);
 

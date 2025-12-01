@@ -22,6 +22,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     private final EditFlashcardController editCtl;
     private final int currentUserId;
     private final CreateFlashcardViewModel createFlashcardVM;
+    private final String username;
 
     private final JLabel titleLabel;
     private final JPanel listPanel;
@@ -33,7 +34,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
                           EditFlashcardController editCtl,
                           CreateFlashcardViewModel createFlashcardVM,
                           int currentUserId,
-                          ViewManager viewManager) {
+                          ViewManager viewManager, String username) {
         this.vm = vm;
         this.openCtl = openCtl;
         this.studyCtl = studyCtl;
@@ -41,6 +42,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
         this.createFlashcardVM = createFlashcardVM;
         this.currentUserId = currentUserId;
         this.viewManager = viewManager;
+        this.username = username;
 
         setLayout(new BorderLayout());
 
@@ -82,7 +84,7 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
 
 
         playBtn.addActionListener(e -> {
-            studyCtl.loadDeckForStudy(currentUserId, vm.getDeckId());
+            studyCtl.loadDeckForStudy(currentUserId, vm.getDeckId(), username);
             viewManager.show("Study");
         });
     }

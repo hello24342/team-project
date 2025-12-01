@@ -2,10 +2,12 @@ package use_case.study_deck;
 
 import data_access.InMemoryDeckDataAccessObject;
 import data_access.InMemoryFlashcardDataAccessObject;
+import data_access.InMemoryUserDataAccessObject;
 import entity.Flashcard;
 import entity.FlashcardDeck;
 import entity.Language;
 import org.junit.jupiter.api.Test;
+import use_case.UserDataAccessInterface;
 import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 import use_case.study_deck.load_deck_for_study.LoadDeckForStudyInputData;
@@ -19,9 +21,10 @@ class LoadDeckForStudyInteractorTest {
 
     @Test
     void testNullDeckFailure() {
-        LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(1, 1);
+        LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(1, 1, "bob");
         FlashcardDataAccessInterface flashcardDataAccessInterface = new InMemoryFlashcardDataAccessObject();
         DeckDataAccessInterface deckDataAccessInterface = new InMemoryDeckDataAccessObject();
+        UserDataAccessInterface UserDataAccessInterface = new InMemoryUserDataAccessObject();
 
         LoadDeckForStudyOutputBoundary presenter = new LoadDeckForStudyOutputBoundary() {
             @Override
@@ -36,15 +39,16 @@ class LoadDeckForStudyInteractorTest {
         };
 
         LoadDeckForStudyInteractor interactor = new LoadDeckForStudyInteractor(presenter, deckDataAccessInterface,
-                flashcardDataAccessInterface);
+                flashcardDataAccessInterface, UserDataAccessInterface);
         interactor.execute(inputData);
     }
 
     @Test
     void testLoadDeckSuccess() {
-        LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(1, 1);
+        LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(1, 1, "bob");
         FlashcardDataAccessInterface flashcardDataAccessInterface = new InMemoryFlashcardDataAccessObject();
         DeckDataAccessInterface deckDataAccessInterface = new InMemoryDeckDataAccessObject();
+        UserDataAccessInterface userDataAccessInterface = new InMemoryUserDataAccessObject();
 
         FlashcardDeck deck = new FlashcardDeck(1, "Conversational French Words", 1);
         deckDataAccessInterface.save(deck);
@@ -72,7 +76,7 @@ class LoadDeckForStudyInteractorTest {
         };
 
         LoadDeckForStudyInteractor interactor = new LoadDeckForStudyInteractor(presenter, deckDataAccessInterface,
-                flashcardDataAccessInterface);
+                flashcardDataAccessInterface, userDataAccessInterface);
         interactor.execute(inputData);
     }
 }

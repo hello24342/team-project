@@ -42,7 +42,7 @@ public class StudyDeckPresenter implements FlipCardOutputBoundary, LoadDeckForSt
         studyDeckState.setShowingFront(true);
         studyDeckState.setStartWithSource(true);
         studyDeckState.setUserId(outputData.getUserId());
-
+        studyDeckState.setUsername(outputData.getUsername());
 
         viewModel.setState(studyDeckState);
         viewModel.firePropertyChange();
