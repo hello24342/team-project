@@ -125,7 +125,7 @@ public class AppBuilder {
 
 
         EditFlashcardView editFlashcardView =
-                new EditFlashcardView(editBundle.vm, editBundle.controller);
+                new EditFlashcardView(editBundle.controller, editBundle.vm, viewManager);
 
         // 5) register views to ViewManager
         // notice that the name should be the same as the one
