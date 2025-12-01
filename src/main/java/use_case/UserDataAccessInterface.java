@@ -10,4 +10,6 @@ public interface UserDataAccessInterface {
     String getCurrentUsername();
     boolean emailExists(String email);
     int getNextUserId();
+    String getUsernameFromId(int userId);
+    void addDeckToUser(String username, int deckId);
 }
