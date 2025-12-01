@@ -1,4 +1,6 @@
 package view.deck;
+import interface_adapter.create_flashcard.CreateFlashcardController;
+import interface_adapter.create_flashcard.CreateFlashcardViewModel;
 import interface_adapter.deck.CreateDeckController;
 import interface_adapter.deck.DeckDetailViewModel;
 import interface_adapter.deck.OpenDeckController;
@@ -17,9 +19,9 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     private final ViewManager viewManager;
     private final OpenDeckController openCtl;
     private final StudyDeckController studyCtl;
-    private final CreateDeckController createCtl;
     private final EditFlashcardController editCtl;
     private final int currentUserId;
+    private final CreateFlashcardViewModel createFlashcardVM;
 
     private final JLabel titleLabel;
     private final JPanel listPanel;
@@ -28,15 +30,15 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
     public DeckDetailView(DeckDetailViewModel vm,
                           OpenDeckController openCtl,
                           StudyDeckController studyCtl,
-                          CreateDeckController createCtl,
                           EditFlashcardController editCtl,
+                          CreateFlashcardViewModel createFlashcardVM,
                           int currentUserId,
                           ViewManager viewManager) {
         this.vm = vm;
         this.openCtl = openCtl;
         this.studyCtl = studyCtl;
-        this.createCtl = createCtl;
         this.editCtl = editCtl;
+        this.createFlashcardVM = createFlashcardVM;
         this.currentUserId = currentUserId;
         this.viewManager = viewManager;
 
@@ -74,9 +76,10 @@ public class DeckDetailView extends JPanel implements PropertyChangeListener {
         backBtn.addActionListener(e -> viewManager.show("DeckMenu"));
 
         addBtn.addActionListener(e -> {
-            createCtl.onCreate(vm.getDeckTitle());
+            createFlashcardVM.setDeckId(vm.getDeckId());
             viewManager.show("CreateFlashcard");
         });
+
 
         playBtn.addActionListener(e -> {
             studyCtl.loadDeckForStudy(currentUserId, vm.getDeckId());
