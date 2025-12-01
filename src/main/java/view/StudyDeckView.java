@@ -82,8 +82,6 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         this.add(dontKnowButton, BorderLayout.EAST);
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (controller == null) {
