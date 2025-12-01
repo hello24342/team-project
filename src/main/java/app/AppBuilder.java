@@ -18,23 +18,6 @@ import view.deck.DeckMenuView;
 
 public class AppBuilder {
 
-// This helper is just here for testing purposes until create flashcard works. you can run main and study this deck!!
-//    private static void seedDemoData(DeckDataAccessInterface deckDAO, FlashcardDataAccessInterface cardDAO) {
-//        int demoDeckId = 100;
-//        String demoDeckTitle = "Demo Deck";
-//
-//        deckDAO.save(new FlashcardDeck(100, demoDeckTitle, 1));
-//
-//        Flashcard card1 = new Flashcard(99, "hello", "bonjour", Language.ENGLISH, Language.FRENCH);
-//        Flashcard card2 = new Flashcard(100, "cat", "chat", Language.ENGLISH, Language.FRENCH);
-//        Flashcard card3 = new Flashcard(101, "dog", "chien", Language.ENGLISH, Language.FRENCH);
-//        card1.addDeck(demoDeckId);
-//        card2.addDeck(demoDeckId);
-//        card3.addDeck(demoDeckId);
-//        cardDAO.save(card1);
-//        cardDAO.save(card2);
-//        cardDAO.save(card3);
-//    }
     /**
      * Build DAOs, use cases, views and register them into ViewManager.
      * @throws IOException when reading from CSV files fails
@@ -57,6 +40,9 @@ public class AppBuilder {
                 new FileDeckDataAccessObject("decks.csv");
 
         FlashcardDataAccessInterface cardDAO = new FileFlashcardDataAccessObject("flashcards.csv");
+
+        int currentUserId = userDAO.getCurrentUserId();
+        String username = userDAO.getCurrentUsername();
 
         // 3) construct use case components
         // TODO: other use case components
@@ -127,7 +113,8 @@ public class AppBuilder {
                 /*editBundle.controller,*/ null,
                 createBundle.vm,
                 userDAO.getCurrentUserId(),
-                viewManager
+                viewManager,
+                username
         );
 
         // StudyDeckView
