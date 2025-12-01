@@ -1,6 +1,7 @@
 package use_case.progressTracker;
 
 import data_access.ProgressTrackerDataAccess;
+import interface_adapter.progress_tracker.ProgressTrackerPresenter;
 
 /**
  * The progress tracker Interactor.
@@ -16,6 +17,10 @@ public class progressTrackerInteractor implements progressTrackerInputBoundary {
     }
 
     public void execute(progressTrackerInputData progressTrackerInputData) {
+        final int wordsStudied  = progressTrackerInputData.getWordsStudied();
+        final int wordsMastered = progressTrackerInputData.getWordsMastered();
 
+        final progressTrackerOutputData outputData = new progressTrackerOutputData(wordsStudied, wordsMastered);
+        presenter.presentSuccess(outputData);
     }
 }
