@@ -4,9 +4,8 @@ import interface_adapter.ViewModel;
 
 public class EditFlashcardViewModel extends ViewModel<EditFlashcardState> {
 
-    public EditFlashcardViewModel(String viewName) {
-        super(viewName);
-        //super("edit flashcard");
+    public EditFlashcardViewModel() {
+        super("EditFlashcard");
         setState(new EditFlashcardState());
     }
 }
