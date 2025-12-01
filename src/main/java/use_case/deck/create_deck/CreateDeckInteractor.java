@@ -2,6 +2,7 @@ package use_case.deck.create_deck;
 
 import data_access.FileUserDataAccessObject;
 import entity.FlashcardDeck;
+import use_case.UserDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 
 import java.util.ArrayList;
@@ -9,10 +10,10 @@ import java.util.List;
 
 public class CreateDeckInteractor implements CreateDeckInputBoundary {
     private final DeckDataAccessInterface deckDAO;
-    private final FileUserDataAccessObject userDAO;
+    private final UserDataAccessInterface userDAO;
     private final CreateDeckOutputBoundary presenter;
 
-    public CreateDeckInteractor(DeckDataAccessInterface deckDAO, FileUserDataAccessObject userDAO,
+    public CreateDeckInteractor(DeckDataAccessInterface deckDAO, UserDataAccessInterface userDAO,
                                 CreateDeckOutputBoundary presenter) {
         this.deckDAO = deckDAO;
         this.userDAO = userDAO;

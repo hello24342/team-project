@@ -22,7 +22,7 @@ public class CreateDeckInteractorTest {
 
     @BeforeAll
     static void setupTestFile() throws IOException {
-        // Create test CSV file before all tests
+        // prepare a userId=123 in the csv file for testing
         try (FileWriter writer = new FileWriter(TEST_USERS_CSV)) {
             writer.write("#userId,username,email,password,totalKnownFlashcards,totalFlashcards,deckIds\n");
             writer.write("123,testuser,test@email.com,password123,0,0,[]\n");
@@ -30,7 +30,12 @@ public class CreateDeckInteractorTest {
         }
     }
 
-    // ----- Presenter Mock -----
+    @AfterAll
+    static void cleanup() {
+        new File(TEST_USERS_CSV).delete();
+    }
+
+    // ---- Presenter mock ----
     private static class CreateDeckPresenterMock implements CreateDeckOutputBoundary {
 
         boolean failCalled = false;
@@ -49,6 +54,26 @@ public class CreateDeckInteractorTest {
             successCalled = true;
             successData = outputData;
         }
+    }
+
+    // ---- Test 0: user not found ----
+    @Test
+    void testCreateDeck_userNotFound_fails() throws IOException {
+        InMemoryDeckDataAccessObject deckDAO = new InMemoryDeckDataAccessObject();
+        UserDataAccessInterface userDAO = new FileUserDataAccessObject(TEST_USERS_CSV);
+        CreateDeckPresenterMock presenter = new CreateDeckPresenterMock();
+
+        CreateDeckInteractor interactor =
+                new CreateDeckInteractor(deckDAO, userDAO, presenter);
+
+        // userId=999 is not in csv，getUsernameFromId will return null
+        CreateDeckInputData input = new CreateDeckInputData(999, "Some Deck");
+
+        interactor.createDeck(input);
+
+        Assertions.assertTrue(presenter.failCalled);
+        Assertions.assertFalse(presenter.successCalled);
+        Assertions.assertEquals("User not found.", presenter.failMessage);
     }
 
     // ----- Test 1: title is null -----
