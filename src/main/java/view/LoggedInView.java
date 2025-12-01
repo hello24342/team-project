@@ -6,11 +6,8 @@ import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.deck.ListDecksController;
-import interface_adapter.progress_tracker.ProgressTrackerController;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,39 +15,37 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-
-public class LoggedInView extends JPanel implements PropertyChangeListener, ActionListener {
+public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final String viewName = "logged in";
 
     private final JLabel username = new JLabel();
     private final JPanel deckPanel = new JPanel();
 
     private final JButton addDeckButton = new JButton("+ Add Deck");
-
     private final JButton homeButton = new JButton("Home");
     private final JButton decksButton = new JButton("Decks");
     private final JButton activityButton = new JButton("Activity");
     private final JButton logOutButton = new JButton("Log Out");
 
-    private LoggedInViewModel loggedInViewModel;
-    private LogoutController logoutController;
-    private ListDecksController listDecksController;
-    private CreateDeckController createDeckController;
-    private OpenDeckController openDeckController;
-//    private ProgressTrackerController progressTrackerController;
+    private final LoggedInViewModel loggedInViewModel;
+    private final LogoutController logoutController;
+    private final ListDecksController listDecksController;
+    private final CreateDeckController createDeckController;
+    private final OpenDeckController openDeckController;
+    private final ViewManager viewManager;
 
-    // Updated constructor to properly initialize all dependencies
     public LoggedInView(LoggedInViewModel loggedInViewModel,
                         LogoutController logoutController,
                         ListDecksController listDecksController,
                         CreateDeckController createDeckController,
-                        OpenDeckController openDeckController) {
+                        OpenDeckController openDeckController,
+                        ViewManager viewManager) {
         this.loggedInViewModel = loggedInViewModel;
         this.logoutController = logoutController;
         this.listDecksController = listDecksController;
         this.createDeckController = createDeckController;
         this.openDeckController = openDeckController;
-//        this.progressTrackerController = new ProgressTrackerController();
+        this.viewManager = viewManager;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         initializeUI();
@@ -60,33 +55,29 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
     private void initializeUI() {
         this.setLayout(new BorderLayout());
 
-        // title panel
         final JLabel title = new JLabel("VocabVault Home");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Arial", Font.BOLD, 18));
         this.add(title, BorderLayout.NORTH);
 
-        // main content panel (welcome message, add deck button, and one clickable deck)
         JPanel mainPanel = new JPanel(new BorderLayout());
 
-        // welcome message
         JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         welcomePanel.add(new JLabel("Welcome, "));
         welcomePanel.add(username);
+        username.setFont(new Font("Arial", Font.BOLD, 14));
         mainPanel.add(welcomePanel, BorderLayout.NORTH);
 
-        // deck display panel
         deckPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        deckPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        deckPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         mainPanel.add(deckPanel, BorderLayout.CENTER);
 
-        // add deck button
         JPanel addDeckPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         addDeckPanel.add(addDeckButton);
         mainPanel.add(addDeckPanel, BorderLayout.SOUTH);
 
         this.add(mainPanel, BorderLayout.CENTER);
 
-        // nav bar
         JPanel navigationPanel = new JPanel(new FlowLayout());
         navigationPanel.add(homeButton);
         navigationPanel.add(decksButton);
@@ -95,8 +86,61 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
         this.add(navigationPanel, BorderLayout.SOUTH);
     }
 
-    public void setupActionListeners() {
-        // Add Deck button listener
+    private void setupActionListeners() {
+        homeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Home button clicked");
+                refreshDeckDisplay();
+            }
+        });
+
+        decksButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Decks button clicked");
+                if (viewManager != null) {
+                    viewManager.show("DeckMenu");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            LoggedInView.this,
+                            "Decks functionality not implemented yet",
+                            "Info",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+        });
+
+        activityButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Activity button clicked");
+                if (viewManager != null) {
+                    viewManager.show("Activity");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            LoggedInView.this,
+                            "Activity/Progress tracker not implemented yet",
+                            "Info",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+        });
+
+        logOutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Logout button clicked");
+                if (logoutController != null) {
+                    logoutController.execute();
+
+                    if (viewManager != null) {
+                        viewManager.show("Login");
+                    }
+                } else if (viewManager != null) {
+                    viewManager.show("Login");
+                }
+            }
+        });
+
         addDeckButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String deckName = JOptionPane.showInputDialog(
@@ -107,7 +151,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
                 );
 
                 if (deckName != null && !deckName.trim().isEmpty()) {
-                    createDeckController.onCreate(deckName.trim());
+                    if (createDeckController != null) {
+                        createDeckController.onCreate(deckName.trim());
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                LoggedInView.this,
+                                "Created deck: " + deckName.trim(),
+                                "Info",
+                                JOptionPane.INFORMATION_MESSAGE
+                        );
+                    }
                 } else if (deckName != null) {
                     JOptionPane.showMessageDialog(
                             LoggedInView.this,
@@ -118,80 +171,55 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
                 }
             }
         });
-
-        // Decks button listener
-        decksButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                listDecksController.onEnterDeckMenu();
-            }
-        });
-
-        // Logout button listener
-        logOutButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                logoutController.execute();
-            }
-        });
-
-        // Home button listener
-        homeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                refreshDeckDisplay();
-            }
-        });
-
-        //TODO: Implement activity button when progress tracker controller is available
-/*
-        activityButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                progressTrackerController.execute()
-            }
-        });
-*/
     }
 
     public void refreshDeckDisplay() {
         deckPanel.removeAll();
 
         LoggedInState loggedInState = loggedInViewModel.getState();
-        java.util.List<String> userDecks = loggedInState.getUserDecks();
+        List<String> userDecks = loggedInState.getUserDecks();
 
         if (userDecks == null || userDecks.isEmpty()) {
             JLabel noDecksLabel = new JLabel("No decks found yet. Click the '+ Add Deck' button to create your first deck!");
+            noDecksLabel.setFont(new Font("Arial", Font.PLAIN, 14));
             deckPanel.add(noDecksLabel);
         } else {
-            // Display the first deck as a clickable button
-            String firstDeckName = userDecks.get(0);
-            JButton deckButton = new JButton(firstDeckName);
-            deckButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    openDeckController.open(0);
-                }
-            });
-            deckPanel.add(deckButton);
+            for (int i = 0; i < userDecks.size(); i++) {
+                final String deckName = userDecks.get(i);
+                final int deckIndex = i;
 
-            // Optional: Show message if there are more decks
-            if (userDecks.size() > 1) {
-                JLabel moreDecksLabel = new JLabel("... and " + (userDecks.size() - 1) + " more decks");
-                deckPanel.add(moreDecksLabel);
+                JButton deckButton = new JButton(deckName);
+                deckButton.setPreferredSize(new Dimension(150, 50));
+                deckButton.setFont(new Font("Arial", Font.PLAIN, 12));
+                deckButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (openDeckController != null) {
+                            openDeckController.open(deckIndex);
+                        } else {
+                            JOptionPane.showMessageDialog(
+                                    LoggedInView.this,
+                                    "Opening deck: " + deckName,
+                                    "Info",
+                                    JOptionPane.INFORMATION_MESSAGE
+                            );
+                        }
+                    }
+                });
+                deckPanel.add(deckButton);
             }
         }
 
-        // Refresh the panel
         deckPanel.revalidate();
         deckPanel.repaint();
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // Handle other actions if needed
-    }
-
-    @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
-        username.setText(loggedInState.getUsername());
-        refreshDeckDisplay();
+        if ("state".equals(evt.getPropertyName())) {
+            LoggedInState loggedInState = (LoggedInState) evt.getNewValue();
+            username.setText(loggedInState.getUsername());
+            refreshDeckDisplay();
+        }
     }
 
     public String getViewName() {

@@ -108,7 +108,8 @@ public class AppBuilder {
                 logoutBundle.logoutController,
                 deckBundle.listController,
                 deckBundle.createController,
-                deckBundle.openController
+                deckBundle.openController,
+                loginBundle.viewManager
         );
 
         // DeckMenuView
