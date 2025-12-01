@@ -130,7 +130,7 @@ public class AppBuilder {
         );
 
         // StudyDeckView
-        StudyDeckView studyView = new StudyDeckView(studyBundle.vm);
+        StudyDeckView studyView = new StudyDeckView(studyBundle.vm, viewManager);
         studyView.setController(studyBundle.controller);
 
         // 5) register views to ViewManager
