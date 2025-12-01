@@ -23,12 +23,12 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
 
     private final JButton setLearningGoalButton = new JButton("Set Learning Goal");
     private final JButton cancelButton = new JButton("Cancel");
-    private final LearningGoalViewModel viewModel;
-    private final LearningGoalController controller;
+    private final LearningGoalViewModel learningGoalViewModel;
+    private final LearningGoalController learningGoalController;
 
     public SetLearningGoalView(LearningGoalViewModel viewModel, LearningGoalController controller) {
-        this.viewModel = viewModel;
-        this.controller = controller;
+        this.learningGoalViewModel = viewModel;
+        this.learningGoalController = controller;
 
         this.setLearningGoalButton.addActionListener(this);
         this.cancelButton.addActionListener(this);
@@ -49,7 +49,11 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
 
         setLearningGoalButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // work on this bit
+                if (e.getSource().equals(cancelButton)) {
+                    final LearningGoalState currrentState = learningGoalViewModel.getState();
+
+                    learningGoalController.execute(currrentState.getUserId() ,currrentState.getLearningGoal());
+                }
             }
         });
         cancelButton.addActionListener(new ActionListener() {
@@ -60,20 +64,27 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
 
         learningGoalInputField.getDocument().addDocumentListener(new DocumentListener() {
             public void documentListenerHelper() {
-                final LearningGoalState currentState = LearningGoalViewModel.getState();
-                currentState.setLearningGoal(learningGoalInputField.getText()); // a string needs to be an int
-                LearningGoalViewModel.setState(currentState);
+                final LearningGoalState currentState = learningGoalViewModel.getState();
+                int learningGoalInt = Integer.parseInt(learningGoalInputField.getText());
+                currentState.setLearningGoal(learningGoalInt);
+                learningGoalViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
             }
         });
-        // work on these
-        @Override
-        public void insertUpdate(DocumentEvent e) {documentListenerHelper();}
-
-        @Override
-        public void removeUpdate(DocumentEvent e) {documentListenerHelper();}
-
-        @Override
-        public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
