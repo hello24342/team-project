@@ -1,6 +1,7 @@
 package view;
 
 import data_access.LearningGoalDataAccess;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.learning_goal.LearningGoalController;
 import interface_adapter.learning_goal.LearningGoalViewModel;
 import interface_adapter.learning_goal.LearningGoalState;
@@ -26,10 +27,14 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
     private final JButton cancelButton = new JButton("Cancel");
     private final LearningGoalViewModel learningGoalViewModel;
     private final LearningGoalController learningGoalController;
+    private final ViewManager viewManager;
 
-    public SetLearningGoalView(LearningGoalViewModel viewModel, LearningGoalController controller) {
+    public SetLearningGoalView(LearningGoalViewModel viewModel,
+                               LearningGoalController controller,
+                               ViewManager viewManager) {
         this.learningGoalViewModel = viewModel;
         this.learningGoalController = controller;
+        this.viewManager = viewManager;
 
         this.setLearningGoalButton.addActionListener(this);
         this.cancelButton.addActionListener(this);
@@ -57,7 +62,7 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
                 }
             }
         });
-        cancelButton.addActionListener(e -> {ViewManager.show("Progress"); // change this if needed
+        cancelButton.addActionListener(e -> {viewManager.show("Progress"); // change this if needed
         });
 
         learningGoalInputField.getDocument().addDocumentListener(new DocumentListener() {
