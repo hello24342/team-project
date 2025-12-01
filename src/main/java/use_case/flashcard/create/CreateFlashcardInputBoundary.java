@@ -1,4 +1,4 @@
-package use_case.flashcard_create;
+package use_case.flashcard.create;
 
 public interface CreateFlashcardInputBoundary {
     void createFlashcard(CreateFlashcardInputData inputData);

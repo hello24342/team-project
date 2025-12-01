@@ -1,4 +1,4 @@
-package use_case.flashcard_edit;
+package use_case.flashcard.edit;
 
 public class EditFlashcardInputData {
     private final int flashcardId;

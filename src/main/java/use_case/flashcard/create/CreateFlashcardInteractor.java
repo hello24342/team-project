@@ -1,23 +1,21 @@
-package use_case.flashcard_create;
+package use_case.flashcard.create;
 
-import data_access.FileFlashcardDataAccessObject;
 import entity.Flashcard;
 import entity.Language;
+import use_case.flashcard.FlashcardDataAccessInterface;
 
 public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
 
-    private final TranslatorGateway translatorGateway;
-    private final FileFlashcardDataAccessObject FileFlashcardDataAccessObject;
-    // Check to make sure this ^ does what we need it to do
+    private final TranslatorGateway translator;
+    private final FlashcardDataAccessInterface dataAccess;
     private final CreateFlashcardOutputBoundary presenter;
 
-    public CreateFlashcardInteractor(TranslatorGateway translatorGateway,
-                                     FileFlashcardDataAccessObject flashcardDataAccess,
+    public CreateFlashcardInteractor(TranslatorGateway translator,
+                                     FlashcardDataAccessInterface flashcardDataAccess,
                                      CreateFlashcardOutputBoundary presenter)
-    // this too ----------------------------^
     {
-        this.translatorGateway = translatorGateway;
-        this.FileFlashcardDataAccessObject = flashcardDataAccess;
+        this.translator = translator;
+        this.dataAccess = flashcardDataAccess;
         this.presenter = presenter;
     }
 
@@ -28,13 +26,12 @@ public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
         Language sourceLang = inputData.getSourceLang();
         Language targetLang = inputData.getTargetLang();
 
-        // *** Call translator API through gateway ***
-        String targetWord = translatorGateway.translate(sourceWord, sourceLang, targetLang);
+        // API translation call
+        String targetWord = translator.translate(sourceWord, sourceLang, targetLang);
 
-        // Generate ID using your data access layer
-        int id = FileFlashcardDataAccessObject.nextFlashcardId();
+        int id = dataAccess.nextFlashcardId();
 
-        Flashcard flashcard = new Flashcard(
+        Flashcard card = new Flashcard(
                 id,
                 sourceWord,
                 targetWord,
@@ -42,7 +39,7 @@ public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
                 targetLang
         );
 
-        FileFlashcardDataAccessObject.save(flashcard);
+        dataAccess.save(card);
 
         CreateFlashcardOutputData response = new CreateFlashcardOutputData(
                 id,

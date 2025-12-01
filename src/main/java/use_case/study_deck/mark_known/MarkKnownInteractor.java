@@ -1,6 +1,6 @@
 package use_case.study_deck.mark_known;
 
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 
 public class MarkKnownInteractor implements MarkKnownInputBoundary {
     private final FlashcardDataAccessInterface flashcardDataAccess;
