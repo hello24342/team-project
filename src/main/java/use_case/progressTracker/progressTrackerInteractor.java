@@ -1,18 +1,12 @@
 package use_case.progressTracker;
 
-import data_access.ProgressTrackerDataAccess;
-import interface_adapter.progress_tracker.ProgressTrackerPresenter;
-
 /**
  * The progress tracker Interactor.
  */
 public class progressTrackerInteractor implements progressTrackerInputBoundary {
-    private final ProgressTrackerDataAccess progressTrackerDataAccess;
     private final progressTrackerOutputBoundary presenter;
 
-    public progressTrackerInteractor(ProgressTrackerDataAccess progressTrackerDataAccess,
-                                     progressTrackerOutputBoundary presenter) {
-        this.progressTrackerDataAccess = progressTrackerDataAccess;
+    public progressTrackerInteractor(progressTrackerOutputBoundary presenter) {
         this.presenter = presenter;
     }
 

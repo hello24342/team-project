@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.progress_tracker.ProgressTrackerState;
 import interface_adapter.progress_tracker.ProgressTrackerViewModel;
 import interface_adapter.progress_tracker.ProgressTrackerController;
@@ -20,10 +21,14 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
 
     private final ProgressTrackerViewModel progressTrackerViewModel;
     private final ProgressTrackerController progressTrackerController;
+    private final ViewManager viewManager;
 
-    public ProgressTrackerView(ProgressTrackerViewModel viewModel, ProgressTrackerController controller) {
+    public ProgressTrackerView(ProgressTrackerViewModel viewModel,
+                               ProgressTrackerController controller,
+                               ViewManager viewManager) {
         this.progressTrackerViewModel = viewModel;
         this.progressTrackerController = controller;
+        this.viewManager = viewManager;
 
         this.changeLearningGoalButton.addActionListener(this);
         this.cancelButton.addActionListener(this);
@@ -49,7 +54,7 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
                 }
             }
         });
-        cancelButton.addActionListener(e -> {ViewManager.show("LoggedIn");
+        cancelButton.addActionListener(e -> {viewManager.show("LoggedIn");
         });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
