@@ -194,29 +194,35 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
     public void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId) {
         List<Flashcard> fromDeck = findByDeck(fromDeckId);
 
-        if (cardIndex >= 0 && cardIndex < fromDeck.size()) {
-            Flashcard cardToMove = fromDeck.get(cardIndex);
-
-            // If the card was known, update cache for the from deck
-            if (cardToMove.isKnown()) {
-                knownCountCache.put(fromDeckId,
-                        Math.max(0, knownCountCache.getOrDefault(fromDeckId, 0) - 1));
-            }
-
-            cardToMove.getDeckIds().add(toDeckId);
-
-            // If the card is known, update cache for the to deck
-            if (cardToMove.isKnown()) {
-                knownCountCache.put(toDeckId, knownCountCache.getOrDefault(toDeckId, 0) + 1);
-            }
-
-            saveToFile();
+        if (cardIndex < 0 || cardIndex >= fromDeck.size()) {
+            return;
         }
+
+        Flashcard cardToMove = fromDeck.get(cardIndex);
+
+        // 如果之前是 known，需要先把 fromDeck 的已知计数减 1
+        if (cardToMove.isKnown()) {
+            int oldCount = knownCountCache.getOrDefault(fromDeckId, 0);
+            knownCountCache.put(fromDeckId, Math.max(0, oldCount - 1));
+        }
+
+        // 点击 "Don't know" 之后，这张卡应该变成 unknown
+        cardToMove.setKnown(false);
+
+        // 把卡加入 don’t know deck（避免重复添加）
+        List<Integer> deckIds = cardToMove.getDeckIds();
+        if (!deckIds.contains(toDeckId)) {
+            deckIds.add(toDeckId);
+        }
+
+        // 对于 don’t know deck，一般不需要把它计入 "known" 计数，所以这里不要再 +1 了
+
+        saveToFile();
     }
 
     @Override
     public int getKnownCardsCount(int userId, int deckId) {
-        return knownCountCache.get(deckId);
+        return knownCountCache.getOrDefault(deckId, 0);
     }
 
     @Override

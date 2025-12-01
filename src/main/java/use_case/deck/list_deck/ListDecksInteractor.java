@@ -20,6 +20,9 @@ public class ListDecksInteractor implements  ListDecksInputBoundary {
     public void execute(ListDecksInputData inputData) {
         int userId = inputData.getUserId();
 
+        // debugging why dont know card has not been added to dont know deck
+        //System.out.println("[DEBUG] ListDecks called for userId = " + userId);
+
         // Ensure "Don't know deck" exists
         int dkId = deckDAO.findOrCreateDontKnowDeckId(userId);
 

@@ -19,6 +19,7 @@ public class LoadDeckForStudyInteractor implements LoadDeckForStudyInputBoundary
 
     @Override
     public void execute(LoadDeckForStudyInputData inputData) {
+        int userId = inputData.getUserId();
         int deckId = inputData.getDeckId();
 
         FlashcardDeck deck = deckDAO.findById(deckId);
@@ -30,7 +31,7 @@ public class LoadDeckForStudyInteractor implements LoadDeckForStudyInputBoundary
 
         Flashcard firstCard = flashcardDAO.findByDeck(deckId).get(0);
 
-        LoadDeckForStudyOutputData outputData = new LoadDeckForStudyOutputData(deckId, deck.getTitle(),
+        LoadDeckForStudyOutputData outputData = new LoadDeckForStudyOutputData(userId, deckId,deck.getTitle(),
                 firstCard.getId(), flashcardDAO.findByDeck(deckId).size(), 0, firstCard.getSourceWord(),
                 firstCard.getTargetWord());
 

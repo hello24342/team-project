@@ -195,11 +195,11 @@ User Story #2
 User Story #8
 
 ### Krista
-
+Use Case #1: Flashcard Creation
 Use Case #5: Create Deck
 Use Case #10: List Deck
 Use Case #11: Open Deck
-User Story #5 #10 #11
+User Story #1 #5 #10 #11
 
 ### Mei
 
