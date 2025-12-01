@@ -71,11 +71,8 @@ public class AppBuilder {
                 StudyDeckUseCaseFactory.build(deckDAO, fileUserDataAccessObject, cardDAO);
 
 
-        // edit flashcard UC9
-        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
-        // EditFlashcardUseCaseFactory.EditFlashcardBundle editBundle =
-        //        EditFlashcardUseCaseFactory.build(cardDAO);
-
+        EditFlashcardUseCaseFactory.EditFlashcardBundle editBundle =
+                EditFlashcardUseCaseFactory.build(cardDAO);
 
         // 4) construct Views
         // TODO: other views
@@ -110,7 +107,7 @@ public class AppBuilder {
                 deckBundle.detailVM,
                 deckBundle.openController,
                 studyBundle.controller,
-                /*editBundle.controller,*/ null,
+                editBundle.controller,
                 createBundle.vm,
                 userDAO.getCurrentUserId(),
                 viewManager,
@@ -125,10 +122,9 @@ public class AppBuilder {
         CreateFlashcardView createFlashcardView =
                 new CreateFlashcardView(createBundle.controller, createBundle.vm, viewManager);
 
-        // EditFlashcardView
-        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
-        // EditFlashcardView editFlashcardView =
-        //        new EditFlashcardView(editBundle.vm, editBundle.controller);
+
+        EditFlashcardView editFlashcardView =
+                new EditFlashcardView(editBundle.vm, editBundle.controller);
 
         // 5) register views to ViewManager
         // notice that the name should be the same as the one
@@ -140,7 +136,7 @@ public class AppBuilder {
         viewManager.add("DeckMenu", deckMenuView);
         viewManager.add("DeckDetail", deckDetailView);
         viewManager.add("CreateFlashcard", createFlashcardView);
-        // viewManager.add("EditFlashcard", editFlashcardView);
+        viewManager.add("EditFlashcard", editFlashcardView);
         viewManager.add("Study", studyView);
 
         return viewManager;
