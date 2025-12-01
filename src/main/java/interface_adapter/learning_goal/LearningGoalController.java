@@ -1,7 +1,7 @@
 package interface_adapter.learning_goal;
 
-import usecase.SetLearningGoal.SetLearningGoalInputBoundary;
-import usecase.SetLearningGoal.SetLearningGoalInputData;
+import use_case.SetLearningGoal.SetLearningGoalInputBoundary;
+import use_case.SetLearningGoal.SetLearningGoalInputData;
 
 public class LearningGoalController {
     private final SetLearningGoalInputBoundary setLearningGoalInteractor;
