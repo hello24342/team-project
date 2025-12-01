@@ -8,6 +8,7 @@ public class CreateFlashcardViewModel {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     private String message = "";
+    private int deckId;
 
     public String getMessage() {
         return message;
@@ -17,6 +18,14 @@ public class CreateFlashcardViewModel {
         String oldMessage = this.message;
         this.message = newMessage;
         pcs.firePropertyChange("message", oldMessage, newMessage);
+    }
+
+    public int getDeckId() {
+        return deckId;
+    }
+
+    public void setDeckId(int deckId) {
+        this.deckId = deckId;
     }
 
     // The View will register itself as a listener

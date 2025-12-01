@@ -1,1 +1,7 @@
 id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds
+1,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
+2,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
+3,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,""
+4,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,"2"
+5,dog,狗,ENGLISH,CHINESE_SIMPLIFIED,false,"2"
+6,,,ABKHAZ,ABKHAZ,false,"2"

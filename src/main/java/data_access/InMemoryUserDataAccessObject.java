@@ -54,7 +54,7 @@ public class InMemoryUserDataAccessObject implements UserDataAccessInterface {
                 return user.getUsername();
             }
         }
-        return null; // or throw an exception if user not found
+        return null;
     }
 
     ;
