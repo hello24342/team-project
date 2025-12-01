@@ -1,0 +1,3 @@
+deck_id,user_id,title,is_dont_know
+1,1,Don't know deck,true
+2,1,1,false

@@ -1,0 +1,4 @@
+id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds
+1,hello,Bonjour,ENGLISH,FRENCH,false,"2,1"
+2,bye,au revoir,ENGLISH,FRENCH,false,"2,1"
+3,thank you,merci,ENGLISH,FRENCH,false,"2,1"
