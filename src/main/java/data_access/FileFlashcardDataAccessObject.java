@@ -21,6 +21,7 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
     private final File csvFile;
     private int nextId = 1;
     private final Map<Integer, Flashcard> flashcards = new HashMap<>();
+    private final Map<Integer, Integer> knownCountCache = new HashMap<>(); // deckId to knownCount
 
     public FileFlashcardDataAccessObject(String csvPath) {
         csvFile = new File(csvPath);
@@ -179,16 +180,51 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
     }
     @Override
     public void markCardAsKnown(int userId, int deckId, int cardIndex) {
-        // To track that the user knows this card (no need to move)
-        // TODO: Implement method for mark known
+        List<Flashcard> deckCards = findByDeck(deckId);
+
+        if (cardIndex >= 0 && cardIndex < deckCards.size()) {
+            Flashcard card = deckCards.get(cardIndex);
+
+            if (!card.isKnown()) {
+                card.setKnown(true);
+                knownCountCache.put(deckId, knownCountCache.getOrDefault(deckId, 0) + 1);
+                saveToFile();
+            }
+        }
     }
 
     @Override
     public void markCardAsUnknown(int cardIndex, int fromDeckId, int toDeckId) {
         List<Flashcard> fromDeck = findByDeck(fromDeckId);
 
-        Flashcard cardToMove = fromDeck.get(cardIndex);
-        cardToMove.getDeckIds().add(toDeckId);
+        if (cardIndex >= 0 && cardIndex < fromDeck.size()) {
+            Flashcard cardToMove = fromDeck.get(cardIndex);
+
+            // If the card was known, update cache for the from deck
+            if (cardToMove.isKnown()) {
+                knownCountCache.put(fromDeckId,
+                        Math.max(0, knownCountCache.getOrDefault(fromDeckId, 0) - 1));
+            }
+
+            cardToMove.getDeckIds().add(toDeckId);
+
+            // If the card is known, update cache for the to deck
+            if (cardToMove.isKnown()) {
+                knownCountCache.put(toDeckId, knownCountCache.getOrDefault(toDeckId, 0) + 1);
+            }
+
+            saveToFile();
+        }
+    }
+
+    @Override
+    public int getKnownCardsCount(int userId, int deckId) {
+        return knownCountCache.get(deckId);
+    }
+
+    @Override
+    public int getDeckSize(int userId, int deckId) {
+        return findByDeck(deckId).size();
     }
 
 }

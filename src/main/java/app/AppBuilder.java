@@ -90,7 +90,7 @@ public class AppBuilder {
 
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
-                StudyDeckUseCaseFactory.build(deckDAO, cardDAO);
+                StudyDeckUseCaseFactory.build(deckDAO, userDAO, cardDAO);
 
         // edit flashcard UC9
         // TODO: uncomment when EditFlashcardUseCaseFactory is ready

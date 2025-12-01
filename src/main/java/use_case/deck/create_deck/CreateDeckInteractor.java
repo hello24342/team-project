@@ -1,6 +1,7 @@
 package use_case.deck.create_deck;
 
 
+import data_access.FileUserDataAccessObject;
 import entity.FlashcardDeck;
 import use_case.deck.DeckDataAccessInterface;
 
@@ -9,16 +10,19 @@ import java.util.List;
 
 public class CreateDeckInteractor implements CreateDeckInputBoundary {
     private final use_case.deck.DeckDataAccessInterface deckDAO;
+    private final FileUserDataAccessObject userDAO;
     private final CreateDeckOutputBoundary presenter;
-    public CreateDeckInteractor(DeckDataAccessInterface deckDAO,
+    public CreateDeckInteractor(DeckDataAccessInterface deckDAO, FileUserDataAccessObject userDAO,
                                 CreateDeckOutputBoundary presenter) {
         this.deckDAO = deckDAO;
+        this.userDAO = userDAO;
         this.presenter = presenter;
     }
     @Override
     public void createDeck(CreateDeckInputData input) {
         String title = input.getTitle();
         int userId = input.getUserId();
+        String username = userDAO.getUsernameFromId(userId);
 
         //Validate title and tell presenter about failure if any
         if (title == null || title.trim().isEmpty()) {
@@ -37,6 +41,8 @@ public class CreateDeckInteractor implements CreateDeckInputBoundary {
         int newId = deckDAO.nextDeckId();
         FlashcardDeck deck = new FlashcardDeck(newId, title.trim(), userId);
         deckDAO.save(deck);
+        userDAO.addDeckToUser(username, deck.getId());
+        userDAO.incrementTotalFlashcards(username, deck.getId());
 
         //Retrieve and sort all decks for the user
         List<FlashcardDeck> decks = deckDAO.findByUser(userId);

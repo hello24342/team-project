@@ -70,7 +70,7 @@ class SignupInteractorTest {
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         UserFactory factory = new UserFactory();
-        User user = factory.create("Paul", "paul123@example.com", "pwd");
+        User user = factory.create(1,"Paul", "paul123@example.com", "pwd");
         userRepository.save(user);
 
         SignupOutputBoundary failurePresenter = new SignupOutputBoundary() {
