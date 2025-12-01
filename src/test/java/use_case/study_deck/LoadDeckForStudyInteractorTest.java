@@ -6,7 +6,7 @@ import entity.Flashcard;
 import entity.FlashcardDeck;
 import entity.Language;
 import org.junit.jupiter.api.Test;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 import use_case.study_deck.load_deck_for_study.LoadDeckForStudyInputData;
 import use_case.study_deck.load_deck_for_study.LoadDeckForStudyInteractor;

@@ -1,7 +1,7 @@
 package use_case.study_deck.previous_card;
 
 import entity.Flashcard;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 
 import java.util.List;
 

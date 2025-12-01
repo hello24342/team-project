@@ -1,8 +1,8 @@
 package view;
 
-import data_access.LearningGoalDataAccess;
 import interface_adapter.learning_goal.LearningGoalController;
 import interface_adapter.learning_goal.LearningGoalViewModel;
+import interface_adapter.learning_goal.LearningGoalState;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -22,12 +22,16 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
 
     private final JButton setLearningGoalButton = new JButton("Set Learning Goal");
     private final JButton cancelButton = new JButton("Cancel");
-    private final LearningGoalViewModel viewModel;
-    private final LearningGoalController controller;
+    private final LearningGoalViewModel learningGoalViewModel;
+    private final LearningGoalController learningGoalController;
+    private final ViewManager viewManager;
 
-    public SetLearningGoalView(LearningGoalViewModel viewModel, LearningGoalController controller) {
-        this.viewModel = viewModel;
-        this.controller = controller;
+    public SetLearningGoalView(LearningGoalViewModel viewModel,
+                               LearningGoalController controller,
+                               ViewManager viewManager) {
+        this.learningGoalViewModel = viewModel;
+        this.learningGoalController = controller;
+        this.viewManager = viewManager;
 
         this.setLearningGoalButton.addActionListener(this);
         this.cancelButton.addActionListener(this);
@@ -48,31 +52,39 @@ public class SetLearningGoalView extends JPanel implements ActionListener, Prope
 
         setLearningGoalButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // work on this bit
+                if (e.getSource().equals(cancelButton)) {
+                    final LearningGoalState currrentState = learningGoalViewModel.getState();
+
+                    learningGoalController.execute(currrentState.getUserId() ,currrentState.getLearningGoal());
+                }
             }
         });
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // work on this bit
-            }
+        cancelButton.addActionListener(e -> {viewManager.show("Progress"); // change this if needed
         });
 
         learningGoalInputField.getDocument().addDocumentListener(new DocumentListener() {
             public void documentListenerHelper() {
-                // work on this bit
+                final LearningGoalState currentState = learningGoalViewModel.getState();
+                int learningGoalInt = Integer.parseInt(learningGoalInputField.getText());
+                currentState.setLearningGoal(learningGoalInt);
+                learningGoalViewModel.setState(currentState);
             }
 
             @Override
-            public void insertUpdate(DocumentEvent e) {documentListenerHelper();}
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
 
             @Override
-            public void removeUpdate(DocumentEvent e) {documentListenerHelper();}
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
 
             @Override
-            public void changedUpdate(DocumentEvent e) {documentListenerHelper();}
-
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
         });
-
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);

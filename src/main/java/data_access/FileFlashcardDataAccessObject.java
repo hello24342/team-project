@@ -11,9 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import data_access.exceptions.FlashcardCorruptedDataException;
+import data_access.exceptions.FlashcardStorageException;
 import entity.Flashcard;
 import entity.Language;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 
 public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterface {
     private static final String HEADER = "id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds";
@@ -36,7 +38,7 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
             loadFromFile();
         }
         catch (IOException ex) {
-            throw new RuntimeException("Failed to initialize Flashcard DAO", ex);
+            throw new FlashcardStorageException("Failed to initialize Flashcard DAO", ex);
         }
     }
 
@@ -44,7 +46,8 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
             final String header = reader.readLine();
             if (!HEADER.equals(header)) {
-                throw new RuntimeException("Header should be: " + HEADER + "\nBut was: " + header);
+                throw new FlashcardCorruptedDataException("Flashcard header expected to be: " +
+                        HEADER + "\nBut was: " + header);
             }
 
             String row;
@@ -68,7 +71,7 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
             }
 
         } catch (IOException ex) {
-            throw new RuntimeException(ex);
+            throw new FlashcardStorageException("Failed to read flashcard file", ex);
         }
     }
 
@@ -86,7 +89,7 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
             }
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new FlashcardStorageException("Failed to write flashcards to file", e);
         }
     }
 

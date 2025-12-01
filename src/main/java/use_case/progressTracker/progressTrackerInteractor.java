@@ -1,21 +1,20 @@
 package use_case.progressTracker;
 
-import data_access.ProgressTrackerDataAccess;
-
 /**
  * The progress tracker Interactor.
  */
 public class progressTrackerInteractor implements progressTrackerInputBoundary {
-    private final ProgressTrackerDataAccess progressTrackerDataAccess;
     private final progressTrackerOutputBoundary presenter;
 
-    public progressTrackerInteractor(ProgressTrackerDataAccess progressTrackerDataAccess,
-                                     progressTrackerOutputBoundary presenter) {
-        this.progressTrackerDataAccess = progressTrackerDataAccess;
+    public progressTrackerInteractor(progressTrackerOutputBoundary presenter) {
         this.presenter = presenter;
     }
 
     public void execute(progressTrackerInputData progressTrackerInputData) {
+        final int wordsStudied  = progressTrackerInputData.getWordsStudied();
+        final int wordsMastered = progressTrackerInputData.getWordsMastered();
 
+        final progressTrackerOutputData outputData = new progressTrackerOutputData(wordsStudied, wordsMastered);
+        presenter.presentSuccess(outputData);
     }
 }

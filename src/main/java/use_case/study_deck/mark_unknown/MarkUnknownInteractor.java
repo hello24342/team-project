@@ -1,6 +1,6 @@
 package use_case.study_deck.mark_unknown;
 
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 
 public class MarkUnknownInteractor implements MarkUnknownInputBoundary {

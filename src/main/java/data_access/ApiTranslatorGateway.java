@@ -1,8 +1,8 @@
 package data_access;
 
 import entity.Language;
-import use_case.flashcard_create.TranslationException;
-import use_case.flashcard_create.TranslatorGateway;
+import use_case.flashcard.create.TranslationException;
+import use_case.flashcard.create.TranslatorGateway;
 
 import org.json.JSONArray;
 

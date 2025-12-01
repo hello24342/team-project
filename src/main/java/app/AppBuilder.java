@@ -9,10 +9,7 @@ import app.factory.DeckManageUseCaseFactory.DeckMenuBundle;
 import data_access.FileDeckDataAccessObject;
 import data_access.FileFlashcardDataAccessObject;
 import data_access.FileUserDataAccessObject;
-import entity.Flashcard;
-import entity.FlashcardDeck;
-import entity.Language;
-import use_case.FlashcardDataAccessInterface;
+import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 import use_case.UserDataAccessInterface;
 import view.*;
@@ -61,14 +58,14 @@ public class AppBuilder {
 
         FlashcardDataAccessInterface cardDAO = new FileFlashcardDataAccessObject("flashcards.csv");
 
-        // line below is for testing, delete once create flashcard works
-        // seedDemoData(deckDAO, cardDAO);
-
         // assume currently only one user, id = 1
         int currentUserId = 1;
 
         // 3) construct use case components
         // TODO: other use case components
+
+        CreateFlashcardUseCaseFactory.CreateFlashcardBundle createBundle =
+                CreateFlashcardUseCaseFactory.build(cardDAO);
 
         // Login UC
         LoginUseCaseFactory.LoginBundle loginBundle =
@@ -89,6 +86,7 @@ public class AppBuilder {
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
                 StudyDeckUseCaseFactory.build(deckDAO, fileUserDataAccessObject, cardDAO);
+
 
         // edit flashcard UC9
         // TODO: uncomment when EditFlashcardUseCaseFactory is ready
@@ -137,6 +135,10 @@ public class AppBuilder {
         StudyDeckView studyView = new StudyDeckView(studyBundle.vm, viewManager);
         studyView.setController(studyBundle.controller);
 
+        //CreateFlashcardView
+        CreateFlashcardView createFlashcardView =
+                new CreateFlashcardView(createBundle.controller, createBundle.vm);
+
         // EditFlashcardView
         // TODO: uncomment when EditFlashcardUseCaseFactory is ready
         // EditFlashcardView editFlashcardView =
@@ -151,6 +153,7 @@ public class AppBuilder {
         viewManager.add("LoggedIn", loggedInView);
         viewManager.add("DeckMenu", deckMenuView);
         viewManager.add("DeckDetail", deckDetailView);
+        viewManager.add("CreateFlashcard", createFlashcardView);
         // viewManager.add("EditFlashcard", editFlashcardView);
         viewManager.add("Study", studyView);
 
