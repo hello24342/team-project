@@ -33,8 +33,8 @@ public class StudyDeckController {
         this.markKnownInputBoundary = markKnownInputBoundary;
         this.markUnknownInputBoundary = markUnknownInputBoundary;
     }
-    public void loadDeckForStudy(int userId, int deckId) {
-        LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(userId, deckId);
+    public void loadDeckForStudy(int userId, int deckId, String username) {
+        LoadDeckForStudyInputData inputData = new LoadDeckForStudyInputData(userId, deckId, username);
         loadDeckForStudyInputBoundary.execute(inputData);
     }
 

@@ -60,6 +60,7 @@ public class AppBuilder {
 
         // assume currently only one user, id = 1
         int currentUserId = 1;
+        String username = userDAO.getUsernameFromId(currentUserId);
 
         // 3) construct use case components
         // TODO: other use case components
@@ -129,7 +130,8 @@ public class AppBuilder {
                 /*editBundle.controller,*/ null,
                 createBundle.vm,
                 currentUserId,
-                viewManager
+                viewManager,
+                username
         );
 
         // StudyDeckView

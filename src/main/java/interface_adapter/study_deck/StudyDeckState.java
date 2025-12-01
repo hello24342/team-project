@@ -69,4 +69,8 @@ public class StudyDeckState {
     public void setDeckName(String deckName) {
         this.deckName = deckName;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
