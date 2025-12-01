@@ -1,8 +1,8 @@
 package interface_adapter.progress_tracker;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.learning_goal.LearningGoalViewModel;
-import usecase.progressTracker.progressTrackerOutputBoundary;
-import usecase.progressTracker.progressTrackerOutputData;
+import use_case.progressTracker.progressTrackerOutputBoundary;
+import use_case.progressTracker.progressTrackerOutputData;
 
 public class ProgressTrackerPresenter implements progressTrackerOutputBoundary{
     private final ProgressTrackerViewModel progressTrackerViewModel;

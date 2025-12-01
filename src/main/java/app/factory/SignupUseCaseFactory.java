@@ -17,10 +17,12 @@ public class SignupUseCaseFactory {
     public static class SignupBundle {
         public final SignupViewModel signupViewModel;
         public final SignupController signupController;
+        public ViewManager viewManager;
 
-        public SignupBundle(SignupViewModel signupViewModel, SignupController signupController) {
+        public SignupBundle(SignupViewModel signupViewModel, SignupController signupController, ViewManager viewManager) {
             this.signupViewModel = signupViewModel;
             this.signupController = signupController;
+            this.viewManager = viewManager;
         }
     }
 
@@ -43,6 +45,6 @@ public class SignupUseCaseFactory {
         // Controller
         SignupController signupController = new SignupController(signupInteractor);
 
-        return new SignupBundle(signupViewModel, signupController);
+        return new SignupBundle(signupViewModel, signupController, viewManager);
     }
 }

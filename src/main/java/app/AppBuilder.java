@@ -97,10 +97,10 @@ public class AppBuilder {
         // 4) construct Views
         // TODO: other views
         // LoginView
-        LoginView loginView = new LoginView(loginBundle.loginViewModel, loginBundle.loginController);
+        LoginView loginView = new LoginView(loginBundle.loginViewModel, loginBundle.loginController, loginBundle.signupController, loginBundle.viewManager);
 
         // Signup View
-        SignUpView signupView = new SignUpView(signupBundle.signupViewModel, signupBundle.signupController);
+        SignUpView signupView = new SignUpView(signupBundle.signupViewModel, signupBundle.signupController, signupBundle.viewManager);
 
         // LoggedInView
         LoggedInView loggedInView = new LoggedInView(

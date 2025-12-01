@@ -3,6 +3,7 @@ package view;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -13,9 +14,8 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-
-public class LoginView extends JPanel implements PropertyChangeListener, ActionListener {
-    private final String viewName = "log in";
+public class LoginView extends JPanel implements PropertyChangeListener {
+    private final String viewName = "Login";
     private final JTextField usernameInputField = new JTextField(15);
     private final JLabel usernameErrorField = new JLabel();
     private final JPasswordField passwordInputField = new JPasswordField(15);
@@ -25,18 +25,34 @@ public class LoginView extends JPanel implements PropertyChangeListener, ActionL
     private final JButton signupButton = new JButton("Signup");
     private final LoginViewModel loginViewModel;
     private final LoginController loginController;
+    private final SignupController signupController;
+    private final ViewManager viewManager;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController loginController) {
-
+    public LoginView(LoginViewModel loginViewModel,
+                     LoginController loginController,
+                     SignupController signupController,
+                     ViewManager viewManager) {
         this.loginViewModel = loginViewModel;
         this.loginController = loginController;
+        this.signupController = signupController;
+        this.viewManager = viewManager;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        this.loginButton.addActionListener(this);
-        this.signupButton.addActionListener(this);
+        initializeUI();
+        setupDocumentListeners();
+        setupActionListeners();
+    }
+
+    private void initializeUI() {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         final JLabel title = new JLabel("VocabVault Login Page");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Arial", Font.BOLD, 18));
+
+        // Style error fields
+        usernameErrorField.setForeground(Color.RED);
+        passwordErrorField.setForeground(Color.RED);
 
         final LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel("Username"), usernameInputField);
@@ -47,93 +63,194 @@ public class LoginView extends JPanel implements PropertyChangeListener, ActionL
         buttons.add(loginButton);
         buttons.add(signupButton);
 
-        loginButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(loginButton)) {
-                            final LoginState currentState = loginViewModel.getState();
-
-                            loginController.execute(
-                                    currentState.getUsername(),
-                                    currentState.getPassword()
-                            );
-                        }
-                    }
-                }
-        );
-
-        signupButton.addActionListener(this);
-
-        usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final LoginState currentState = loginViewModel.getState();
-                currentState.setUsername(usernameInputField.getText());
-                loginViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final LoginState currentState = loginViewModel.getState();
-                currentState.setPassword(new String(passwordInputField.getPassword()));
-                loginViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-
+        this.add(Box.createVerticalStrut(20));
         this.add(title);
+        this.add(Box.createVerticalStrut(20));
         this.add(usernameInfo);
         this.add(usernameErrorField);
+        this.add(Box.createVerticalStrut(10));
         this.add(passwordInfo);
         this.add(passwordErrorField);
+        this.add(Box.createVerticalStrut(20));
         this.add(buttons);
+        this.add(Box.createVerticalStrut(20));
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private void setupDocumentListeners() {
+        usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updateUsernameState();
+            }
 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updateUsernameState();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updateUsernameState();
+            }
+
+            private void updateUsernameState() {
+                SwingUtilities.invokeLater(() -> {
+                    LoginState currentState = loginViewModel.getState();
+                    currentState.setUsername(usernameInputField.getText());
+                    loginViewModel.setState(currentState);
+
+                    // DEBUG
+                    System.out.println("Username state updated to: " + currentState.getUsername());
+                });
+            }
+        });
+
+        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                updatePasswordState();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                updatePasswordState();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                updatePasswordState();
+            }
+
+            private void updatePasswordState() {
+                SwingUtilities.invokeLater(() -> {
+                    LoginState currentState = loginViewModel.getState();
+                    currentState.setPassword(new String(passwordInputField.getPassword()));
+                    loginViewModel.setState(currentState);
+
+                    // DEBUG - don't print actual password
+                    System.out.println("Password state updated (length): " + currentState.getPassword().length());
+                });
+            }
+        });
+
+        // Initialize state with empty values
+        LoginState initialState = loginViewModel.getState();
+        initialState.setUsername("");
+        initialState.setPassword("");
+        loginViewModel.setState(initialState);
+    }
+
+    private void setupActionListeners() {
+        loginButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                LoginState currentState = loginViewModel.getState();
+
+                // DEBUG: Show current state
+                System.out.println("=== LOGIN BUTTON CLICKED ===");
+                System.out.println("State username: '" + currentState.getUsername() + "'");
+                System.out.println("State password length: " + currentState.getPassword().length());
+                System.out.println("Field username: '" + usernameInputField.getText() + "'");
+                System.out.println("Field password: " + passwordInputField.getPassword());
+
+                String username = currentState.getUsername();
+                String password = currentState.getPassword();
+
+                if (username == null || username.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            LoginView.this,
+                            "Please enter username",
+                            "Validation Error",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                    usernameInputField.requestFocus();
+                    return;
+                }
+
+                if (password == null || password.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(
+                            LoginView.this,
+                            "Please enter password",
+                            "Validation Error",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                    passwordInputField.requestFocus();
+                    return;
+                }
+                loginController.execute(username.trim(), password.trim());
+                viewManager.show("LoggedIn");
+            }
+        });
+
+        signupButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                if (viewManager != null) {
+                    usernameInputField.setText("");
+                    passwordInputField.setText("");
+                    LoginState clearedState = loginViewModel.getState();
+                    clearedState.setUsername("");
+                    clearedState.setPassword("");
+                    clearedState.setLoginError(null);
+                    loginViewModel.setState(clearedState);
+
+                    viewManager.show("Signup");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            LoginView.this,
+                            "Signup functionality not implemented yet",
+                            "Info",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                }
+            }
+        });
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("state")) {
+            LoginState state = (LoginState) evt.getNewValue();
 
+            // DEBUG
+            System.out.println("=== PROPERTY CHANGE ===");
+            System.out.println("New state username: '" + state.getUsername() + "'");
+            System.out.println("New state password length: " + state.getPassword().length());
+            System.out.println("Login error: " + state.getLoginError());
+
+            String error = state.getLoginError();
+            if (error != null && !error.isEmpty()) {
+                usernameErrorField.setText(error);
+                passwordErrorField.setText(error);
+                if (!state.getUsername().equals(usernameInputField.getText())) {
+                    usernameInputField.setText(state.getUsername());
+                }
+            } else {
+                usernameErrorField.setText("");
+                passwordErrorField.setText("");
+            }
+
+            if (state.getUsername().isEmpty() && !usernameInputField.getText().isEmpty()) {
+                System.out.println("Clearing username field in UI");
+                usernameInputField.setText("");
+            }
+
+            if (state.getPassword().isEmpty() && passwordInputField.getPassword().length > 0) {
+                System.out.println("Clearing password field in UI");
+                passwordInputField.setText("");
+            }
+        }
     }
 
     public String getViewName() {
         return viewName;
     }
 
+    public void clearForm() {
+        usernameInputField.setText("");
+        passwordInputField.setText("");
+        LoginState clearedState = loginViewModel.getState();
+        clearedState.setUsername("");
+        clearedState.setPassword("");
+        clearedState.setLoginError(null);
+        loginViewModel.setState(clearedState);
+    }
 }

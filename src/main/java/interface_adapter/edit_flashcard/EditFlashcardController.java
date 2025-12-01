@@ -1,7 +1,7 @@
 package interface_adapter.edit_flashcard;
 
-import use_case.flashcard_edit.EditFlashcardInputBoundary;
-import use_case.flashcard_edit.EditFlashcardInputData;
+import use_case.flashcard.edit.EditFlashcardInputBoundary;
+import use_case.flashcard.edit.EditFlashcardInputData;
 
 public class EditFlashcardController {
     private final EditFlashcardInputBoundary editFlashcardInteractor;

@@ -1,7 +1,6 @@
 package app.factory;
 
 import interface_adapter.deck.*;
-import use_case.FlashcardDataAccessInterface;
 import data_access.FileUserDataAccessObject;
 import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
