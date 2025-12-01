@@ -66,6 +66,7 @@ public class AppBuilder {
         DeckMenuBundle deckBundle =
                 DeckManageUseCaseFactory.build(deckDAO, cardDAO, fileUserDataAccessObject);
 
+
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
                 StudyDeckUseCaseFactory.build(deckDAO, fileUserDataAccessObject, cardDAO);
@@ -111,7 +112,7 @@ public class AppBuilder {
                 createBundle.vm,
                 userDAO.getCurrentUserId(),
                 viewManager,
-                username
+                userDAO.getCurrentUsername()
         );
 
         // StudyDeckView
