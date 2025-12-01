@@ -19,9 +19,9 @@ public class ProgressTrackerPresenter implements progressTrackerOutputBoundary{
 
     @Override
     public void presentSuccess(progressTrackerOutputData outputData) {
-        final ProgressTrackerState loggedInState = progressTrackerViewModel.getState();
-        loggedInState.setWordsStudied(outputData.getWordsStudied());
-        loggedInState.setWordsMastered(outputData.getWordsMastered());
+        final ProgressTrackerState progressTrackerState = progressTrackerViewModel.getState();
+        progressTrackerState.setWordsStudied(outputData.getWordsStudied());
+        progressTrackerState.setWordsMastered(outputData.getWordsMastered());
         this.progressTrackerViewModel.firePropertyChange();
 
         progressTrackerViewModel.setState(new ProgressTrackerState());
