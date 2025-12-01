@@ -49,7 +49,6 @@ public class LoginInteractor implements LoginInputBoundary {
                 userDeckNames.add(deck.getTitle());
             }
         }
-
-        return userDeckNames;
+    return userDeckNames;
     }
 }

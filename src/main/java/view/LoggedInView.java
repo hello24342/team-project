@@ -6,6 +6,7 @@ import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.deck.ListDecksController;
+import interface_adapter.progress_tracker.ProgressTrackerController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -36,6 +37,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
     private ListDecksController listDecksController;
     private CreateDeckController createDeckController;
     private OpenDeckController openDeckController;
+//    private ProgressTrackerController progressTrackerController;
 
     // Updated constructor to properly initialize all dependencies
     public LoggedInView(LoggedInViewModel loggedInViewModel,
@@ -48,6 +50,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
         this.listDecksController = listDecksController;
         this.createDeckController = createDeckController;
         this.openDeckController = openDeckController;
+//        this.progressTrackerController = new ProgressTrackerController();
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         initializeUI();
@@ -138,13 +141,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
         });
 
         //TODO: Implement activity button when progress tracker controller is available
-        /*
+/*
         activityButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setLearningGoalController.
+                progressTrackerController.execute()
             }
-        })
-        */
+        });
+*/
     }
 
     public void refreshDeckDisplay() {
@@ -162,7 +165,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Acti
             JButton deckButton = new JButton(firstDeckName);
             deckButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    // openDeckController.execute(firstDeckName);
+                    openDeckController.open(0);
                 }
             });
             deckPanel.add(deckButton);
