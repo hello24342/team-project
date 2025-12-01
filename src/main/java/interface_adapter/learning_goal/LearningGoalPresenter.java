@@ -2,6 +2,7 @@ package interface_adapter.learning_goal;
 
 import interface_adapter.ViewModel;
 import use_case.SetLearningGoal.SetLearningGoalOutputBoundary;
+import use_case.SetLearningGoal.SetLearningGoalOutputData;
 import view.SetLearningGoalView;
 
 public class LearningGoalPresenter implements SetLearningGoalOutputBoundary {
@@ -13,5 +14,13 @@ public class LearningGoalPresenter implements SetLearningGoalOutputBoundary {
         this.viewModel = viewModel;
     }
 
-    public void
+    @Override
+    public void prepareSuccess(SetLearningGoalOutputData outputData) {
+
+    }
+
+    @Override
+    public void prepareFailure(String errorMessage) {
+
+    }
 }

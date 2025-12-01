@@ -1,17 +1,12 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import interface_adapter.study_deck.StudyDeckController;
 import interface_adapter.study_deck.StudyDeckState;
@@ -28,11 +23,15 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
     private final JButton previousButton;
     private final JButton knowButton;
     private final JButton dontKnowButton;
+    private final JButton exitButton;
 
     private final StudyDeckViewModel viewModel;
     private StudyDeckController controller;
 
-    public StudyDeckView(StudyDeckViewModel viewModel) {
+    private final ViewManager viewManager;
+
+    public StudyDeckView(StudyDeckViewModel viewModel, ViewManager viewManager) {
+        this.viewManager = viewManager;
 
         cardLabel = new JLabel();
         deckTitleLabel = new JLabel();
@@ -51,6 +50,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         previousButton = new JButton("←");
         knowButton = new JButton("Know it");
         dontKnowButton = new JButton("Don't know it");
+        exitButton = new JButton("Exit");
 
         this.viewModel = viewModel;
         this.viewModel.addPropertyChangeListener(this);
@@ -67,9 +67,15 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         previousButton.addActionListener(this);
         knowButton.addActionListener(this);
         dontKnowButton.addActionListener(this);
+        exitButton.addActionListener(e -> viewManager.show("DeckMenu"));
 
         this.setLayout(new BorderLayout());
-        this.add(deckTitleLabel, BorderLayout.NORTH);
+
+        JPanel top = new JPanel(new BorderLayout());
+        top.add(exitButton, BorderLayout.EAST);
+        top.add(deckTitleLabel, BorderLayout.CENTER);
+        this.add(top, BorderLayout.NORTH);
+
         this.add(cardLabel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         this.add(knowButton, BorderLayout.WEST);
@@ -93,7 +99,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         else if (e.getSource() == previousButton) {
             controller.previousCard(currentState.getDeckId(), currentState.getCardIndex());
         } else if (e.getSource() == knowButton) {
-            controller.markKnown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex());
+            controller.markKnown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex(), currentState.getUsername());
         } else if (e.getSource() == dontKnowButton) {
             controller.markUnknown(currentState.getUserId(), currentState.getDeckId(), currentState.getCardIndex());
         }

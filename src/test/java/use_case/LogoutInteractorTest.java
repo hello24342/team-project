@@ -18,7 +18,7 @@ class LogoutInteractorTest {
         InMemoryUserDataAccessObject userRepository = new InMemoryUserDataAccessObject();
 
         UserFactory factory = new UserFactory();
-        User user = factory.create("Paul", "paul123@example.com", "password");
+        User user = factory.create(1,"Paul", "paul123@example.com", "password");
         userRepository.save(user);
         userRepository.setCurrentUsername("Paul");
 

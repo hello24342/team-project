@@ -6,7 +6,6 @@ public class EditFlashcardInputData {
     private final String newTargetWord;
     private final String newSourceLang;
     private final String newTargetLang;
-
     private final boolean delete; // true if delete request
 
     public EditFlashcardInputData(
@@ -24,6 +23,27 @@ public class EditFlashcardInputData {
         this.delete = delete;
     }
 
-    // getters...
-}
+    public int getFlashcardId() {
+        return flashcardId;
+    }
 
+    public String getNewSourceWord() {
+        return newSourceWord;
+    }
+
+    public String getNewTargetWord() {
+        return newTargetWord;
+    }
+
+    public String getNewSourceLang() {
+        return newSourceLang;
+    }
+
+    public String getNewTargetLang() {
+        return newTargetLang;
+    }
+
+    public boolean isDelete() {
+        return delete;
+    }
+}

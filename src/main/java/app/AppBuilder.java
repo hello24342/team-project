@@ -87,7 +87,7 @@ public class AppBuilder {
 
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
-                StudyDeckUseCaseFactory.build(deckDAO, cardDAO);
+                StudyDeckUseCaseFactory.build(deckDAO, userDAO, cardDAO);
 
 
         // edit flashcard UC9
@@ -134,7 +134,7 @@ public class AppBuilder {
         );
 
         // StudyDeckView
-        StudyDeckView studyView = new StudyDeckView(studyBundle.vm);
+        StudyDeckView studyView = new StudyDeckView(studyBundle.vm, viewManager);
         studyView.setController(studyBundle.controller);
 
         //CreateFlashcardView
