@@ -1,6 +1,6 @@
 package interface_adapter.progress_tracker;
- import usecase.progressTracker.progressTrackerInputBoundary;
- import usecase.progressTracker.progressTrackerInputData;
+ import use_case.progressTracker.progressTrackerInputBoundary;
+ import use_case.progressTracker.progressTrackerInputData;
 
 public class ProgressTrackerController {
     private final progressTrackerInputBoundary progressTrackerInteractor;

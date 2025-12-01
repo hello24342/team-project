@@ -44,6 +44,17 @@ public class InMemoryFlashcardDataAccessObject implements FlashcardDataAccessInt
     }
 
     @Override
+    public int getKnownCardsCount(int userId, int deckId) {
+        return (int) findByDeck(deckId).stream().filter(Flashcard::isKnown).count();
+    }
+
+    @Override
+    public int getDeckSize(int userId, int deckId) {
+        return findByDeck(deckId).size();
+    }
+
+
+    @Override
     public void save(Flashcard flashcard) {
         flashcards.put(flashcard.getId(), flashcard);
     }
