@@ -1,7 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -24,11 +23,15 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
     private final JButton previousButton;
     private final JButton knowButton;
     private final JButton dontKnowButton;
+    private final JButton exitButton;
 
     private final StudyDeckViewModel viewModel;
     private StudyDeckController controller;
 
-    public StudyDeckView(StudyDeckViewModel viewModel) {
+    private final ViewManager viewManager;
+
+    public StudyDeckView(StudyDeckViewModel viewModel, ViewManager viewManager) {
+        this.viewManager = viewManager;
 
         cardLabel = new JLabel();
         deckTitleLabel = new JLabel();
@@ -47,6 +50,7 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         previousButton = new JButton("←");
         knowButton = new JButton("Know it");
         dontKnowButton = new JButton("Don't know it");
+        exitButton = new JButton("Exit");
 
         this.viewModel = viewModel;
         this.viewModel.addPropertyChangeListener(this);
@@ -63,9 +67,15 @@ public class StudyDeckView extends JPanel implements ActionListener, PropertyCha
         previousButton.addActionListener(this);
         knowButton.addActionListener(this);
         dontKnowButton.addActionListener(this);
+        exitButton.addActionListener(e -> viewManager.show("DeckMenu"));
 
         this.setLayout(new BorderLayout());
-        this.add(deckTitleLabel, BorderLayout.NORTH);
+
+        JPanel top = new JPanel(new BorderLayout());
+        top.add(exitButton, BorderLayout.EAST);
+        top.add(deckTitleLabel, BorderLayout.CENTER);
+        this.add(top, BorderLayout.NORTH);
+
         this.add(cardLabel, BorderLayout.CENTER);
         this.add(buttonPanel, BorderLayout.SOUTH);
         this.add(knowButton, BorderLayout.WEST);
