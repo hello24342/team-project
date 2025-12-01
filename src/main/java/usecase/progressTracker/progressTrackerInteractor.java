@@ -21,6 +21,6 @@ public class progressTrackerInteractor implements progressTrackerInputBoundary {
         final int wordsMastered = progressTrackerInputData.getWordsMastered();
 
         final progressTrackerOutputData outputData = new progressTrackerOutputData(wordsStudied, wordsMastered);
-        presenter.prepareSuccess(outputData);
+        presenter.presentSuccess(outputData);
     }
 }

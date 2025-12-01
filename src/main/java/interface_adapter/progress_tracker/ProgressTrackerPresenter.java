@@ -1,29 +1,32 @@
 package interface_adapter.progress_tracker;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.learning_goal.LearningGoalViewModel;
 import usecase.progressTracker.progressTrackerOutputBoundary;
 import usecase.progressTracker.progressTrackerOutputData;
 
 public class ProgressTrackerPresenter implements progressTrackerOutputBoundary{
     private final ProgressTrackerViewModel progressTrackerViewModel;
+    private final LearningGoalViewModel learningGoalViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public ProgressTrackerPresenter(ProgressTrackerViewModel progressTrackerViewModel,
+                                    LearningGoalViewModel learningGoalViewModel,
                                     ViewManagerModel viewManagerModel){
         this.progressTrackerViewModel = progressTrackerViewModel;
+        this.learningGoalViewModel = learningGoalViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
-    public void prepareSuccess(progressTrackerOutputData outputData) {
+    public void presentSuccess(progressTrackerOutputData outputData) {
         final ProgressTrackerState loggedInState = progressTrackerViewModel.getState();
         loggedInState.setWordsStudied(outputData.getWordsStudied());
         loggedInState.setWordsMastered(outputData.getWordsMastered());
         this.progressTrackerViewModel.firePropertyChange();
 
         progressTrackerViewModel.setState(new ProgressTrackerState());
-    }
-    @Override
-    public void prepareFailure(String message) {
-        // work on this.
+
+        viewManagerModel.setState(learningGoalViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }
