@@ -2,17 +2,18 @@ package use_case.signup;
 
 import entity.User;
 import entity.UserFactory;
+import use_case.UserDataAccessInterface;
 
 public class SignupInteractor implements SignupInputBoundary {
 
-    private final SignupUserDataAccessInterface signupUserDataAccessObject;
+    private final UserDataAccessInterface userDataAccessObject;
     private final SignupOutputBoundary signupPresenter;
     private final UserFactory userFactory;
 
-    public SignupInteractor(SignupUserDataAccessInterface signupUserDataAccessObject,
+    public SignupInteractor(UserDataAccessInterface userDataAccessObject,
                             SignupOutputBoundary signupPresenter,
                             UserFactory userFactory) {
-        this.signupUserDataAccessObject = signupUserDataAccessObject;
+        this.userDataAccessObject = userDataAccessObject;
         this.signupPresenter = signupPresenter;
         this.userFactory = userFactory;
     }
@@ -24,7 +25,7 @@ public class SignupInteractor implements SignupInputBoundary {
         final String email = signupInputData.getEmail();
         final String confirmPassword = signupInputData.getConfirmPassword();
 
-        if (signupUserDataAccessObject.usernameExists(username)) {
+        if (userDataAccessObject.usernameExists(username)) {
             signupPresenter.signupFailureView("Username already exists. Login instead!");
         }
         else if (!password.equals(confirmPassword)) {
@@ -33,7 +34,7 @@ public class SignupInteractor implements SignupInputBoundary {
         else if (email.isEmpty()) {
             signupPresenter.signupFailureView("Email cannot be empty.");
         }
-        else if (signupUserDataAccessObject.emailExists(email)) {
+        else if (userDataAccessObject.emailExists(email)) {
             signupPresenter.signupFailureView("Email already exists. Login instead!");
         }
         else if (password.isEmpty()) {
@@ -43,13 +44,13 @@ public class SignupInteractor implements SignupInputBoundary {
             signupPresenter.signupFailureView("Username cannot be empty");
         }
         else {
-            int userId = signupUserDataAccessObject.getNextUserId();
+            int userId = userDataAccessObject.getNextUserId();
             final User user = userFactory.create(userId, signupInputData.getUsername(),
                     signupInputData.getEmail(),
                     signupInputData.getPassword());
             user.setTotalKnownFlashcards(0);
             user.setTotalFlashcards(0);
-            signupUserDataAccessObject.save(user);
+            userDataAccessObject.save(user);
 
             final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername());
             signupPresenter.signupSuccessView(signupOutputData);

@@ -11,8 +11,7 @@ import data_access.FileFlashcardDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
-import use_case.login.LoginUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
+import use_case.UserDataAccessInterface;
 import view.*;
 import view.deck.DeckDetailView;
 import view.deck.DeckMenuView;
@@ -50,9 +49,8 @@ public class AppBuilder {
         // 2) create Data Access instances
         // TODO: other DAOs & can be replaced by DB implementations later if needed
         // User DAO
-        FileUserDataAccessObject userDAO = new FileUserDataAccessObject("users.csv");
-        LoginUserDataAccessInterface loginDAO = userDAO;
-        SignupUserDataAccessInterface signupDAO = userDAO;
+        FileUserDataAccessObject fileUserDataAccessObject = new FileUserDataAccessObject("users.csv");
+        UserDataAccessInterface userDAO = fileUserDataAccessObject;
 
         // Deck DAO (uses CSV file for storage)
         DeckDataAccessInterface deckDAO =
@@ -71,11 +69,11 @@ public class AppBuilder {
 
         // Login UC
         LoginUseCaseFactory.LoginBundle loginBundle =
-                LoginUseCaseFactory.build(loginDAO, viewManager);
+                LoginUseCaseFactory.build(userDAO, viewManager);
 
         // Sign up UC
         SignupUseCaseFactory.SignupBundle signupBundle =
-                SignupUseCaseFactory.build(signupDAO, viewManager);
+                SignupUseCaseFactory.build(userDAO, viewManager);
 
         // Logout UC
         LogoutUseCaseFactory.LogoutBundle logoutBundle =
@@ -83,11 +81,11 @@ public class AppBuilder {
 
         // deck UC5 & 10 & 11
         DeckMenuBundle deckBundle =
-                DeckManageUseCaseFactory.build(deckDAO, cardDAO, currentUserId);
+                DeckManageUseCaseFactory.build(deckDAO, cardDAO, fileUserDataAccessObject, currentUserId);
 
         // study deck UC2
         StudyDeckUseCaseFactory.StudyDeckBundle studyBundle =
-                StudyDeckUseCaseFactory.build(deckDAO, userDAO, cardDAO);
+                StudyDeckUseCaseFactory.build(deckDAO, fileUserDataAccessObject, cardDAO);
 
 
         // edit flashcard UC9

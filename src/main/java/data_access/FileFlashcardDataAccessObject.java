@@ -183,17 +183,11 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
     }
     @Override
     public void markCardAsKnown(int userId, int deckId, int cardIndex) {
-        List<Flashcard> deckCards = findByDeck(deckId);
-
-        if (cardIndex >= 0 && cardIndex < deckCards.size()) {
-            Flashcard card = deckCards.get(cardIndex);
-
-            if (!card.isKnown()) {
-                card.setKnown(true);
-                knownCountCache.put(deckId, knownCountCache.getOrDefault(deckId, 0) + 1);
-                saveToFile();
-            }
-        }
+        List<Flashcard> deck = findByDeck(deckId);
+        Flashcard card = deck.get(cardIndex);
+        card.setKnown(true);
+        knownCountCache.put(deckId, knownCountCache.getOrDefault(deckId, 0) + 1);
+        saveToFile();
     }
 
     @Override

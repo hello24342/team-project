@@ -1,6 +1,8 @@
 package app.factory;
 
 import interface_adapter.deck.*;
+import use_case.FlashcardDataAccessInterface;
+import data_access.FileUserDataAccessObject;
 import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 import use_case.deck.create_deck.CreateDeckInteractor;
@@ -15,22 +17,25 @@ public class DeckManageUseCaseFactory {
         public final ListDecksController listController;
         public final OpenDeckController openController;
         public final DeckDetailViewModel detailVM;
+        public final FileUserDataAccessObject userDAO;
 
         public DeckMenuBundle(DeckMenuViewModel vm,
                               CreateDeckController createCtl,
                               ListDecksController listCtl,
                               OpenDeckController openCtl,
-                              DeckDetailViewModel detailVM) {
+                              DeckDetailViewModel detailVM, FileUserDataAccessObject userDAO) {
             this.vm = vm;
             this.createController = createCtl;
             this.listController = listCtl;
             this.openController = openCtl;
             this.detailVM = detailVM;
+            this.userDAO = userDAO;
         }
     }
     // Builds the use case components for managing decks so that they can be used in the UI
     public static DeckMenuBundle build(DeckDataAccessInterface deckDAO,
                                        FlashcardDataAccessInterface cardDAO,
+                                       FileUserDataAccessObject userDAO,
                                        int userId) {
         DeckMenuViewModel vm = new DeckMenuViewModel();
 
@@ -40,7 +45,7 @@ public class DeckManageUseCaseFactory {
 
         // Interactors
         CreateDeckInteractor createInteractor =
-                new CreateDeckInteractor(deckDAO, createPresenter);
+                new CreateDeckInteractor(deckDAO, userDAO, createPresenter);
         ListDecksInteractor listInteractor =
                 new ListDecksInteractor(deckDAO, listPresenter);
 
@@ -56,7 +61,7 @@ public class DeckManageUseCaseFactory {
         OpenDeckInteractor openInteractor = new OpenDeckInteractor(deckDAO, cardDAO, openPresenter);
         OpenDeckController openCtl = new OpenDeckController(openInteractor);
 
-        return new DeckMenuBundle(vm, createCtl, listCtl, openCtl, detailVM);
+        return new DeckMenuBundle(vm, createCtl, listCtl, openCtl, detailVM, userDAO);
 
 
 

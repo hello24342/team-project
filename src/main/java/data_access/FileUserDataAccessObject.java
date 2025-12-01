@@ -7,10 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import entity.User;
-import use_case.login.LoginUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
+import use_case.UserDataAccessInterface;
 
-public class FileUserDataAccessObject implements LoginUserDataAccessInterface, SignupUserDataAccessInterface {
+public class FileUserDataAccessObject implements UserDataAccessInterface {
     private final String filePath;
     // Key: username
     private final Map<String, User> usersByUsername = new HashMap<>();
