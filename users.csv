@@ -1,1 +1,2 @@
-#userId,username,email,password,totalKnownFlashcards,totalFlashcards,deckIds
+#username,email,password,totalKnownFlashcards,totalFlashcards,deckIds
+1,Krista,kristalulu020514@gmail.com,123456,0,0,[2, 5]

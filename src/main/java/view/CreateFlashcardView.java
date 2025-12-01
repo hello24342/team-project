@@ -20,11 +20,17 @@ public class CreateFlashcardView extends JPanel implements PropertyChangeListene
     private final JComboBox<Language> targetLangDropdown;
     private final JTextArea outputArea;
 
+    private final ViewManager viewManager;
+    private final JButton deckMenuBtn;
+
+
     public CreateFlashcardView(CreateFlashcardController controller,
-                               CreateFlashcardViewModel viewModel) {
+                               CreateFlashcardViewModel viewModel,
+                               ViewManager viewManager) {
 
         this.controller = controller;
         this.viewModel = viewModel;
+        this.viewManager = viewManager;
 
         this.viewModel.addPropertyChangeListener(this);
 
@@ -44,8 +50,19 @@ public class CreateFlashcardView extends JPanel implements PropertyChangeListene
         targetLangDropdown = new JComboBox<>(Language.values());
         inputPanel.add(targetLangDropdown);
 
+        // Deck Menu Button
+        JPanel bottom = new JPanel(new BorderLayout());
+        deckMenuBtn = new JButton("Deck Menu");
+        bottom.add(deckMenuBtn, BorderLayout.WEST);
+        this.add(bottom, BorderLayout.SOUTH);
+        deckMenuBtn.addActionListener(e -> {
+            viewManager.show("DeckMenu");
+        });
+
         JButton createButton = new JButton("Create Flashcard");
         inputPanel.add(createButton);
+
+
 
         this.add(inputPanel, BorderLayout.NORTH);
 
@@ -61,11 +78,9 @@ public class CreateFlashcardView extends JPanel implements PropertyChangeListene
         String word = sourceWordField.getText();
         Language sourceLang = (Language) sourceLangDropdown.getSelectedItem();
         Language targetLang = (Language) targetLangDropdown.getSelectedItem();
+        int deckId = viewModel.getDeckId();
 
-        CreateFlashcardInputData input =
-                new CreateFlashcardInputData(word, sourceLang, targetLang);
-
-        controller.createFlashcard(input);
+        controller.createFlashcard(deckId, word, sourceLang, targetLang);
     }
 
     @Override

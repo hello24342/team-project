@@ -25,6 +25,7 @@ public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
         String sourceWord = inputData.getSourceWord();
         Language sourceLang = inputData.getSourceLang();
         Language targetLang = inputData.getTargetLang();
+        int deckId = inputData.getDeckId();
 
         // API translation call
         String targetWord = translator.translate(sourceWord, sourceLang, targetLang);
@@ -38,6 +39,8 @@ public class CreateFlashcardInteractor implements CreateFlashcardInputBoundary {
                 sourceLang,
                 targetLang
         );
+
+        card.addDeck(deckId);
 
         dataAccess.save(card);
 
