@@ -1,2 +1,1 @@
-#username,email,password,totalKnownFlashcards,totalFlashcards,deckIds
-1,jane,jane123@mail.com,12345,0,0,[]
+#userId,username,email,password,totalKnownFlashcards,totalFlashcards,deckIds
