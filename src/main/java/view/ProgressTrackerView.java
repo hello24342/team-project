@@ -17,7 +17,8 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
 
     private final JButton changeLearningGoalButton = new JButton("Change Learning Goal");
     private final JButton cancelButton = new JButton("Home");
-    private final JProgressBar progressBar = new JProgressBar(0,100);
+    private final JProgressBar goalprogressBar = new JProgressBar(0,100);
+    private final JProgressBar totalprogressBar = new JProgressBar(0,100);
 
     private final ProgressTrackerViewModel progressTrackerViewModel;
     private final ProgressTrackerController progressTrackerController;
@@ -32,13 +33,29 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
 
         this.changeLearningGoalButton.addActionListener(this);
         this.cancelButton.addActionListener(this);
-        this.progressBar.setValue(0); // set this to be the words mastered/wordsstudied
-        this.progressBar.setStringPainted(true);
+
+        final ProgressTrackerState currentState = progressTrackerViewModel.getState();
+
+        this.goalprogressBar.setValue(currentState.getWordsMastered()/currentState.getDailyTarget());
+        this.totalprogressBar.setValue(currentState.getWordsMastered()/currentState.getWordsStudied());
+        this.goalprogressBar.setStringPainted(true);
+        this.totalprogressBar.setStringPainted(true);
 
         final JLabel title = new JLabel("VocabVault Learning Goal");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        final JPanel goalProgressPanel = new JPanel();
+        goalProgressPanel.setLayout(new BoxLayout(goalProgressPanel, BoxLayout.X_AXIS));
+        goalProgressPanel.add(new JLabel("Your Progress on Your Goal: "));
+        goalProgressPanel.add(goalprogressBar);
+
+        final JPanel totalProgressPanel = new JPanel();
+        totalProgressPanel.setLayout(new BoxLayout(goalProgressPanel, BoxLayout.X_AXIS));
+        totalProgressPanel.add(new JLabel("Percentage of Total Words Learned: "));
+        totalProgressPanel.add(totalprogressBar);
+
         final JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
         buttonPanel.add(changeLearningGoalButton);
         buttonPanel.add(cancelButton);
 
@@ -59,7 +76,8 @@ public class ProgressTrackerView extends JPanel implements PropertyChangeListene
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(progressBar);
+        this.add(goalProgressPanel);
+        this.add(totalProgressPanel);
         this.add(buttonPanel);
     }
 
