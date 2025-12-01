@@ -5,3 +5,5 @@ id,sourceWord,targetWord,sourceLang,targetLang,known,deckIds
 4,cat,猫,ENGLISH,CHINESE_SIMPLIFIED,false,"2,4,4,4,1"
 5,dog,狗,ENGLISH,CHINESE_SIMPLIFIED,false,"2,4"
 6,,,ABKHAZ,ABKHAZ,false,"2"
+7,cheese,keju,ENGLISH,INDONESIAN,false,"6,1"
+8,rice,米,ENGLISH,CHINESE_SIMPLIFIED,false,"8,1,6"

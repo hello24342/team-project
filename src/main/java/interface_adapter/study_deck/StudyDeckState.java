@@ -10,6 +10,7 @@ public class StudyDeckState {
     private boolean startWithSource;
     private String deckName;
     private String errorMessage;
+    private int dontKnowDeckId;
 
     public int getDeckId() {
         return deckId;
@@ -29,6 +30,10 @@ public class StudyDeckState {
 
     public String getUsername() { return username;
     }
+
+    public int getDontKnowDeckId() { return dontKnowDeckId; }
+
+    public void setDontKnowDeckId(int dontKnowDeckId) { this.dontKnowDeckId = dontKnowDeckId; }
 
     public boolean isShowingFront() {
         return isShowingFront;

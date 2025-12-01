@@ -16,12 +16,24 @@ public class FileUserDataAccessObject implements UserDataAccessInterface {
     // Key: email
     private final Map<String, User> usersByEmail = new HashMap<>();
     private final Map<Integer, User> usersById = new HashMap<>();
-    private int nextUserId = 1;
+    private int nextUserId = 2;
     private String currentUsername;
+    private Integer currentUserId;
 
     public FileUserDataAccessObject(String filePath) throws IOException {
         this.filePath = filePath;
         loadUsersFromFile();
+        updateNextUserId();
+    }
+
+    private void updateNextUserId() {
+        int maxId = 1; // Start from 1
+        for (User user : usersByUsername.values()) {
+            if (user.getUserId() > maxId) {
+                maxId = user.getUserId();
+            }
+        }
+        nextUserId = maxId + 1;
     }
 
     public void addDeckToUser(String username, int deckId) {
@@ -29,6 +41,15 @@ public class FileUserDataAccessObject implements UserDataAccessInterface {
         if (user != null && !user.getDeckIds().contains(deckId)) {
             user.getDeckIds().add(deckId);
             save(user);
+        }
+    }
+
+    @Override
+    public void setCurrentUserId(int userId) {
+        this.currentUserId = userId;
+        User user = usersById.get(userId);
+        if (user != null) {
+            this.currentUsername = user.getUsername();
         }
     }
 
@@ -59,7 +80,7 @@ public class FileUserDataAccessObject implements UserDataAccessInterface {
                     continue;
                 }
                 String[] parts = line.split(",");
-                if (parts.length >= 7) { // Updated to 7 fields
+                if (parts.length >= 7) {
                     int userId = Integer.parseInt(parts[0].trim());
                     String username = parts[1].trim();
                     String email = parts[2].trim();
@@ -100,7 +121,6 @@ public class FileUserDataAccessObject implements UserDataAccessInterface {
             return deckIds;
         }
 
-        // Remove any surrounding quotes or brackets if present
         deckIdsString = deckIdsString.replace("\"", "").replace("[", "").replace("]", "").trim();
         if (deckIdsString.isEmpty()) {
             return deckIds;
@@ -120,12 +140,11 @@ public class FileUserDataAccessObject implements UserDataAccessInterface {
 
     private void saveUsersToFile() throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            // Write header
-            writer.write("#username,email,password,totalKnownFlashcards,totalFlashcards,deckIds");
+            writer.write("#userId,username,email,password,totalKnownFlashcards,totalFlashcards,deckIds");
             writer.newLine();
 
             for (User user : usersByUsername.values()) {
-                String line = String.format("%d,%s,%s,%s,%d,%d,%s", // Changed format to include totalFlashcards as integer
+                String line = String.format("%d,%s,%s,%s,%d,%d,%s",
                         user.getUserId(),
                         user.getUsername(),
                         user.getEmail(),
@@ -154,7 +173,6 @@ public class FileUserDataAccessObject implements UserDataAccessInterface {
         return user != null ? user.getUsername() : null;
     }
 
-    // NEW: Get user by ID
     public User getUserById(int userId) {
         return usersById.get(userId);
     }
@@ -201,17 +219,42 @@ public class FileUserDataAccessObject implements UserDataAccessInterface {
     @Override
     public void setCurrentUsername(String username) {
         this.currentUsername = username;
+        User user = usersByUsername.get(username);
+        if (user != null) {
+            this.currentUserId = user.getUserId();
+        }
     }
 
     @Override
     public void save(User user) {
         usersByUsername.put(user.getUsername(), user);
         usersByEmail.put(user.getEmail(), user);
+        usersById.put(user.getUserId(), user);
         try {
             saveUsersToFile();
         } catch (IOException e) {
             throw new RuntimeException("Failed to save user data", e);
         }
+    }
+
+    @Override
+    public int getCurrentUserId() {
+        System.out.println("DEBUG getCurrentUserId(): currentUsername = '" + currentUsername + "'");
+
+        if (currentUsername == null || currentUsername.trim().isEmpty()) {
+            System.out.println("WARNING: No user logged in yet. currentUsername is null/empty.");
+            return -1;
+        }
+
+        User user = usersByUsername.get(currentUsername);
+        if (user == null) {
+            System.err.println("ERROR: User '" + currentUsername + "' not found in database!");
+            System.err.println("Available usernames: " + usersByUsername.keySet());
+            return -1;
+        }
+
+        System.out.println("DEBUG: Found user ID: " + user.getUserId());
+        return user.getUserId();
     }
 
     @Override

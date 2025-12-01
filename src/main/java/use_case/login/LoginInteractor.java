@@ -47,6 +47,7 @@ public class LoginInteractor implements LoginInputBoundary {
         System.out.println("LOGIN SUCCESS: " + username);
         final User user = userDataAccessObject.getUser(username);
         userDataAccessObject.setCurrentUsername(username);
+        userDataAccessObject.setCurrentUserId(user.getUserId());
 
         List<String> userDeckNames = getUserDeckNames(user);
 

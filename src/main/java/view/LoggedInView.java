@@ -66,10 +66,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             System.out.println("Set initial username to: " + initialState.getUsername());
         }
 
-        if (listDecksController != null) {
-            listDecksController.onEnterDeckMenu();
-        }
-
         if (deckMenuViewModel != null) {
             deckMenuViewModel.addPropertyChangeListener(evt -> {
                 if (DeckMenuViewModel.DECK_LIST_PROPERTY.equals(evt.getPropertyName())) {
@@ -288,6 +284,17 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             username.setText(loggedInState.getUsername());
             refreshDeckDisplay();
         }
+        if (username != null) {
+            System.out.println("User logged in: " + username + ", loading decks...");
+
+            // Load decks for this user
+            if (listDecksController != null) {
+                listDecksController.onEnterDeckMenu();
+            } else {
+                System.err.println("ERROR: listDecksController is null!");
+            }
+        }
+        refreshDeckDisplay();
     }
 
     public String getViewName() {
