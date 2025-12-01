@@ -3,8 +3,8 @@ package interface_adapter.learning_goal;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.progress_tracker.ProgressTrackerState;
 import interface_adapter.progress_tracker.ProgressTrackerViewModel;
-import usecase.SetLearningGoal.SetLearningGoalOutputBoundary;
-import usecase.SetLearningGoal.SetLearningGoalOutputData;
+import use_case.SetLearningGoal.SetLearningGoalOutputBoundary;
+import use_case.SetLearningGoal.SetLearningGoalOutputData;
 
 public class LearningGoalPresenter implements SetLearningGoalOutputBoundary {
     private final LearningGoalViewModel learningGoalViewModel;
