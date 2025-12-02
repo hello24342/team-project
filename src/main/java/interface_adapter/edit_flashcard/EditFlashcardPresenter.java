@@ -16,7 +16,7 @@ public class EditFlashcardPresenter implements EditFlashcardOutputBoundary {
         EditFlashcardState state = viewModel.getState();
         state.setFlashcardId(outputData.getFlashcardId());
         state.setMessage(outputData.getMessage());
-        state.setErrorMessage(null);
+        state.setMessage(null);
         viewModel.setState(state);
         viewModel.firePropertyChange();
     }
@@ -24,7 +24,7 @@ public class EditFlashcardPresenter implements EditFlashcardOutputBoundary {
     @Override
     public void prepareFailView(String errorMessage) {
         EditFlashcardState state = viewModel.getState();
-        state.setErrorMessage(errorMessage);
+        state.setMessage(errorMessage);
         state.setMessage(null);
         viewModel.setState(state);
         viewModel.firePropertyChange();

@@ -21,17 +21,17 @@ public class EditFlashcardUseCaseFactory {
         }
     }
 
-    public static EditFlashcardBundle build(FlashcardDataAccessInterface cardDAO) {
-        EditFlashcardViewModel vm = new EditFlashcardViewModel();
-
-        EditFlashcardOutputBoundary presenter = new EditFlashcardPresenter(vm);
-
-        EditFlashcardInputBoundary interactor =
-                new EditFlashcardInteractor(cardDAO, presenter);
-
-        EditFlashcardController controller =
-                new EditFlashcardController(interactor, vm);
-
-        return new EditFlashcardBundle(vm, controller);
-    }
+//    public static EditFlashcardBundle build(FlashcardDataAccessInterface cardDAO) {
+//        EditFlashcardViewModel vm = new EditFlashcardViewModel();
+//
+//        EditFlashcardOutputBoundary presenter = new EditFlashcardPresenter(vm);
+//
+//        EditFlashcardInputBoundary interactor =
+//                new EditFlashcardInteractor(cardDAO, presenter);
+//
+//        EditFlashcardController controller =
+//                new EditFlashcardController(interactor, vm);
+//
+//        return new EditFlashcardBundle(vm, controller);
+//    }
 }

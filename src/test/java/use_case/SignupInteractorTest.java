@@ -12,7 +12,7 @@ class SignupInteractorTest {
 
     @Test
     void successTest() {
-        SignupInputData inputData = new SignupInputData("Paul", "paul123@example.com", "password", "password");
+        SignupInputData inputData = new SignupInputData("Paul", "password", "paul123@example.com", "password");
         UserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         SignupOutputBoundary successPresenter = new SignupOutputBoundary() {
@@ -24,7 +24,7 @@ class SignupInteractorTest {
 
             @Override
             public void signupFailureView(String errorMessage) {
-                fail("Use case failure is unexpected.");
+                fail("Use case failure is unexpected. Error: " + errorMessage); // Added error message for debugging
             }
 
             @Override
@@ -39,7 +39,7 @@ class SignupInteractorTest {
 
     @Test
     void failurePasswordMismatchTest() {
-        SignupInputData inputData = new SignupInputData("Paul", "paul123@example.com", "password", "wrong");
+        SignupInputData inputData = new SignupInputData("Paul", "password1", "paul123@example.com", "password2");
         UserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // This creates a presenter that tests whether the test case is as we expect.
@@ -66,7 +66,7 @@ class SignupInteractorTest {
 
     @Test
     void failureUserExistsTest() {
-        SignupInputData inputData = new SignupInputData("Paul", "paul123@example.com", "password", "wrong");
+        SignupInputData inputData = new SignupInputData("Paul", "password", "paul123@example.com", "password");
         UserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         UserFactory factory = new UserFactory();

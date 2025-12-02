@@ -20,41 +20,31 @@ public class SignupInteractor implements SignupInputBoundary {
 
     @Override
     public void execute(SignupInputData signupInputData) {
-        final String username = signupInputData.getUsername();
-        final String password = signupInputData.getPassword();
-        final String email = signupInputData.getEmail();
-        final String confirmPassword = signupInputData.getConfirmPassword();
-
-        if (userDataAccessObject.usernameExists(username)) {
-            signupPresenter.signupFailureView("Username already exists. Login instead!");
-        }
-        else if (!password.equals(confirmPassword)) {
+        if (!signupInputData.getPassword().equals(signupInputData.getConfirmPassword())) {
             signupPresenter.signupFailureView("Passwords don't match.");
+            return;
         }
-        else if (email.isEmpty()) {
-            signupPresenter.signupFailureView("Email cannot be empty.");
-        }
-        else if (userDataAccessObject.emailExists(email)) {
-            signupPresenter.signupFailureView("Email already exists. Login instead!");
-        }
-        else if (password.isEmpty()) {
-            signupPresenter.signupFailureView("New password cannot be empty");
-        }
-        else if (username.isEmpty()) {
-            signupPresenter.signupFailureView("Username cannot be empty");
-        }
-        else {
-            int userId = userDataAccessObject.getNextUserId();
-            final User user = userFactory.create(userId, signupInputData.getUsername(),
-                    signupInputData.getEmail(),
-                    signupInputData.getPassword());
-            user.setTotalKnownFlashcards(0);
-            user.setTotalFlashcards(0);
-            userDataAccessObject.save(user);
 
-            final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername());
-            signupPresenter.signupSuccessView(signupOutputData);
+        if (userDataAccessObject.usernameExists(signupInputData.getUsername())) {
+            signupPresenter.signupFailureView("User already exists.");
+            return;
         }
+
+        if (userDataAccessObject.emailExists(signupInputData.getEmail())) {
+            signupPresenter.signupFailureView("Email already registered.");
+            return;
+        }
+
+        int userId = userDataAccessObject.getNextUserId();
+        final User user = userFactory.create(userId, signupInputData.getUsername(),
+                signupInputData.getEmail(),
+                signupInputData.getPassword());
+        user.setTotalKnownFlashcards(0);
+        user.setTotalFlashcards(0);
+        userDataAccessObject.save(user);
+
+        final SignupOutputData signupOutputData = new SignupOutputData(user.getUsername());
+        signupPresenter.signupSuccessView(signupOutputData);
     }
 
     @Override
