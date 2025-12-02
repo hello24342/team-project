@@ -6,7 +6,7 @@ public class EditFlashcardViewModel extends ViewModel<EditFlashcardState> {
 
     public EditFlashcardViewModel(String viewName) {
         super(viewName);
-        //super("edit flashcard");
+        // super("edit flashcard");
         setState(new EditFlashcardState());
     }
 }

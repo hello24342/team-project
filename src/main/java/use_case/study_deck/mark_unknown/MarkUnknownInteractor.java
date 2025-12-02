@@ -1,5 +1,4 @@
 package use_case.study_deck.mark_unknown;
-
 import use_case.flashcard.FlashcardDataAccessInterface;
 import use_case.deck.DeckDataAccessInterface;
 
@@ -22,19 +21,7 @@ public class MarkUnknownInteractor implements MarkUnknownInputBoundary {
         int deckId = inputData.getDeckId();
         int cardIndex = inputData.getCardId();
 
-        // debugging why dont know card has not been added to dont know deck
-        //System.out.println("[DEBUG] MarkUnknown called!");
-        //System.out.println("  userId = " + userId);
-        //System.out.println("  deckId = " + deckId);
-        //System.out.println("  cardIndex = " + cardIndex);
-
         int dontKnowDeckId = deckDataAccess.findOrCreateDontKnowDeckId(userId);
-
-
-
-        // debugging why dont know card has not been added to dont know deck
-        // print don’t know deck id for debugging
-        //System.out.println("  dontKnowDeckId = " + dontKnowDeckId);
 
         // Move the flashcard to the "Don't Know" deck
         flashcardDataAccess.markCardAsUnknown(cardIndex, deckId, dontKnowDeckId);

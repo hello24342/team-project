@@ -98,9 +98,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         // Welcome panel
         JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         welcomePanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        welcomePanel.add(new JLabel("Welcome, "));
+        welcomePanel.add(new JLabel("Welcome!"));
         username.setFont(new Font("Arial", Font.BOLD, 16));
-        welcomePanel.add(username);
         mainContentPanel.add(welcomePanel, BorderLayout.NORTH);
 
         // Deck display panel with grid layout
