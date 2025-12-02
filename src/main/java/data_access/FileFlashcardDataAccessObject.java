@@ -142,20 +142,6 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
             }
         }
         return sb.toString();
-
-        void rebuildKnownCountCache() {
-            knownCountCache.clear();
-
-            for (Flashcard card : flashcards.values()) {
-                if (card.isKnown()) {
-                    for (Integer deckId : card.getDeckIds()) {
-                        int oldCount = knownCountCache.getOrDefault(deckId, 0);
-                        knownCountCache.put(deckId, oldCount + 1);
-                    }
-                }
-            }
-        }
-
     }
 
     // interface methods
@@ -175,7 +161,6 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         if (!flashcards.containsKey(cardId)) {
             return;
         }
-        rebuildKnownCountCache();
         saveToFile();
     }
 
@@ -185,7 +170,6 @@ public class FileFlashcardDataAccessObject implements FlashcardDataAccessInterfa
         if (removed == null) {
             return;
         }
-        rebuildKnownCountCache();
         saveToFile();
     }
 

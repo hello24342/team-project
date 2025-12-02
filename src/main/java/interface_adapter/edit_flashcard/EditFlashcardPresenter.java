@@ -16,7 +16,7 @@ public class EditFlashcardPresenter implements EditFlashcardOutputBoundary {
         EditFlashcardState state = viewModel.getState();
         state.setFlashcardId(outputData.getFlashcardId());
         state.setMessage(outputData.getMessage());
-        state.setErrorMessage(null);
+        state.setMessage(null);
         viewModel.setState(state);
         viewModel.firePropertyChange();
     }

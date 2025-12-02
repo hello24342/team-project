@@ -5,6 +5,7 @@ import use_case.flashcard.edit.EditFlashcardInputData;
 
 public class EditFlashcardController {
     private final EditFlashcardInputBoundary editFlashcardInteractor;
+    private final EditFlashcardViewModel viewModel;
     private int currentCardId;
     private String currentSourceWord;
     private String currentTargetWord;
