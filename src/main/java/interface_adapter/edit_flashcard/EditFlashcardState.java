@@ -3,10 +3,13 @@ package interface_adapter.edit_flashcard;
 public class EditFlashcardState {
 
     private int flashcardId;
-    private String sourceWord;
-    private String targetWord;
-    private String message;      // success
-    private String errorMessage; // error
+    private String sourceWord = "";
+    private String targetWord = "";
+    private String sourceLang;
+    private String targetLang;
+
+    private String message; // success/info message
+    private String error;   // error message
 
     public int getFlashcardId() {
         return flashcardId;
@@ -32,6 +35,22 @@ public class EditFlashcardState {
         this.targetWord = targetWord;
     }
 
+    public String getSourceLang() {
+        return sourceLang;
+    }
+
+    public void setSourceLang(String sourceLang) {
+        this.sourceLang = sourceLang;
+    }
+
+    public String getTargetLang() {
+        return targetLang;
+    }
+
+    public void setTargetLang(String targetLang) {
+        this.targetLang = targetLang;
+    }
+
     public String getMessage() {
         return message;
     }
@@ -40,11 +59,11 @@ public class EditFlashcardState {
         this.message = message;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getError() {
+        return error;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setError(String error) {
+        this.error = error;
     }
 }

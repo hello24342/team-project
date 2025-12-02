@@ -18,23 +18,6 @@ import view.deck.DeckMenuView;
 
 public class AppBuilder {
 
-// This helper is just here for testing purposes until create flashcard works. you can run main and study this deck!!
-//    private static void seedDemoData(DeckDataAccessInterface deckDAO, FlashcardDataAccessInterface cardDAO) {
-//        int demoDeckId = 100;
-//        String demoDeckTitle = "Demo Deck";
-//
-//        deckDAO.save(new FlashcardDeck(100, demoDeckTitle, 1));
-//
-//        Flashcard card1 = new Flashcard(99, "hello", "bonjour", Language.ENGLISH, Language.FRENCH);
-//        Flashcard card2 = new Flashcard(100, "cat", "chat", Language.ENGLISH, Language.FRENCH);
-//        Flashcard card3 = new Flashcard(101, "dog", "chien", Language.ENGLISH, Language.FRENCH);
-//        card1.addDeck(demoDeckId);
-//        card2.addDeck(demoDeckId);
-//        card3.addDeck(demoDeckId);
-//        cardDAO.save(card1);
-//        cardDAO.save(card2);
-//        cardDAO.save(card3);
-//    }
     /**
      * Build DAOs, use cases, views and register them into ViewManager.
      * @throws IOException when reading from CSV files fails
@@ -57,6 +40,9 @@ public class AppBuilder {
                 new FileDeckDataAccessObject("decks.csv");
 
         FlashcardDataAccessInterface cardDAO = new FileFlashcardDataAccessObject("flashcards.csv");
+
+        int currentUserId = userDAO.getCurrentUserId();
+        String username = userDAO.getCurrentUsername();
 
         // 3) construct use case components
         // TODO: other use case components
@@ -86,11 +72,8 @@ public class AppBuilder {
                 StudyDeckUseCaseFactory.build(deckDAO, fileUserDataAccessObject, cardDAO);
 
 
-        // edit flashcard UC9
-        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
-        // EditFlashcardUseCaseFactory.EditFlashcardBundle editBundle =
-        //        EditFlashcardUseCaseFactory.build(cardDAO);
-
+        EditFlashcardUseCaseFactory.EditFlashcardBundle editBundle =
+                EditFlashcardUseCaseFactory.build(cardDAO);
 
         // 4) construct Views
         // TODO: other views
@@ -125,7 +108,7 @@ public class AppBuilder {
                 deckBundle.detailVM,
                 deckBundle.openController,
                 studyBundle.controller,
-                /*editBundle.controller,*/ null,
+                editBundle.controller,
                 createBundle.vm,
                 userDAO.getCurrentUserId(),
                 viewManager,
@@ -140,10 +123,9 @@ public class AppBuilder {
         CreateFlashcardView createFlashcardView =
                 new CreateFlashcardView(createBundle.controller, createBundle.vm, viewManager);
 
-        // EditFlashcardView
-        // TODO: uncomment when EditFlashcardUseCaseFactory is ready
-        // EditFlashcardView editFlashcardView =
-        //        new EditFlashcardView(editBundle.vm, editBundle.controller);
+
+        EditFlashcardView editFlashcardView =
+                new EditFlashcardView(editBundle.vm, editBundle.controller);
 
         // 5) register views to ViewManager
         // notice that the name should be the same as the one
@@ -155,7 +137,7 @@ public class AppBuilder {
         viewManager.add("DeckMenu", deckMenuView);
         viewManager.add("DeckDetail", deckDetailView);
         viewManager.add("CreateFlashcard", createFlashcardView);
-        // viewManager.add("EditFlashcard", editFlashcardView);
+        viewManager.add("EditFlashcard", editFlashcardView);
         viewManager.add("Study", studyView);
 
         return viewManager;
